@@ -16,7 +16,6 @@ Vagrant.configure("2") do |config|
       vb.name = <%= @hostname.inspect %>
       vb.customize(["modifyvm", :id, "--cpus", <%= @cpus.inspect %>])
       vb.customize(["modifyvm", :id, "--memory", <%= @memory.inspect %>])
-      vb.customize(["modifyvm", :id, "--resize", <%= @resize.inspect %>])
     end
 
     testlab.ssh.username = <%= @user.inspect %>
