@@ -164,7 +164,11 @@ class TestLab
       end
 
       def memory
-        (@config[:vagrant][:memory] || 2048)
+        (@config[:vagrant][:memory] || (1024 * 2))
+      end
+
+      def resize
+        (@config[:vagrant][:resize] || (1024 * 16))
       end
 
 ################################################################################
@@ -198,6 +202,7 @@ class TestLab
           :port => self.port,
           :cpus => self.cpus,
           :memory => self.memory,
+          :resize => self.resize,
           :box => self.box,
           :box_url => self.box_url
         }
