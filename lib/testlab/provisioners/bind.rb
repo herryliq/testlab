@@ -41,7 +41,9 @@ class TestLab
       def on_container_provision(container)
         @ui.logger.debug { "BIND Provisioner: Container #{container.id}" }
 
-        bind_reload(container.node)
+        # ensure we override the config hash with the nodes configuration
+        @config = container.node.config
+        bind_provision(container.node)
 
         true
       end
