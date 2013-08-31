@@ -79,7 +79,7 @@ class TestLab
       end
 
       def ip
-        "127.0.0.1"
+        (@config[:local][:ip] || "127.0.0.1")
       end
 
       def port
