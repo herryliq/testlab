@@ -11,9 +11,7 @@ class TestLab
       def ephemeral
         @ui.logger.debug { "Container Ephemeral: #{self.id}" }
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Ephemeral', :yellow)) do
-          is_persistent? and self.to_ephemeral
-        end
+        is_persistent? and self.to_ephemeral
 
         true
       end
@@ -26,9 +24,7 @@ class TestLab
       def persistent
         @ui.logger.debug { "Container Persistent: #{self.id}" }
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Persistent', :yellow)) do
-          is_ephemeral? and self.to_persistent
-        end
+        is_ephemeral? and self.to_persistent
 
         true
       end
@@ -92,14 +88,16 @@ class TestLab
         if self.is_ephemeral?
           self_state = self.state
 
-          configure
+          please_wait(:ui => @ui, :message => format_object_action(self, 'Persistent', :yellow)) do
+            configure
 
-          self.lxc.stop
-          self.lxc.destroy(%(-f))
+            self.lxc.stop
+            self.lxc.destroy(%(-f))
 
-          self.lxc_clone.stop
-          self.lxc_clone.clone(%W(-o #{self.lxc_clone.name} -n #{self.lxc.name}))
-          self.lxc_clone.destroy(%(-f))
+            self.lxc_clone.stop
+            self.lxc_clone.clone(%W(-o #{self.lxc_clone.name} -n #{self.lxc.name}))
+            self.lxc_clone.destroy(%(-f))
+          end
 
           # bring our container back online if it was running before the operation
           (self_state == :running) and self.up
@@ -118,14 +116,16 @@ class TestLab
         if self.is_persistent?
           self_state = self.state
 
-          configure
+          please_wait(:ui => @ui, :message => format_object_action(self, 'Ephemeral', :yellow)) do
+            configure
 
-          self.lxc_clone.stop
-          self.lxc_clone.destroy(%(-f))
+            self.lxc_clone.stop
+            self.lxc_clone.destroy(%(-f))
 
-          self.lxc.stop
-          self.lxc.clone(%W(-o #{self.lxc.name} -n #{self.lxc_clone.name}))
-          self.lxc.destroy(%(-f))
+            self.lxc.stop
+            self.lxc.clone(%W(-o #{self.lxc.name} -n #{self.lxc_clone.name}))
+            self.lxc.destroy(%(-f))
+          end
 
           # bring our container back online if it was running before the operation
           (self_state == :running) and self.up
