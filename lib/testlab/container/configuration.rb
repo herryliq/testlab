@@ -28,6 +28,10 @@ class TestLab
         lxc_config['lxc.arch']    = self.arch
         lxc_config['lxc.utsname'] = self.fqdn
 
+        self.mounts.nil? or self.mounts.flatten.compact.each do |mount|
+          lxc_config['lxc.mount.entry'] = mount
+        end
+
         unless self.aa_profile.nil?
           lxc_config['lxc.aa_profile'] = self.aa_profile
         end
@@ -36,7 +40,7 @@ class TestLab
           lxc_config['lxc.cap.drop'] = [self.cap_drop].flatten.compact.map(&:downcase).join(' ')
         end
 
-        lxc_config.networks       = build_lxc_network_conf(self.interfaces)
+        lxc_config.networks = build_lxc_network_conf(self.interfaces)
 
         lxc_config.save
 

@@ -125,6 +125,8 @@ class TestLab
     attribute   :release,       :default => 'precise'
     attribute   :arch
 
+    attribute   :mounts,        :default => Array.new
+
     attribute   :aa_profile
     attribute   :cap_drop
 
