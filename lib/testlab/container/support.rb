@@ -30,7 +30,7 @@ class TestLab
           arguments << %W(-s lxc.cap.drop="#{cap_drop}")
         end
 
-        arguments << %W(-d)
+        arguments << %W(-d -l DEBUG)
 
         arguments.flatten.compact
       end
