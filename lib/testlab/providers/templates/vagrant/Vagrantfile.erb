@@ -11,6 +11,9 @@ Vagrant.configure("2") do |config|
     testlab.vm.box = <%= @box.inspect %>
     testlab.vm.box_url = <%= @box_url.inspect %>
     testlab.vm.network(:private_network, :ip => <%= @ip.inspect %>)
+<% @synced_folders.nil? or @synced_folders.each do |synced_folder| -%>
+    testlab.vm.synced_folder *<%= synced_folder.inspect %>
+<% end -%>
 
     testlab.vm.provider :virtualbox do |vb|
       vb.name = <%= @hostname.inspect %>

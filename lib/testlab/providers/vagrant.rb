@@ -171,6 +171,10 @@ class TestLab
         (@config[:vagrant][:resize] || (1024 * 16))
       end
 
+      def synced_folders
+        (@config[:vagrant][:synced_folders] || nil)
+      end
+
 ################################################################################
 
       def vagrant_cli(*args)
@@ -204,7 +208,8 @@ class TestLab
           :memory => self.memory,
           :resize => self.resize,
           :box => self.box,
-          :box_url => self.box_url
+          :box_url => self.box_url,
+          :synced_folders => self.synced_folders
         }
 
         vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
