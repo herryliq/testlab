@@ -5,7 +5,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # Update APT and ensure our required packages are installed
 apt-get -y update
-<% %w(lxc bridge-utils debootstrap yum iptables iptables-persistent ntpdate ntp pbzip2).each do |package| -%>
+<% %w(lxc apparmor bridge-utils debootstrap yum iptables iptables-persistent ntpdate ntp pbzip2).each do |package| -%>
 dpkg --status <%= package %> &> /dev/null || apt-get -y install <%= package %>
 <% end -%>
 
@@ -26,3 +26,11 @@ if ! iptables -t nat -v --list | grep "MASQUERADE"; then
   iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
   iptables-save | tee /etc/iptables/rules.v4
 fi
+
+grep 'mount fstype=nfs,' /etc/apparmor.d/abstractions/lxc/container-base || cat <<EOF | tee -a /etc/apparmor.d/abstractions/lxc/container-base
+  mount fstype=nfs,
+EOF
+
+grep 'mount fstype=rpc_pipefs,' /etc/apparmor.d/abstractions/lxc/container-base || cat <<EOF | tee -a /etc/apparmor.d/abstractions/lxc/container-base
+  mount fstype=rpc_pipefs,
+EOF
