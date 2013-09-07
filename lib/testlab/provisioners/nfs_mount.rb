@@ -80,9 +80,9 @@ set -x
         @config[:nfs_mounts].each do |nfs_mount|
           mount_entries << case RUBY_PLATFORM
           when /darwin/ then
-            %(#{nfs_mount[0]})
+            %(#{nfs_mount[1]})
           when /linux/ then
-            %(#{nfs_mount[0]} *(rw,sync,no_subtree_check))
+            %(#{nfs_mount[1]} *(rw,sync,no_subtree_check))
           end
         end
         mount_entries.join("\n")
@@ -99,8 +99,8 @@ set -x
 
       def container_mount(container)
         @config[:nfs_mounts].each do |nfs_mount|
-          container.exec(%(sudo mkdir -p #{nfs_mount[1]}))
-          container.exec(%(sudo mount -vt nfs -o 'nfsvers=3' #{@config[:nfs_server]}:#{nfs_mount[0]} #{nfs_mount[1]}))
+          container.exec(%(sudo mkdir -p #{nfs_mount[2]}))
+          container.exec(%(sudo mount -vt nfs -o 'nfsvers=3' #{nfs_mount[0]}:#{nfs_mount[1]} #{nfs_mount[2]}), :ignore_exit_status => true)
         end
       end
 
