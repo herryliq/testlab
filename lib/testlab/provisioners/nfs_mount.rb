@@ -69,10 +69,7 @@ EOI
       end
 
       def remove_nfs_mounts(container)
-        @command.exec(<<-EOF)
-set -x
-#{sed_exports(container)}
-        EOF
+        @command.exec(sed_exports(container))
       end
 
       def mount_blob(container)
