@@ -95,7 +95,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/testlab/provisioner.rb<span class="defines">,<br />
-  lib/testlab/provisioners/apt.rb,<br /> lib/testlab/provisioners/bind.rb,<br /> lib/testlab/provisioners/chef.rb,<br /> lib/testlab/provisioners/shell.rb,<br /> lib/testlab/provisioners/route.rb,<br /> lib/testlab/provisioners/resolv.rb,<br /> lib/testlab/provisioners/raring.rb,<br /> lib/testlab/provisioners/chef/omni_bus.rb,<br /> lib/testlab/provisioners/apt_cacher_ng.rb,<br /> lib/testlab/provisioners/chef/omni_truck.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_server.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_client.rb</span>
+  lib/testlab/provisioners/apt.rb,<br /> lib/testlab/provisioners/bind.rb,<br /> lib/testlab/provisioners/chef.rb,<br /> lib/testlab/provisioners/shell.rb,<br /> lib/testlab/provisioners/route.rb,<br /> lib/testlab/provisioners/resolv.rb,<br /> lib/testlab/provisioners/raring.rb,<br /> lib/testlab/provisioners/nfs_mount.rb,<br /> lib/testlab/provisioners/chef/omni_bus.rb,<br /> lib/testlab/provisioners/apt_cacher_ng.rb,<br /> lib/testlab/provisioners/chef/omni_truck.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_server.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_client.rb</span>
 </dd>
   
 </dl>
@@ -134,7 +134,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Provisioner/Apt.html" title="TestLab::Provisioner::Apt (class)">Apt</a></span>, <span class='object_link'><a href="Provisioner/AptCacherNG.html" title="TestLab::Provisioner::AptCacherNG (class)">AptCacherNG</a></span>, <span class='object_link'><a href="Provisioner/AptCacherNGError.html" title="TestLab::Provisioner::AptCacherNGError (class)">AptCacherNGError</a></span>, <span class='object_link'><a href="Provisioner/AptError.html" title="TestLab::Provisioner::AptError (class)">AptError</a></span>, <span class='object_link'><a href="Provisioner/Bind.html" title="TestLab::Provisioner::Bind (class)">Bind</a></span>, <span class='object_link'><a href="Provisioner/BindError.html" title="TestLab::Provisioner::BindError (class)">BindError</a></span>, <span class='object_link'><a href="Provisioner/Chef.html" title="TestLab::Provisioner::Chef (class)">Chef</a></span>, <span class='object_link'><a href="Provisioner/ChefError.html" title="TestLab::Provisioner::ChefError (class)">ChefError</a></span>, <span class='object_link'><a href="Provisioner/Raring.html" title="TestLab::Provisioner::Raring (class)">Raring</a></span>, <span class='object_link'><a href="Provisioner/RaringError.html" title="TestLab::Provisioner::RaringError (class)">RaringError</a></span>, <span class='object_link'><a href="Provisioner/Resolv.html" title="TestLab::Provisioner::Resolv (class)">Resolv</a></span>, <span class='object_link'><a href="Provisioner/ResolvError.html" title="TestLab::Provisioner::ResolvError (class)">ResolvError</a></span>, <span class='object_link'><a href="Provisioner/Route.html" title="TestLab::Provisioner::Route (class)">Route</a></span>, <span class='object_link'><a href="Provisioner/RouteError.html" title="TestLab::Provisioner::RouteError (class)">RouteError</a></span>, <span class='object_link'><a href="Provisioner/Shell.html" title="TestLab::Provisioner::Shell (class)">Shell</a></span>, <span class='object_link'><a href="Provisioner/ShellError.html" title="TestLab::Provisioner::ShellError (class)">ShellError</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Provisioner/Apt.html" title="TestLab::Provisioner::Apt (class)">Apt</a></span>, <span class='object_link'><a href="Provisioner/AptCacherNG.html" title="TestLab::Provisioner::AptCacherNG (class)">AptCacherNG</a></span>, <span class='object_link'><a href="Provisioner/AptCacherNGError.html" title="TestLab::Provisioner::AptCacherNGError (class)">AptCacherNGError</a></span>, <span class='object_link'><a href="Provisioner/AptError.html" title="TestLab::Provisioner::AptError (class)">AptError</a></span>, <span class='object_link'><a href="Provisioner/Bind.html" title="TestLab::Provisioner::Bind (class)">Bind</a></span>, <span class='object_link'><a href="Provisioner/BindError.html" title="TestLab::Provisioner::BindError (class)">BindError</a></span>, <span class='object_link'><a href="Provisioner/Chef.html" title="TestLab::Provisioner::Chef (class)">Chef</a></span>, <span class='object_link'><a href="Provisioner/ChefError.html" title="TestLab::Provisioner::ChefError (class)">ChefError</a></span>, <span class='object_link'><a href="Provisioner/NFSMount.html" title="TestLab::Provisioner::NFSMount (class)">NFSMount</a></span>, <span class='object_link'><a href="Provisioner/NFSMountError.html" title="TestLab::Provisioner::NFSMountError (class)">NFSMountError</a></span>, <span class='object_link'><a href="Provisioner/Raring.html" title="TestLab::Provisioner::Raring (class)">Raring</a></span>, <span class='object_link'><a href="Provisioner/RaringError.html" title="TestLab::Provisioner::RaringError (class)">RaringError</a></span>, <span class='object_link'><a href="Provisioner/Resolv.html" title="TestLab::Provisioner::Resolv (class)">Resolv</a></span>, <span class='object_link'><a href="Provisioner/ResolvError.html" title="TestLab::Provisioner::ResolvError (class)">ResolvError</a></span>, <span class='object_link'><a href="Provisioner/Route.html" title="TestLab::Provisioner::Route (class)">Route</a></span>, <span class='object_link'><a href="Provisioner/RouteError.html" title="TestLab::Provisioner::RouteError (class)">RouteError</a></span>, <span class='object_link'><a href="Provisioner/Shell.html" title="TestLab::Provisioner::Shell (class)">Shell</a></span>, <span class='object_link'><a href="Provisioner/ShellError.html" title="TestLab::Provisioner::ShellError (class)">ShellError</a></span>
     
   
 </p>
@@ -212,12 +212,12 @@
       <pre class="lines">
 
 
-22
 23
-24</pre>
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioner.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioner.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_template_dir'>template_dir</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_gem_dir'>gem_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testlab</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>provisioners</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>templates</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -232,7 +232,7 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Sep  4 13:24:01 2013 by
+  Generated on Mon Sep  9 10:50:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>
