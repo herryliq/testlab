@@ -34,3 +34,5 @@ EOF
 grep 'mount fstype=rpc_pipefs,' /etc/apparmor.d/abstractions/lxc/container-base || cat <<EOF | tee -a /etc/apparmor.d/abstractions/lxc/container-base
   mount fstype=rpc_pipefs,
 EOF
+
+service apparmor reload
