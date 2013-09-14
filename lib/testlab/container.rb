@@ -11,14 +11,14 @@ class TestLab
   #   container "server-west-1" do
   #     domain        "west.zone"
   #
-  #     distro        "ubuntu"
-  #     release       "precise"
+  #     distro  "ubuntu"
+  #     release "precise"
   #
   #     user do
   #       username "deployer"
   #       password "deployer"
-  #       uid 2600
-  #       gid 2600
+  #       uid      2600
+  #       gid      2600
   #     end
   #
   #     interface do
@@ -31,14 +31,14 @@ class TestLab
   #
   # @example Multiple interfaces can be defined as well:
   #   container "dual-nic" do
-  #     distro        "ubuntu"
-  #     release       "precise"
+  #     distro  "ubuntu"
+  #     release "precise"
   #
   #     user do
   #       username "deployer"
   #       password "deployer"
-  #       uid 2600
-  #       gid 2600
+  #       uid      2600
+  #       gid      2600
   #     end
   #
   #     interface do
@@ -126,6 +126,8 @@ class TestLab
     attribute   :arch
 
     attribute   :mounts,        :default => Array.new
+
+    attribute   :sc_url
 
     attribute   :aa_profile
     attribute   :cap_drop
