@@ -6,7 +6,38 @@ class TestLab
       require 'net/https' if RUBY_VERSION < '1.9'
       require 'tempfile'
 
-      PBZIP2_MEMORY = 256
+      PBZIP2_MEMORY    = 1024
+      READ_SIZE        = ((64 * 1024) - 1)
+      TRANSFER_MESSAGE = "transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%%   \r"
+
+      def progress_callback(action, args)
+        @total_size ||= 0
+
+        case action
+        when :open then
+          @start_time = Time.now
+          if (@total_size == 0)
+            @total_size = args[0].size
+            @total_size_mb = (@total_size.to_f / (1024 * 1024).to_f)
+          end
+
+        when :get, :put then
+          current_size = (args[1] + args[2].length)
+          current_size_mb = (current_size.to_f / (1024 * 1024).to_f)
+
+          elapsed = (Time.now - @start_time)
+          speed_mb = (current_size.to_f / elapsed.to_f) / (1024 * 1024).to_f
+
+          percentage_done = ((current_size * 100) / @total_size)
+
+          @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(args[0].local), speed_mb, current_size_mb, @total_size_mb, percentage_done]))
+
+        when :finish
+          @ui.stdout.puts
+          @total_size = 0
+
+        end
+      end
 
       # Export the container
       #
@@ -47,80 +78,23 @@ ls -lah #{remote_file}
 EOF
         end
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Export', :cyan)) do
-          File.exists?(local_file) and FileUtils.rm_f(local_file)
-          self.node.download(remote_file, local_file)
-        end
+        File.exists?(local_file) and FileUtils.rm_f(local_file)
+
+        @total_size = self.node.ssh.sftp.stat!(remote_file).size
+        @total_size_mb = (@total_size.to_f / (1024 * 1024).to_f)
+
+        self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
+
+        self.node.bootstrap(<<-EOF)
+set -x
+set -e
+
+rm -fv #{remote_file}
+EOF
 
         @ui.stdout.puts(format_message("Your shipping container is now exported and available at '#{local_file}'!".green.bold))
 
         true
-      end
-
-      # Downloads a given shipping container image
-      #
-      # @return [Boolean] True if successful.
-      def sc_download(local_file, url, count)
-        (count <= 0) and raise ContainerError, "Too many redirects, aborting!"
-
-        uri        = URI(url)
-        http       = Net::HTTP.new(uri.host, uri.port)
-
-        if (uri.scheme.downcase == 'https')
-          http.use_ssl = true
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # lets be really permissive for now
-        end
-
-        http.request_get(uri.path) do |response|
-          case response
-          when Net::HTTPNotFound then
-            raise ContainerError, "The supplied sc_url for this container was 404 Not Found!"
-
-          when Net::HTTPClientError then
-            raise ContainerError, "Client Error: #{response.inspect}"
-
-          when Net::HTTPRedirection then
-            location = response['location']
-            puts(format_message("REDIRECTED  #{url} --> #{location}".black))
-            return sc_download(local_file, location, (count - 1))
-
-          when Net::HTTPOK then
-            tempfile = Tempfile.new(%(download-#{self.id}))
-            tempfile.binmode
-
-            current_size = 0
-            progress = 0
-            total_size = response['content-length'].to_i
-            total_size_mb = total_size.to_f / (1024 * 1024).to_f
-
-            start_time = Time.now
-            response.read_body do |chunk|
-              tempfile << chunk
-
-              current_size += chunk.size
-              current_size_mb = current_size.to_f / (1024 * 1024).to_f
-
-              new_progress = (current_size * 100) / total_size
-              unless new_progress == progress
-                elapsed = (Time.now - start_time)
-                speed_mb = (current_size.to_f / elapsed.to_f) / (1024 * 1024).to_f
-                print(format_message("Downloading %s - %0.2fMB of %0.2fMB [%0.2fMB/s] (%d%%)\r".green.bold % [local_file, current_size_mb, total_size_mb, speed_mb, new_progress]))
-              end
-              progress = new_progress
-            end
-
-            tempfile.close
-
-            FileUtils.mkdir_p(File.dirname(local_file))
-            File.exists?(local_file) and File.unlink(local_file)
-            FileUtils.mv(tempfile.path, local_file, :force => true)
-
-            true
-          else
-            raise ContainerError, "Unknown HTTP response when attempt to download your shipping container!"
-          end
-        end
-
       end
 
       # Import the container
@@ -132,19 +106,18 @@ EOF
         if !File.exists?(local_file)
           self.sc_url.nil? and raise ContainerError, "You failed to supply a filename or URL to import from!"
 
-          puts(format_message("Downloading shipping container for #{self.id}...".green.bold))
+          @ui.stdout.puts(format_message("Downloading shipping container for #{self.id}...".green.bold))
 
           local_file = File.expand_path("#{self.id}.sc")
           sc_download(local_file, self.sc_url, 16)
         end
-
-        halt!
 
         # Ensure we are not in ephemeral mode.
         self.persistent
 
         self.down
         self.destroy
+
         self.create
 
         import_tempfile = Tempfile.new('import')
@@ -155,10 +128,8 @@ EOF
         local_file   = File.expand_path(local_file)
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
-          self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
-          self.node.upload(local_file, remote_file)
-        end
+        self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
+        self.node.upload(local_file, remote_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
           self.node.bootstrap(<<-EOF)
@@ -172,6 +143,8 @@ cd #{self.lxc.container_root}
 pbzip2 -vdcm#{PBZIP2_MEMORY} #{remote_file} | cpio -uid && rm -fv #{remote_file}
 
 du -sh #{self.lxc.container_root}
+
+rm -fv #{remote_file}
 EOF
         end
 
@@ -213,6 +186,73 @@ EOF
         (target_state == :running) and target_container.up
 
         true
+      end
+
+      # Downloads a given shipping container image
+      #
+      # @return [Boolean] True if successful.
+      def sc_download(local_file, url, count)
+        (count <= 0) and raise ContainerError, "Too many redirects, aborting!"
+
+        uri        = URI(url)
+        http       = Net::HTTP.new(uri.host, uri.port)
+
+        if (uri.scheme.downcase == 'https')
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # lets be really permissive for now
+        end
+
+        http.request_get(uri.path) do |response|
+          case response
+          when Net::HTTPNotFound then
+            raise ContainerError, "The supplied sc_url for this container was 404 Not Found!"
+
+          when Net::HTTPClientError then
+            raise ContainerError, "Client Error: #{response.inspect}"
+
+          when Net::HTTPRedirection then
+            location = response['location']
+            @ui.stdout.puts(format_message("REDIRECTED  #{url} --> #{location}".black))
+            return sc_download(local_file, location, (count - 1))
+
+          when Net::HTTPOK then
+            tempfile = Tempfile.new(%(download-#{self.id}))
+            tempfile.binmode
+
+            current_size = 0
+            progress = 0
+            total_size = response['content-length'].to_i
+            total_size_mb = total_size.to_f / (1024 * 1024).to_f
+
+            start_time = Time.now
+            response.read_body do |chunk|
+              tempfile << chunk
+
+              current_size += chunk.size
+              current_size_mb = current_size.to_f / (1024 * 1024).to_f
+
+              new_progress = (current_size * 100) / total_size
+              unless new_progress == progress
+                elapsed = (Time.now - start_time)
+                speed_mb = (current_size.to_f / elapsed.to_f) / (1024 * 1024).to_f
+                @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(local_file), speed_mb, current_size_mb, total_size_mb, new_progress]))
+              end
+              progress = new_progress
+            end
+            @ui.stdout.puts
+
+            tempfile.close
+
+            FileUtils.mkdir_p(File.dirname(local_file))
+            File.exists?(local_file) and File.unlink(local_file)
+            FileUtils.mv(tempfile.path, local_file, :force => true)
+
+            true
+          else
+            raise ContainerError, "Unknown HTTP response when attempt to download your shipping container!"
+          end
+        end
+
       end
 
     end
