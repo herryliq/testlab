@@ -142,14 +142,14 @@ the container.</p>
       <pre class="example code"><code><span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>server-west-1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_domain'>domain</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>west.zone</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_distro'>distro</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_release'>release</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_user'>user</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_username'>username</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_password'>password</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_uid'>uid</span> <span class='int'>2600</span>
-    <span class='id identifier rubyid_gid'>gid</span> <span class='int'>2600</span>
+    <span class='id identifier rubyid_uid'>uid</span>      <span class='int'>2600</span>
+    <span class='id identifier rubyid_gid'>gid</span>      <span class='int'>2600</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
@@ -166,14 +166,14 @@ the container.</p>
 </div></p>
       
       <pre class="example code"><code><span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dual-nic</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_distro'>distro</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_release'>release</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_user'>user</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_username'>username</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_password'>password</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_uid'>uid</span> <span class='int'>2600</span>
-    <span class='id identifier rubyid_gid'>gid</span> <span class='int'>2600</span>
+    <span class='id identifier rubyid_uid'>uid</span>      <span class='int'>2600</span>
+    <span class='id identifier rubyid_gid'>gid</span>      <span class='int'>2600</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
@@ -265,7 +265,7 @@ the container.</p>
   
   <h3 class="inherited">Constants included
      from <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Container/IO.html#PBZIP2_MEMORY-constant" title="TestLab::Container::IO::PBZIP2_MEMORY (constant)">IO::PBZIP2_MEMORY</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Container/IO.html#PBZIP2_MEMORY-constant" title="TestLab::Container::IO::PBZIP2_MEMORY (constant)">IO::PBZIP2_MEMORY</a></span>, <span class='object_link'><a href="Container/IO.html#READ_SIZE-constant" title="TestLab::Container::IO::READ_SIZE (constant)">IO::READ_SIZE</a></span>, <span class='object_link'><a href="Container/IO.html#TRANSFER_MESSAGE-constant" title="TestLab::Container::IO::TRANSFER_MESSAGE (constant)">IO::TRANSFER_MESSAGE</a></span></p>
 
 
 
@@ -483,7 +483,7 @@ the container.</p>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Container/IO.html#copy-instance_method" title="TestLab::Container::IO#copy (method)">#copy</a></span>, <span class='object_link'><a href="Container/IO.html#export-instance_method" title="TestLab::Container::IO#export (method)">#export</a></span>, <span class='object_link'><a href="Container/IO.html#import-instance_method" title="TestLab::Container::IO#import (method)">#import</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Container/IO.html#copy-instance_method" title="TestLab::Container::IO#copy (method)">#copy</a></span>, <span class='object_link'><a href="Container/IO.html#export-instance_method" title="TestLab::Container::IO#export (method)">#export</a></span>, <span class='object_link'><a href="Container/IO.html#import-instance_method" title="TestLab::Container::IO#import (method)">#import</a></span>, <span class='object_link'><a href="Container/IO.html#progress_callback-instance_method" title="TestLab::Container::IO#progress_callback (method)">#progress_callback</a></span>, <span class='object_link'><a href="Container/IO.html#sc_download-instance_method" title="TestLab::Container::IO#sc_download (method)">#sc_download</a></span></p>
 
   
   
@@ -569,8 +569,6 @@ the container.</p>
       <pre class="lines">
 
 
-147
-148
 149
 150
 151
@@ -602,10 +600,12 @@ the container.</p>
 177
 178
 179
-180</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
@@ -678,12 +678,12 @@ the container.</p>
       <pre class="lines">
 
 
-182
-183
-184</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -708,12 +708,12 @@ the container.</p>
       <pre class="lines">
 
 
-186
-187
-188</pre>
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -728,7 +728,7 @@ the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Sep  9 15:44:01 2013 by
+  Generated on Sat Sep 14 19:32:52 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>

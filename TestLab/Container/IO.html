@@ -96,7 +96,17 @@
         <dt id="PBZIP2_MEMORY-constant" class="">PBZIP2_MEMORY =
           
         </dt>
-        <dd><pre class="code"><span class='int'>256</span></pre></dd>
+        <dd><pre class="code"><span class='int'>1024</span></pre></dd>
+      
+        <dt id="READ_SIZE-constant" class="">READ_SIZE =
+          
+        </dt>
+        <dd><pre class="code"><span class='lparen'>(</span><span class='lparen'>(</span><span class='int'>64</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="TRANSFER_MESSAGE-constant" class="">TRANSFER_MESSAGE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%%   \r</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -187,6 +197,52 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#progress_callback-instance_method" title="#progress_callback (instance method)">- (Object) <strong>progress_callback</strong>(action, args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sc_download-instance_method" title="#sc_download (instance method)">- (Boolean) <strong>sc_download</strong>(local_file, url, count) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Downloads a given shipping container image.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -242,38 +298,38 @@
       <pre class="lines">
 
 
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136</pre>
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy'>copy</span><span class='lparen'>(</span><span class='id identifier rubyid_target_name'>target_name</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Copy: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -353,40 +409,6 @@
       <pre class="lines">
 
 
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
 45
 46
 47
@@ -397,10 +419,53 @@
 52
 53
 54
-55</pre>
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_export'>export</span><span class='lparen'>(</span><span class='id identifier rubyid_compression'>compression</span><span class='op'>=</span><span class='int'>9</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Export: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -438,11 +503,20 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
 </span><span class='heredoc_end'>EOF
 </span>  <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Export</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:cyan</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
 
+  <span class='ivar'>@total_size</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_sftp'>sftp</span><span class='period'>.</span><span class='id identifier rubyid_stat!'>stat!</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+  <span class='ivar'>@total_size_mb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@total_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='symbol'>:on_progress</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:progress_callback</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:read_size</span> <span class='op'>=&gt;</span> <span class='const'>READ_SIZE</span><span class='rparen'>)</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='rparen'>)</span>
+<span class='tstring_content'>set -x
+set -e
+
+rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>EOF
+</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now exported and available at '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rbrace'>}</span><span class='tstring_content'>'!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
@@ -496,60 +570,80 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101</pre>
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Import: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sc_url'>sc_url</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You failed to supply a filename or URL to import from!</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Downloading shipping container for </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>...</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_local_file'>local_file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>.sc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_sc_download'>sc_download</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sc_url'>sc_url</span><span class='comma'>,</span> <span class='int'>16</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='comment'># Ensure we are not in ephemeral mode.
 </span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_persistent'>persistent</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
+
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
 
   <span class='id identifier rubyid_import_tempfile'>import_tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>import</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
@@ -560,10 +654,8 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
   <span class='id identifier rubyid_local_file'>local_file</span>   <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_root_fs_path'>root_fs_path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_fs_root'>fs_root</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>SEPARATOR</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
 
-  <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Import</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:cyan</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_file'>remote_file</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_file'>remote_file</span><span class='comma'>,</span> <span class='symbol'>:on_progress</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:progress_callback</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:read_size</span> <span class='op'>=&gt;</span> <span class='const'>READ_SIZE</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Expand</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:cyan</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='rparen'>)</span>
@@ -577,6 +669,8 @@ cd </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span c
 pbzip2 -vdcm</span><span class='embexpr_beg'>#{</span><span class='const'>PBZIP2_MEMORY</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'> | cpio -uid &amp;&amp; rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
 
 du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_container_root'>container_root</span><span class='rbrace'>}</span><span class='tstring_content'>
+
+rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>EOF
 </span>  <span class='kw'>end</span>
 
@@ -589,12 +683,271 @@ du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><sp
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="progress_callback-instance_method">
+  
+    - (<tt>Object</tt>) <strong>progress_callback</strong>(action, args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_progress_callback'>progress_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@total_size</span> <span class='op'>||=</span> <span class='int'>0</span>
+
+  <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
+  <span class='kw'>when</span> <span class='symbol'>:open</span> <span class='kw'>then</span>
+    <span class='ivar'>@start_time</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='ivar'>@total_size</span> <span class='op'>==</span> <span class='int'>0</span><span class='rparen'>)</span>
+      <span class='ivar'>@total_size</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+      <span class='ivar'>@total_size_mb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@total_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+  <span class='kw'>when</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='symbol'>:put</span> <span class='kw'>then</span>
+    <span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_current_size_mb'>current_size_mb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_size'>current_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_elapsed'>elapsed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='ivar'>@start_time</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_speed_mb'>speed_mb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_size'>current_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='id identifier rubyid_elapsed'>elapsed</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+
+    <span class='id identifier rubyid_percentage_done'>percentage_done</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>*</span> <span class='int'>100</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='ivar'>@total_size</span><span class='rparen'>)</span>
+
+    <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='const'>TRANSFER_MESSAGE</span><span class='period'>.</span><span class='id identifier rubyid_yellow'>yellow</span> <span class='op'>%</span> <span class='lbracket'>[</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_local'>local</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_speed_mb'>speed_mb</span><span class='comma'>,</span> <span class='id identifier rubyid_current_size_mb'>current_size_mb</span><span class='comma'>,</span> <span class='ivar'>@total_size_mb</span><span class='comma'>,</span> <span class='id identifier rubyid_percentage_done'>percentage_done</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+  <span class='kw'>when</span> <span class='symbol'>:finish</span>
+    <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+    <span class='ivar'>@total_size</span> <span class='op'>=</span> <span class='int'>0</span>
+
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sc_download-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>sc_download</strong>(local_file, url, count) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Downloads a given shipping container image</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sc_download'>sc_download</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&lt;=</span> <span class='int'>0</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Too many redirects, aborting!</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_uri'>uri</span>        <span class='op'>=</span> <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_http'>http</span>       <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_scheme'>scheme</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>https</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_use_ssl'>use_ssl</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_verify_mode'>verify_mode</span> <span class='op'>=</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>SSL</span><span class='op'>::</span><span class='const'>VERIFY_NONE</span>  <span class='comment'># lets be really permissive for now
+</span>  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_request_get'>request_get</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span>
+    <span class='kw'>when</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTPNotFound</span> <span class='kw'>then</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The supplied sc_url for this container was 404 Not Found!</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='kw'>when</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTPClientError</span> <span class='kw'>then</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Client Error: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='kw'>when</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTPRedirection</span> <span class='kw'>then</span>
+      <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>location</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+      <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>REDIRECTED  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='rbrace'>}</span><span class='tstring_content'> --&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_location'>location</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_black'>black</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>return</span> <span class='id identifier rubyid_sc_download'>sc_download</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTPOK</span> <span class='kw'>then</span>
+      <span class='id identifier rubyid_tempfile'>tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>download-</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_tempfile'>tempfile</span><span class='period'>.</span><span class='id identifier rubyid_binmode'>binmode</span>
+
+      <span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_progress'>progress</span> <span class='op'>=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_total_size'>total_size</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>content-length</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+      <span class='id identifier rubyid_total_size_mb'>total_size_mb</span> <span class='op'>=</span> <span class='id identifier rubyid_total_size'>total_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+
+      <span class='id identifier rubyid_start_time'>start_time</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+      <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_read_body'>read_body</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_chunk'>chunk</span><span class='op'>|</span>
+        <span class='id identifier rubyid_tempfile'>tempfile</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_chunk'>chunk</span>
+
+        <span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>+=</span> <span class='id identifier rubyid_chunk'>chunk</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+        <span class='id identifier rubyid_current_size_mb'>current_size_mb</span> <span class='op'>=</span> <span class='id identifier rubyid_current_size'>current_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+
+        <span class='id identifier rubyid_new_progress'>new_progress</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>*</span> <span class='int'>100</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_total_size'>total_size</span>
+        <span class='kw'>unless</span> <span class='id identifier rubyid_new_progress'>new_progress</span> <span class='op'>==</span> <span class='id identifier rubyid_progress'>progress</span>
+          <span class='id identifier rubyid_elapsed'>elapsed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='id identifier rubyid_start_time'>start_time</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_speed_mb'>speed_mb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_size'>current_size</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='id identifier rubyid_elapsed'>elapsed</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+          <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='const'>TRANSFER_MESSAGE</span><span class='period'>.</span><span class='id identifier rubyid_yellow'>yellow</span> <span class='op'>%</span> <span class='lbracket'>[</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_speed_mb'>speed_mb</span><span class='comma'>,</span> <span class='id identifier rubyid_current_size_mb'>current_size_mb</span><span class='comma'>,</span> <span class='id identifier rubyid_total_size_mb'>total_size_mb</span><span class='comma'>,</span> <span class='id identifier rubyid_new_progress'>new_progress</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_progress'>progress</span> <span class='op'>=</span> <span class='id identifier rubyid_new_progress'>new_progress</span>
+      <span class='kw'>end</span>
+      <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+
+      <span class='id identifier rubyid_tempfile'>tempfile</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+
+      <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mkdir_p'>mkdir_p</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
+      <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mv'>mv</span><span class='lparen'>(</span><span class='id identifier rubyid_tempfile'>tempfile</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='symbol'>:force</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+
+      <span class='kw'>true</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unknown HTTP response when attempt to download your shipping container!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Mon Sep  9 15:43:57 2013 by
+  Generated on Sat Sep 14 19:32:48 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>
