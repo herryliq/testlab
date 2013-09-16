@@ -173,12 +173,8 @@ EOF
     import.flag [:input]
 
     import.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        iterate_objects_by_name(options[:name], TestLab::Container) do |container|
-          container.import(options[:input] || "")
-        end
+      iterate_objects_by_name(options[:name], TestLab::Container) do |container|
+        container.import(options[:input])
       end
     end
   end

@@ -103,12 +103,13 @@ EOF
       def import(local_file)
         @ui.logger.debug { "Container Import: #{self.id} " }
 
+        local_file ||= File.expand_path("#{self.id}.sc")
+
         if !File.exists?(local_file)
           self.sc_url.nil? and raise ContainerError, "You failed to supply a filename or URL to import from!"
 
           @ui.stdout.puts(format_message("Downloading shipping container for #{self.id}...".green.bold))
 
-          local_file = File.expand_path("#{self.id}.sc")
           sc_download(local_file, self.sc_url, 16)
         end
 
@@ -212,7 +213,7 @@ EOF
 
           when Net::HTTPRedirection then
             location = response['location']
-            @ui.stdout.puts(format_message("REDIRECTED  #{url} --> #{location}".black))
+            @ui.stdout.puts(format_message("REDIRECT: #{url} --> #{location}".white))
             return sc_download(local_file, location, (count - 1))
 
           when Net::HTTPOK then
