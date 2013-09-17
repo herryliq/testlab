@@ -138,20 +138,6 @@ describe TestLab::Container do
       end
     end
 
-    describe "#generate_ip" do
-      it "should generate a random RFC compliant private IP address" do
-        subject.generate_ip.should_not be_nil
-        subject.generate_ip.should be_kind_of(String)
-      end
-    end
-
-    describe "#generate_mac" do
-      it "should generate a random RFC compliant private MAC address" do
-        subject.generate_mac.should_not be_nil
-        subject.generate_mac.should be_kind_of(String)
-      end
-    end
-
     describe "#create" do
       it "should create the container" do
         subject.node.stub(:alive?) { true }
