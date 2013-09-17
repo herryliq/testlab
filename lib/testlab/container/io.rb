@@ -8,7 +8,7 @@ class TestLab
 
       PBZIP2_MEMORY    = 1024
       READ_SIZE        = ((64 * 1024) - 1)
-      TRANSFER_MESSAGE = "transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%%   \r"
+      TRANSFER_MESSAGE = "transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%% (%01d:%02dT-%01d:%02d)   \r"
 
       def progress_callback(action, args)
         @total_size ||= 0
@@ -22,15 +22,24 @@ class TestLab
           end
 
         when :get, :put then
+          elapsed  = (Time.now - @start_time)
+
           current_size = (args[1] + args[2].length)
           current_size_mb = (current_size.to_f / (1024 * 1024).to_f)
 
-          elapsed = (Time.now - @start_time)
-          speed_mb = (current_size.to_f / elapsed.to_f) / (1024 * 1024).to_f
+          speed    = (current_size.to_f / elapsed.to_f)
+          speed_mb = speed / (1024 * 1024).to_f
+
+          minutes = elapsed.div(60)
+          seconds = elapsed.modulo(60)
+
+          estimated = ((@total_size.to_f - current_size).to_f / speed)
+          est_minutes = estimated.div(60)
+          est_seconds = estimated.modulo(60)
 
           percentage_done = ((current_size * 100) / @total_size)
 
-          @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(args[0].local), speed_mb, current_size_mb, @total_size_mb, percentage_done]))
+          @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(args[0].local), speed_mb, current_size_mb, @total_size_mb, percentage_done, minutes, seconds, est_minutes, est_seconds]))
 
         when :finish
           @ui.stdout.puts
@@ -242,9 +251,19 @@ EOF
 
               new_progress = (current_size * 100) / total_size
               unless new_progress == progress
-                elapsed = (Time.now - start_time)
-                speed_mb = (current_size.to_f / elapsed.to_f) / (1024 * 1024).to_f
-                @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(local_file), speed_mb, current_size_mb, total_size_mb, new_progress]))
+                elapsed  = (Time.now - start_time)
+
+                speed    = (current_size.to_f / elapsed.to_f)
+                speed_mb = speed / (1024 * 1024).to_f
+
+                minutes = elapsed.div(60)
+                seconds = elapsed.modulo(60)
+
+                estimated = ((total_size.to_f - current_size).to_f / speed)
+                est_minutes = estimated.div(60)
+                est_seconds = estimated.modulo(60)
+
+                @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(local_file), speed_mb, current_size_mb, total_size_mb, new_progress, minutes, seconds, est_minutes, est_seconds]))
               end
               progress = new_progress
             end
