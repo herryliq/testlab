@@ -10,6 +10,26 @@ class TestLab
       READ_SIZE        = ((64 * 1024) - 1)
       TRANSFER_MESSAGE = "transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%% (%01d:%02dT-%01d:%02d)   \r"
 
+      def transfer_message(filename, current_size, total_size, elapsed)
+        total_size_mb   = (total_size.to_f / (1024 * 1024).to_f)
+        current_size_mb = (current_size.to_f / (1024 * 1024).to_f)
+
+        speed    = (current_size.to_f / elapsed.to_f)
+        speed    = total_size.to_f if (speed == 0.0)
+        speed_mb = speed.to_f / (1024 * 1024).to_f
+
+        minutes = elapsed.div(60)
+        seconds = elapsed.modulo(60)
+
+        estimated   = ((total_size.to_f - current_size.to_f) / speed.to_f)
+        est_minutes = estimated.div(60)
+        est_seconds = estimated.modulo(60)
+
+        percentage_done = ((current_size * 100) / total_size)
+
+        @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(filename), speed_mb, current_size_mb, total_size_mb, percentage_done, minutes, seconds, est_minutes, est_seconds]))
+      end
+
       def progress_callback(action, args)
         @total_size ||= 0
 
@@ -18,28 +38,13 @@ class TestLab
           @start_time = Time.now
           if (@total_size == 0)
             @total_size = args[0].size
-            @total_size_mb = (@total_size.to_f / (1024 * 1024).to_f)
           end
 
         when :get, :put then
-          elapsed  = (Time.now - @start_time)
-
+          elapsed      = (Time.now - @start_time)
           current_size = (args[1] + args[2].length)
-          current_size_mb = (current_size.to_f / (1024 * 1024).to_f)
 
-          speed    = (current_size.to_f / elapsed.to_f)
-          speed_mb = speed / (1024 * 1024).to_f
-
-          minutes = elapsed.div(60)
-          seconds = elapsed.modulo(60)
-
-          estimated = ((@total_size.to_f - current_size).to_f / speed)
-          est_minutes = estimated.div(60)
-          est_seconds = estimated.modulo(60)
-
-          percentage_done = ((current_size * 100) / @total_size)
-
-          @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(args[0].local), speed_mb, current_size_mb, @total_size_mb, percentage_done, minutes, seconds, est_minutes, est_seconds]))
+          transfer_message(args[0].local, current_size, @total_size, elapsed)
 
         when :finish
           @ui.stdout.puts
@@ -93,7 +98,6 @@ EOF
         File.exists?(local_file) and FileUtils.rm_f(local_file)
 
         @total_size = self.node.ssh.sftp.stat!(remote_file).size
-        @total_size_mb = (@total_size.to_f / (1024 * 1024).to_f)
 
         self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
 
@@ -238,34 +242,16 @@ EOF
             tempfile.binmode
 
             current_size = 0
-            progress = 0
-            total_size = response['content-length'].to_i
-            total_size_mb = total_size.to_f / (1024 * 1024).to_f
+            total_size   = response['content-length'].to_i
+            start_time   = Time.now
 
-            start_time = Time.now
             response.read_body do |chunk|
               tempfile << chunk
 
+              elapsed  = (Time.now - start_time)
               current_size += chunk.size
-              current_size_mb = current_size.to_f / (1024 * 1024).to_f
 
-              new_progress = (current_size * 100) / total_size
-              unless new_progress == progress
-                elapsed  = (Time.now - start_time)
-
-                speed    = (current_size.to_f / elapsed.to_f)
-                speed_mb = speed / (1024 * 1024).to_f
-
-                minutes = elapsed.div(60)
-                seconds = elapsed.modulo(60)
-
-                estimated = ((total_size.to_f - current_size).to_f / speed)
-                est_minutes = estimated.div(60)
-                est_seconds = estimated.modulo(60)
-
-                @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(local_file), speed_mb, current_size_mb, total_size_mb, new_progress, minutes, seconds, est_minutes, est_seconds]))
-              end
-              progress = new_progress
+              transfer_message(local_file, current_size, total_size, elapsed)
             end
             @ui.stdout.puts
 
