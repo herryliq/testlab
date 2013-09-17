@@ -56,6 +56,8 @@ describe TestLab::Container do
         subject.node.stub(:dead?) { false }
         subject.node.stub(:state) { :running }
         subject.lxc.stub(:state) { :not_created }
+        subject.lxc.stub(:memory_usage) { 0 }
+        subject.lxc.stub(:cpu_usage) { 0 }
         subject.lxc_clone.stub(:exists?) { false }
 
         subject.status.should be_kind_of(Hash)
