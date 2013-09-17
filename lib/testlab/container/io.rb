@@ -51,6 +51,9 @@ class TestLab
         # ephemeral state.
         self.lxc_clone.exists? and raise ContainerError, 'You can not export ephemeral containers!'
 
+        # Run our callbacks
+        do_provisioner_callbacks(self, :export, @ui)
+
         # Ensure the container is stopped before we attempt to export it.
         self.down
 
@@ -148,6 +151,11 @@ du -sh #{self.lxc.container_root}
 rm -fv #{remote_file}
 EOF
         end
+
+        self.up
+
+        # Run our callbacks
+        do_provisioner_callbacks(self, :import, @ui)
 
         @ui.stdout.puts(format_message("Your shipping container is now imported and available for use!".green.bold))
 
