@@ -56,6 +56,8 @@ class TestLab
           :mode => self.mode,
           :fqdn => self.fqdn,
           :state => self.state,
+          :memory_usage => "#{self.memory_usage}M",
+          :cpu_time => "#{self.cpu_usage}s",
           :distro => self.distro,
           :release => self.release,
           :interfaces => interfaces,
@@ -63,6 +65,24 @@ class TestLab
           :node_id => self.node.id,
           :inherited => (self.inherit.nil? ? 'none' : self.inherit)
         }
+      end
+
+      # Container Memory Usage
+      def memory_usage
+        if self.node.dead?
+          0
+        else
+          self.lxc.memory_usage / (1024 * 1024)
+        end
+      end
+
+      # Container CPU Time
+      def cpu_usage
+        if self.node.dead?
+          0
+        else
+          self.lxc.cpu_usage
+        end
       end
 
       # Container State
