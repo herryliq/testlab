@@ -9,9 +9,10 @@ class TestLab
   class Provider
     PROXY_METHODS = %w(instance_id state user identity ip port create destroy up down reload status alive? dead? exists?).map(&:to_sym)
 
-    autoload :AWS, 'testlab/providers/aws'
-    autoload :Local, 'testlab/providers/local'
-    autoload :Vagrant, 'testlab/providers/vagrant'
+    autoload :AWS,       'testlab/providers/aws'
+    autoload :Local,     'testlab/providers/local'
+    autoload :OpenStack, 'testlab/providers/open_stack'
+    autoload :Vagrant,   'testlab/providers/vagrant'
 
     class << self
 
