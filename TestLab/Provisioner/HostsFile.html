@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: TestLab::Provisioner::Raring
+  Class: TestLab::Provisioner::HostsFile
   
     &mdash; Documentation by YARD 0.8.7.1
   
@@ -31,10 +31,10 @@
     <div id="header">
       <div id="menu">
   
-    <a href="../../_index.html">Index (R)</a> &raquo;
+    <a href="../../_index.html">Index (H)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../TestLab.html" title="TestLab (class)">TestLab</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Provisioner.html" title="TestLab::Provisioner (class)">Provisioner</a></span></span>
      &raquo; 
-    <span class="title">Raring</span>
+    <span class="title">HostsFile</span>
   
 
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Class: TestLab::Provisioner::Raring
+    <div id="content"><h1>Class: TestLab::Provisioner::HostsFile
   
   
   
@@ -78,7 +78,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">TestLab::Provisioner::Raring</li>
+            <li class="next">TestLab::Provisioner::HostsFile</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -94,7 +94,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/testlab/provisioners/raring.rb</dd>
+    <dd class="r2 last">lib/testlab/provisioners/hosts_file.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -102,7 +102,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Ubuntu Raring Provisioner Class</p>
+<p>HostsFile Provisioner Class</p>
 
 
   </div>
@@ -144,7 +144,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Raring) <strong>initialize</strong>(config = {}, ui = nil) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (HostsFile) <strong>initialize</strong>(config = {}, ui = nil) </a>
     
 
     
@@ -161,7 +161,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of Raring.</p>
+<p>A new instance of HostsFile.</p>
 </div></span>
   
 </li>
@@ -170,9 +170,11 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#on_node_provision-instance_method" title="#on_node_provision (instance method)">- (Boolean) <strong>on_node_provision</strong>(node) </a>
+      <a href="#on_container_callback-instance_method" title="#on_container_callback (instance method)">- (Object) <strong>on_container_callback</strong>(container) </a>
     
 
+    
+      (also: #on_container_create, #on_container_up, #on_container_provision, #on_container_deprovision, #on_container_down, #on_container_destroy)
     
   </span>
   
@@ -185,7 +187,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Ubuntu Raring: Node Provision.</p>
+<p>HostsFile: Container Provision.</p>
 </div></span>
   
 </li>
@@ -200,7 +202,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="TestLab::Provisioner::Raring (class)">Raring</a></span></tt>) <strong>initialize</strong>(config = {}, ui = nil) 
+    - (<tt><span class='object_link'><a href="" title="TestLab::Provisioner::HostsFile (class)">HostsFile</a></span></tt>) <strong>initialize</strong>(config = {}, ui = nil) 
   
 
   
@@ -209,7 +211,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of Raring</p>
+<p>Returns a new instance of HostsFile</p>
 
 
   </div>
@@ -229,17 +231,15 @@
 16
 17
 18
-19
-20</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/raring.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/hosts_file.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_ui'>ui</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span> <span class='op'>||</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
-  <span class='ivar'>@ui</span>     <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span>     <span class='op'>||</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
-
-  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:raring</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@config</span>  <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span> <span class='op'>||</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span>      <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span>     <span class='op'>||</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
+  <span class='ivar'>@command</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
 
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -256,62 +256,28 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="on_node_provision-instance_method">
+  <h3 class="signature first" id="on_container_callback-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>on_node_provision</strong>(node) 
+    - (<tt>Object</tt>) <strong>on_container_callback</strong>(container) 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_container_create-instance_method'>on_container_create</span>, <span id='on_container_up-instance_method'>on_container_up</span>, <span id='on_container_provision-instance_method'>on_container_provision</span>, <span id='on_container_deprovision-instance_method'>on_container_deprovision</span>, <span id='on_container_down-instance_method'>on_container_down</span>, <span id='on_container_destroy-instance_method'>on_container_destroy</span></span>
+    </span>
   
 
   
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Ubuntu Raring: Node Provision</p>
+<p>HostsFile: Container Provision</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>node</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Node.html" title="TestLab::Node (class)">TestLab::Node</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>The node which we want to provision.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>True if successful.</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -319,19 +285,21 @@
       <pre class="lines">
 
 
-27
-28
-29
-30
-31</pre>
+22
+23
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/raring.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/hosts_file.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_on_node_provision'>on_node_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ubuntu Raring Provisioner: Node </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_on_container_callback'>on_container_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_remove_hosts'>remove_hosts</span>
+  <span class='id identifier rubyid_add_hosts'>add_hosts</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_provision_template'>provision_template</span><span class='comma'>,</span> <span class='ivar'>@config</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
