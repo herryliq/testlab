@@ -11,6 +11,7 @@ class TestLab
     autoload :AptCacherNG,  'testlab/provisioners/apt_cacher_ng'
     autoload :Bind,         'testlab/provisioners/bind'
     autoload :Chef,         'testlab/provisioners/chef'
+    autoload :HostsFile,    'testlab/provisioners/hosts_file'
     autoload :NFSMount,     'testlab/provisioners/nfs_mount'
     autoload :Raring,       'testlab/provisioners/raring'
     autoload :Resolv,       'testlab/provisioners/resolv'
