@@ -1,3 +1,4 @@
+require 'zlib'
 require 'socket'
 
 require 'ztk'
