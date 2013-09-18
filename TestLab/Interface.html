@@ -160,7 +160,57 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>CIDR mask for the interface.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_ip-instance_method" title="#generate_ip (instance method)">- (String) <strong>generate_ip</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Generate IP address.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_mac-instance_method" title="#generate_mac (instance method)">- (String) <strong>generate_mac</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Generate MAC address.</p>
+</div></span>
   
 </li>
 
@@ -208,7 +258,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>IP address for the interface.</p>
+</div></span>
   
 </li>
 
@@ -230,7 +282,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Netmask for the interface.</p>
+</div></span>
   
 </li>
 
@@ -252,7 +306,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>PTR record for the interface.</p>
+</div></span>
   
 </li>
 
@@ -296,7 +352,11 @@
 24
 25
 26
-27</pre>
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 21</span>
@@ -306,6 +366,10 @@
 
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Loading Interface</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_address'>address</span> <span class='op'>||=</span> <span class='id identifier rubyid_generate_ip'>generate_ip</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_mac'>mac</span>     <span class='op'>||=</span> <span class='id identifier rubyid_generate_mac'>generate_mac</span>
+
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Interface '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>' Loaded</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -329,21 +393,216 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>CIDR mask for the interface</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cidr'>cidr</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_cidr'>cidr</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_address'>address</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_ip-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>generate_ip</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Generate IP address</p>
+
+<p>Generates an RFC compliant private IP address.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A random, private IP address in the 192.168.0.1/24 range.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_ip'>generate_ip</span>
+  <span class='id identifier rubyid_crc32'>crc32</span>  <span class='op'>=</span> <span class='const'>Zlib</span><span class='period'>.</span><span class='id identifier rubyid_crc32'>crc32</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_offset'>offset</span> <span class='op'>=</span> <span class='id identifier rubyid_crc32'>crc32</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='int'>255</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_octets'>octets</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='int'>192</span><span class='op'>..</span><span class='int'>192</span><span class='comma'>,</span>
+             <span class='int'>168</span><span class='op'>..</span><span class='int'>168</span><span class='comma'>,</span>
+             <span class='int'>0</span><span class='op'>..</span><span class='int'>254</span><span class='comma'>,</span>
+             <span class='int'>1</span><span class='op'>..</span><span class='int'>254</span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_ip'>ip</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>for</span> <span class='id identifier rubyid_x'>x</span> <span class='kw'>in</span> <span class='int'>1</span><span class='op'>..</span><span class='int'>4</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_ip'>ip</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_octets'>octets</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='id identifier rubyid_offset'>offset</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='id identifier rubyid_octets'>octets</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>end</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>/24</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_mac-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>generate_mac</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Generate MAC address</p>
+
+<p>Generates an RFC compliant private MAC address.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A random, private MAC address.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 79</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_mac'>generate_mac</span>
+  <span class='id identifier rubyid_crc32'>crc32</span>  <span class='op'>=</span> <span class='const'>Zlib</span><span class='period'>.</span><span class='id identifier rubyid_crc32'>crc32</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_offset'>offset</span> <span class='op'>=</span> <span class='id identifier rubyid_crc32'>crc32</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='int'>255</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_digits'>digits</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>5</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>e</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'> </span><span class='tstring_content'>1</span><span class='words_sep'> </span><span class='tstring_content'>2</span><span class='words_sep'> </span><span class='tstring_content'>3</span><span class='words_sep'> </span><span class='tstring_content'>4</span><span class='words_sep'> </span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'> </span><span class='tstring_content'>1</span><span class='words_sep'> </span><span class='tstring_content'>2</span><span class='words_sep'> </span><span class='tstring_content'>3</span><span class='words_sep'> </span><span class='tstring_content'>4</span><span class='words_sep'> </span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>3</span><span class='words_sep'> </span><span class='tstring_content'>4</span><span class='words_sep'> </span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'> </span><span class='tstring_content'>1</span><span class='words_sep'> </span><span class='tstring_content'>2</span><span class='words_sep'> </span><span class='tstring_content'>3</span><span class='words_sep'> </span><span class='tstring_content'>4</span><span class='words_sep'> </span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span><span class='comma'>,</span>
+             <span class='qwords_beg'>%w(</span><span class='tstring_content'>0</span><span class='words_sep'> </span><span class='tstring_content'>1</span><span class='words_sep'> </span><span class='tstring_content'>2</span><span class='words_sep'> </span><span class='tstring_content'>3</span><span class='words_sep'> </span><span class='tstring_content'>4</span><span class='words_sep'> </span><span class='tstring_content'>5</span><span class='words_sep'> </span><span class='tstring_content'>6</span><span class='words_sep'> </span><span class='tstring_content'>7</span><span class='words_sep'> </span><span class='tstring_content'>8</span><span class='words_sep'> </span><span class='tstring_content'>9</span><span class='words_sep'> </span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='words_sep'> </span><span class='tstring_content'>f</span><span class='words_sep'>)</span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mac'>mac</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>for</span> <span class='id identifier rubyid_x'>x</span> <span class='kw'>in</span> <span class='int'>1</span><span class='op'>..</span><span class='int'>12</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_mac'>mac</span> <span class='op'>+=</span> <span class='id identifier rubyid_digits'>digits</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_offset'>offset</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='id identifier rubyid_digits'>digits</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_mac'>mac</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_modulo'>modulo</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span> <span class='op'>!=</span> <span class='int'>12</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_mac'>mac</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -359,18 +618,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>IP address for the interface</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-29
-30
-31</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ip'>ip</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_address'>address</span><span class='rparen'>)</span>
@@ -389,18 +659,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Netmask for the interface</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_netmask'>netmask</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_netmask'>netmask</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_address'>address</span><span class='rparen'>)</span>
@@ -419,18 +700,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>PTR record for the interface</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-41
-42
-43</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/interface.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ptr'>ptr</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_ptr'>ptr</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_address'>address</span><span class='rparen'>)</span>
@@ -445,7 +737,7 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:06:54 2013 by
+  Generated on Tue Sep 17 20:48:00 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.1 (ruby-1.9.3).
 </div>
