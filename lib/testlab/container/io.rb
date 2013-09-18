@@ -168,7 +168,9 @@ EOF
         self.up
 
         # Run our callbacks
-        do_provisioner_callbacks(self, :import, @ui)
+        please_wait(:ui => @ui, :message => format_object_action(self, 'import', :cyan)) do
+          do_provisioner_callbacks(self, :import, @ui)
+        end
 
         @ui.stdout.puts(format_message("Your shipping container is now imported and available for use!".green.bold))
 
