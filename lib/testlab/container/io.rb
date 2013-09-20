@@ -117,9 +117,19 @@ EOF
       #
       # @return [Boolean] True if successful.
       def import(local_file)
-        @ui.logger.debug { "Container Import: #{self.id} " }
+        @ui.logger.debug { "Container Import: #{self.id}" }
 
         local_file ||= File.expand_path("#{self.id}.sc")
+
+        import_tempfile = Tempfile.new('import')
+        remote_filename = File.basename(import_tempfile.path.dup)
+        import_tempfile.close!
+
+        remote_file  = File.join("", "tmp", remote_filename)
+        local_file   = File.expand_path(local_file)
+        root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
+
+        @ui.logger.debug { "Local File: #{local_file.inspect}" }
 
         if !File.exists?(local_file)
           self.sc_url.nil? and raise ContainerError, "You failed to supply a filename or URL to import from!"
@@ -136,14 +146,6 @@ EOF
         self.destroy
 
         self.create
-
-        import_tempfile = Tempfile.new('import')
-        remote_filename = File.basename(import_tempfile.path.dup)
-        import_tempfile.close!
-
-        remote_file  = File.join("", "tmp", remote_filename)
-        local_file   = File.expand_path(local_file)
-        root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
         self.node.upload(local_file, remote_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
