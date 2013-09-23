@@ -82,13 +82,13 @@ describe TestLab::Container do
 
     describe "#ip" do
       it "should return the IP address of the containers primary interface" do
-        subject.ip.should == "192.168.0.254"
+        subject.ip.should == "100.64.0.10"
       end
     end
 
     describe "#cidr" do
       it "should return the CIDR of the containers primary interface" do
-        subject.cidr.should == 16
+        subject.cidr.should == 24
       end
     end
 
@@ -96,7 +96,7 @@ describe TestLab::Container do
       it "should return a BIND PTR record for the containers primary interface" do
         subject.ptr.should be_kind_of(String)
         subject.ptr.should_not be_empty
-        subject.ptr.should == "254.0"
+        subject.ptr.should == "10"
       end
     end
 
@@ -178,31 +178,20 @@ describe TestLab::Container do
     describe "#up" do
       it "should up the container" do
         subject.node.stub(:state) { :running }
-        subject.lxc.stub(:state) { :stopped }
+
+        subject.lxc.config.stub(:save) { true }
+        subject.lxc.stub(:state) { :running }
+        subject.lxc.stub(:start) { true }
 
         subject.lxc_clone.stub(:exists?) { false }
 
-        subject.lxc.config.stub(:save) { true }
         subject.node.stub(:arch) { "x86_64" }
-
-        ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
-
-
-        # subject.node.stub(:dead?) { false }
-        # subject.node.stub(:alive?) { true }
-        # subject.node.stub(:state) { :running }
         subject.node.stub(:exec) { }
 
-        # subject.lxc.stub(:exists?) { true }
-        # subject.lxc.stub(:start) { true }
-        # subject.lxc.stub(:wait) { true }
-        # subject.lxc.stub(:state) { :running }
-
-
         subject.stub(:exec) { }
-        # subject.stub(:configure) { }
         subject.stub(:provisioners) { Array.new }
 
+        ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
 
         subject.up
       end

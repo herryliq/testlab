@@ -32,7 +32,7 @@ node 'vagrant' do
 
   network 'testnet' do
     provisioners  [TestLab::Provisioner::Route]
-    address       '192.168.255.254/16'
+    address       '100.64.0.254/24'
     bridge        :br0
   end
 
@@ -50,14 +50,14 @@ node 'vagrant' do
     interface do
       name       :eth0
       network_id 'testnet'
-      address    '192.168.0.254/16'
+      address    '100.64.0.10/24'
       primary    true
     end
 
     interface do
       name       :eth1
       network_id 'testnet'
-      address    '192.168.0.253/16'
+      address    '100.64.0.20/24'
     end
   end
 
@@ -75,7 +75,7 @@ node 'vagrant' do
     interface do
       name       :eth0
       network_id 'testnet'
-      address    '192.168.0.200/16'
+      address    '100.64.0.30/24'
     end
   end
 
@@ -99,7 +99,7 @@ node 'vagrant' do
     interface do
       name       :eth0
       network_id 'testnet'
-      address    '192.168.0.200/16'
+      address    '100.64.0.40/24'
     end
   end
 
