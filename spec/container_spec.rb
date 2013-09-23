@@ -177,6 +177,8 @@ describe TestLab::Container do
 
     describe "#up" do
       it "should up the container" do
+        subject.node.stub(:dead?) { false }
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
 
         subject.lxc.config.stub(:save) { true }

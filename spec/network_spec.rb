@@ -42,7 +42,7 @@ describe TestLab::Network do
       it "should return the ips for all defined containers" do
         subject.class.ips.should be_kind_of(Array)
         subject.class.ips.should_not be_empty
-        subject.class.ips.should == ["192.168.255.254"]
+        subject.class.ips.should == ["100.64.0.254"]
       end
     end
 
@@ -50,7 +50,7 @@ describe TestLab::Network do
       it "should return a BIND PTR record for the networks bridge interface" do
         subject.ptr.should be_kind_of(String)
         subject.ptr.should_not be_empty
-        subject.ptr.should == "254.255"
+        subject.ptr.should == "254"
       end
     end
 
@@ -58,37 +58,37 @@ describe TestLab::Network do
       it "should return the ARPA network calculated from the cidr address" do
         subject.arpa.should be_kind_of(String)
         subject.arpa.should_not be_empty
-        subject.arpa.should == "168.192.in-addr.arpa"
+        subject.arpa.should == "0.64.100.in-addr.arpa"
       end
     end
 
     describe "#ip" do
       it "should return the IP address of the networks bridge interface" do
-        subject.ip.should == "192.168.255.254"
+        subject.ip.should == "100.64.0.254"
       end
     end
 
     describe "#cidr" do
       it "should return the CIDR of the networks bridge interface" do
-        subject.cidr.should == 16
+        subject.cidr.should == 24
       end
     end
 
     describe "#netmask" do
       it "should return the netmask of the networks bridge interface" do
-        subject.netmask.should == "255.255.0.0"
+        subject.netmask.should == "255.255.255.0"
       end
     end
 
     describe "#network" do
       it "should return the network address of the networks bridge interface" do
-        subject.network.should == "192.168.0.0"
+        subject.network.should == "100.64.0.0"
       end
     end
 
     describe "#broadcast" do
       it "should return the broadcast address of the networks bridge interface" do
-        subject.broadcast.should == "192.168.255.255"
+        subject.broadcast.should == "100.64.0.255"
       end
     end
 
