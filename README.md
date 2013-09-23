@@ -10,25 +10,31 @@ I attempt to keep TestLab in line with Semantic Versioning when incrementing ver
 
 * http://semver.org/
 
-# TestLab
+# What is TestLab?
 
-A toolkit for building virtual computer labs.
+Simply put; a toolkit for building virtual computer labs.
 
-What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then build and demolish this virtual infrastructure as you have dictated in the `Labfile`.
+TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then build and demolish this virtual infrastructure as you have dictated in the `Labfile`.
+
+TestLab also allows you to template objects, meaning less congestion in your `Labfile`.
 
 TestLab can also import and export containers, making it easy to share them.  TestLab supports the latest LXC versions, allowing for ephemeral cloning operations, furthering your ability to iterate quickly.  TestLab can be used for many other applications, including infrastructure unit and integration testing, allowing for vastly more complex configurations and more effective resource sharing than traditional VM solutions.
 
 TestLab can be run via the command-line or can be interfaced with directly via Ruby code.
 
+# What is a Labfile?
+
+A `Labfile` defines what your lab will look like using the TestLab DSL.
+
 # Using TestLab Interactively
 
-    $ tl
+    $ tl help
     NAME
         tl - TestLab - A toolkit for building virtual computer labs
 
         TestLab is based around the abstraction of three main components: nodes, networks and containers. Nodes represent a system
-        (bare-metal or virtualized) that hosts containers. Networks repesent a Linux bridge on a node. Containers simply represent a
-        Linux Container (LXC) running on its parent node which is typically connected to a network on the node.
+        (bare-metal or virtualized) that hosts containers. Networks represent a Linux bridge on a node. Containers simply represent a Linux
+        Container (LXC) running on its parent node which is typically connected to a network on the node.
 
         In addition to the core component abstractions, TestLab shares a series of core tasks that are universal across all of the
         components. These are create and destroy, up and down, provision and deprovision. Several other core tasks, such as build,
@@ -36,11 +42,11 @@ TestLab can be run via the command-line or can be interfaced with directly via R
 
         You can execute almost all of the tasks against the entire lab, or individual lab components.
 
-        When building a lab from scratch, you will typically run 'tl build'. To breakdown your lab, destroying all the components, you
-        will typically run 'tl demolish'. If you want to re-build the lab you can run 'tl recycle' which will run the demolish task
-        followed by the build task against all the lab components. If you want to power-cycle the entire lab you can run 'tl bounce'
-        which will run the down task followed by the up task against all the lab components. Again these tasks can be run against the
-        lab as a whole or individual components.
+        When building a lab from scratch, you will typically run 'tl build'. To breakdown your lab, destroying all the components, you will
+        typically run 'tl demolish'. If you want to re-build the lab you can run 'tl recycle' which will run the demolish task followed by
+        the build task against all the lab components. If you want to power-cycle the entire lab you can run 'tl bounce' which will run the
+        down task followed by the up task against all the lab components. Again these tasks can be run against the lab as a whole or
+        individual components.
 
         You can view the status of the entire lab using 'tl status', or view the status of individual components using 'tl node status',
         'tl network status' or 'tl container status'.
@@ -52,11 +58,11 @@ TestLab can be run via the command-line or can be interfaced with directly via R
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        1.1.0
+        1.9.2
 
     GLOBAL OPTIONS
         -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
-        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/chef-repo)
+        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/Dropbox/code/lookout/chef-repo)
         -c, --config=path/to/directory - Path to Configuration directory: ${REPO}/.testlab-$(hostname -s) (default: none)
         --version                      - Display the program version
         -v, --[no-]verbose             - Show verbose output
@@ -269,6 +275,10 @@ You can access all the nodes for example:
     @testlab.nodes
 
 For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
+
+You can also check out the `tl-knife` command-line binary for another example of using TestLab in a programmatic fashion:
+
+* https://github.com/zpatten/testlab/blob/master/bin/tl-knife
 
 # REQUIREMENTS
 

@@ -31,7 +31,7 @@ program_desc %(TestLab - A toolkit for building virtual computer labs)
 program_long_desc <<-EOF
 TestLab is based around the abstraction of three main components: nodes,
 networks and containers.  Nodes represent a system (bare-metal or virtualized)
-that hosts containers.  Networks repesent a Linux bridge on a node.  Containers
+that hosts containers.  Networks represent a Linux bridge on a node.  Containers
 simply represent a Linux Container (LXC) running on its parent node which is
 typically connected to a network on the node.
 
