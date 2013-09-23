@@ -184,11 +184,13 @@ describe TestLab::Container do
         subject.lxc.config.stub(:save) { true }
         subject.lxc.stub(:state) { :running }
         subject.lxc.stub(:start) { true }
+        subject.lxc.stub(:attach) { "" }
+        subject.lxc.stub(:exec) { OpenStruct.new(:exit_code => 0) }
 
         subject.lxc_clone.stub(:exists?) { false }
 
         subject.node.stub(:arch) { "x86_64" }
-        subject.node.stub(:exec) { }
+        subject.node.stub(:exec) { OpenStruct.new(:exit_code => 1) }
 
         subject.stub(:exec) { }
         subject.stub(:provisioners) { Array.new }
