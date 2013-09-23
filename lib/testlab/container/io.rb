@@ -76,7 +76,7 @@ class TestLab
         export_tempfile.close!
 
         remote_file  = File.join("", "tmp", remote_filename)
-        local_file ||= File.join(Dir.pwd, File.basename(remote_file))
+        local_file ||= File.join(Dir.pwd, "#{self.id}.sc")
         local_file   = File.expand_path(local_file)
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
@@ -119,13 +119,12 @@ EOF
       def import(local_file)
         @ui.logger.debug { "Container Import: #{self.id}" }
 
-        local_file ||= File.expand_path("#{self.id}.sc")
-
         import_tempfile = Tempfile.new('import')
         remote_filename = File.basename(import_tempfile.path.dup)
         import_tempfile.close!
 
         remote_file  = File.join("", "tmp", remote_filename)
+        local_file ||= File.join(Dir.pwd, "#{self.id}.sc")
         local_file   = File.expand_path(local_file)
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
