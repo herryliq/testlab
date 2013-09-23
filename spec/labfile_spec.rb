@@ -17,28 +17,41 @@
 #   limitations under the License.
 #
 ################################################################################
-require 'coveralls'
-Coveralls.wear!
-################################################################################
-require 'testlab'
+require "spec_helper"
 
-REPO_DIR     = File.join(File.dirname(__FILE__), 'support')
-LABFILE_PATH = File.join(REPO_DIR, 'Labfile')
+describe TestLab::Labfile do
 
-RSpec.configure do |config|
-  config.before(:each) do
-    TestLab::Node.purge
-    TestLab::Container.purge
-    TestLab::Network.purge
-    TestLab::Interface.purge
-    TestLab::User.purge
+  subject {
+    @ui = ui_helper
+    @testlab = testlab_helper(:ui => @ui)
+    @testlab.boot
+    @testlab.labfile
+  }
+
+  describe "class" do
+
+    it "should be an instance of TestLab::Labfile" do
+      subject.should be_an_instance_of TestLab::Labfile
+    end
+
   end
-end
 
-def ui_helper(options={})
-  ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
-end
+  describe "methods" do
 
-def testlab_helper(options={})
-  TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => options[:ui])
+    describe "config_dir" do
+      it "should return the configuration directory for the lab" do
+        subject.config_dir.should be_kind_of(String)
+        subject.config_dir.should_not be_empty
+      end
+    end
+
+    describe "repo_dir" do
+      it "should return the configuration directory for the lab" do
+        subject.repo_dir.should be_kind_of(String)
+        subject.repo_dir.should_not be_empty
+      end
+    end
+
+  end
+
 end

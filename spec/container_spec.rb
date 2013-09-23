@@ -177,24 +177,32 @@ describe TestLab::Container do
 
     describe "#up" do
       it "should up the container" do
-        subject.node.stub(:dead?) { false }
-        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.node.stub(:arch) { "x86_64" }
-        subject.node.stub(:exec) { }
-
-        subject.lxc.stub(:exists?) { true }
-        subject.lxc.stub(:start) { true }
-        subject.lxc.stub(:wait) { true }
-        subject.lxc.stub(:state) { :running }
+        subject.lxc.stub(:state) { :stopped }
 
         subject.lxc_clone.stub(:exists?) { false }
 
-        subject.stub(:exec) { }
-        subject.stub(:configure) { }
-        subject.stub(:provisioners) { Array.new }
+        subject.lxc.config.stub(:save) { true }
+        subject.node.stub(:arch) { "x86_64" }
 
         ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
+
+
+        # subject.node.stub(:dead?) { false }
+        # subject.node.stub(:alive?) { true }
+        # subject.node.stub(:state) { :running }
+        subject.node.stub(:exec) { }
+
+        # subject.lxc.stub(:exists?) { true }
+        # subject.lxc.stub(:start) { true }
+        # subject.lxc.stub(:wait) { true }
+        # subject.lxc.stub(:state) { :running }
+
+
+        subject.stub(:exec) { }
+        # subject.stub(:configure) { }
+        subject.stub(:provisioners) { Array.new }
+
 
         subject.up
       end
