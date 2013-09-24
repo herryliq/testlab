@@ -38,67 +38,123 @@ describe TestLab do
 
   describe "methods" do
 
-    describe "provision" do
-      it "should provision the test lab" do
-        subject.stub(:dead?) { false }
-        subject.nodes.each do |node|
-          node.stub(:provision) { true }
-        end
-        subject.containers.each do |container|
-          container.stub(:provision) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:provision) { true }
-        end
-        subject.provision
+    before(:each) do
+      TestLab::Node.any_instance.stub(:state) { :running }
+    end
+
+    describe "#config" do
+      it "should return the configuration hash for the lab" do
+        subject.config.should be_kind_of Hash
       end
     end
 
-    describe "deprovision" do
-      it "should deprovision the test lab" do
-        subject.stub(:dead?) { false }
-        subject.nodes.each do |node|
-          node.stub(:deprovision) { true }
-        end
-        subject.containers.each do |container|
-          container.stub(:deprovision) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:deprovision) { true }
-        end
-        subject.deprovision
+    describe "#alive?" do
+      it "should return true if the lab is alive" do
+        subject.alive?.should == true
       end
     end
 
-    describe "up" do
-      it "should online the test lab" do
-        subject.stub(:dead?) { false }
-        subject.nodes.each do |node|
-          node.stub(:up) { true }
-        end
-        subject.containers.each do |container|
-          container.stub(:up) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:up) { true }
-        end
+    describe "#dead?" do
+      it "should return false if the lab is alive" do
+        subject.dead?.should == false
+      end
+    end
+
+    describe "#create" do
+      it "should online the lab" do
+        TestLab::Node.any_instance.stub(:create) { true }
+        TestLab::Container.any_instance.stub(:create) { true }
+        TestLab::Network.any_instance.stub(:create) { true }
+
+        subject.create
+      end
+    end
+
+    describe "#destroy" do
+      it "should offline the lab" do
+        TestLab::Node.any_instance.stub(:destroy) { true }
+        TestLab::Container.any_instance.stub(:destroy) { true }
+        TestLab::Network.any_instance.stub(:destroy) { true }
+
+        subject.destroy
+      end
+    end
+
+    describe "#up" do
+      it "should online the lab" do
+        TestLab::Node.any_instance.stub(:up) { true }
+        TestLab::Container.any_instance.stub(:up) { true }
+        TestLab::Network.any_instance.stub(:up) { true }
+
         subject.up
       end
     end
 
-    describe "down" do
-      it "should offline the test lab" do
-        subject.stub(:dead?) { false }
-        subject.nodes.each do |node|
-          node.stub(:down) { true }
-        end
-        subject.containers.each do |container|
-          container.stub(:down) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:down) { true }
-        end
+    describe "#down" do
+      it "should offline the lab" do
+        TestLab::Node.any_instance.stub(:down) { true }
+        TestLab::Container.any_instance.stub(:down) { true }
+        TestLab::Network.any_instance.stub(:down) { true }
+
         subject.down
+      end
+    end
+
+    describe "#provision" do
+      it "should provision the lab" do
+        TestLab::Node.any_instance.stub(:provision) { true }
+        TestLab::Container.any_instance.stub(:provision) { true }
+        TestLab::Network.any_instance.stub(:provision) { true }
+
+        subject.provision
+      end
+    end
+
+    describe "#deprovision" do
+      it "should deprovision the lab" do
+        TestLab::Node.any_instance.stub(:deprovision) { true }
+        TestLab::Container.any_instance.stub(:deprovision) { true }
+        TestLab::Network.any_instance.stub(:deprovision) { true }
+
+        subject.deprovision
+      end
+    end
+
+    describe "#build" do
+      it "should build the lab" do
+        TestLab::Node.any_instance.stub(:build) { true }
+        TestLab::Container.any_instance.stub(:build) { true }
+        TestLab::Network.any_instance.stub(:build) { true }
+
+        subject.build
+      end
+    end
+
+    describe "#demolish" do
+      it "should demolish the lab" do
+        TestLab::Node.any_instance.stub(:demolish) { true }
+        TestLab::Container.any_instance.stub(:demolish) { true }
+        TestLab::Network.any_instance.stub(:demolish) { true }
+
+        subject.demolish
+      end
+    end
+
+    describe "#bounce" do
+      it "should bounce the lab" do
+        subject.stub(:down) { true }
+        subject.stub(:up) { true }
+
+        subject.bounce
+      end
+    end
+
+    describe "#recycle" do
+      it "should recycle the lab" do
+        subject.stub(:demolish) { true }
+        subject.stub(:build) { true }
+
+        subject.recycle
       end
     end
 
