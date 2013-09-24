@@ -82,6 +82,18 @@ describe TestLab::Container do
           end
         end
 
+        describe "#ephemeral" do
+          it "should attempt to convert to an ephemeral container" do
+            subject.ephemeral
+          end
+        end
+
+        describe "#persistent" do
+          it "should attempt to convert to an persistent container" do
+            subject.persistent
+          end
+        end
+
         describe "#up" do
           it "should up the container" do
             subject.node.stub(:dead?) { false }

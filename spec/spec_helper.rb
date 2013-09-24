@@ -42,6 +42,8 @@ RSpec.configure do |config|
     ZTK::Command.any_instance.stub(:exec) { OpenStruct.new(:output => "", :exit_code => 0) }
 
     ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
+
+    LXC::Runner::SSH.any_instance.stub(:exec) { "" }
   end
 end
 
