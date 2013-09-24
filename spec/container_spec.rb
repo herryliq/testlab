@@ -52,26 +52,56 @@ describe TestLab::Container do
 
   describe "methods" do
 
-    describe "#status" do
-      it "should return a hash of status information about the container" do
-        subject.node.stub(:dead?) { false }
-        subject.node.stub(:state) { :running }
-        subject.lxc.stub(:state) { :not_created }
-        subject.lxc.stub(:memory_usage) { 0 }
-        subject.lxc.stub(:cpu_usage) { 0 }
-        subject.lxc_clone.stub(:exists?) { false }
+    { 'ephemeral' => true, 'persistent' => false }.each do |tag, mode|
+      context tag do
 
-        subject.status.should be_kind_of(Hash)
-        subject.status.should_not be_empty
-      end
-    end
+        before(:each) do
+          subject.lxc_clone.stub(:exists?) { mode }
+        end
 
-    describe "#state" do
-      it "should return the state of the container" do
-        subject.node.stub(:dead?) { false }
-        subject.lxc.stub(:state) { :not_created }
-        subject.lxc_clone.stub(:exists?) { false }
-        subject.state.should == :not_created
+        describe "#status" do
+          it "should return a hash of status information about the container" do
+            subject.node.stub(:dead?) { false }
+            subject.node.stub(:state) { :running }
+
+            subject.lxc.stub(:state) { :not_created }
+            subject.lxc.stub(:memory_usage) { 0 }
+            subject.lxc.stub(:cpu_usage) { 0 }
+
+            subject.status.should be_kind_of(Hash)
+            subject.status.should_not be_empty
+          end
+        end
+
+        describe "#state" do
+          it "should return the state of the container" do
+            subject.node.stub(:dead?) { false }
+            subject.node.stub(:state) { :running }
+
+            subject.state.should == :not_created
+          end
+        end
+
+        describe "#up" do
+          it "should up the container" do
+            subject.node.stub(:dead?) { false }
+            subject.node.stub(:state) { :running }
+
+            subject.lxc.config.stub(:save) { true }
+            subject.lxc.stub(:state) { :running }
+            subject.lxc.stub(:start) { true }
+            subject.lxc.stub(:attach) { "" }
+            subject.lxc.stub(:exec) { OpenStruct.new(:exit_code => 0) }
+
+            subject.node.stub(:arch) { "x86_64" }
+            subject.node.stub(:exec) { OpenStruct.new(:exit_code => 1) }
+
+            subject.stub(:provisioners) { Array.new }
+
+            subject.up
+          end
+        end
+
       end
     end
 
@@ -189,32 +219,6 @@ describe TestLab::Container do
         subject.stub(:provisioners) { Array.new }
 
         subject.destroy
-      end
-    end
-
-    describe "#up" do
-      it "should up the container" do
-        subject.node.stub(:dead?) { false }
-        subject.node.stub(:alive?) { true }
-        subject.node.stub(:state) { :running }
-
-        subject.lxc.config.stub(:save) { true }
-        subject.lxc.stub(:state) { :running }
-        subject.lxc.stub(:start) { true }
-        subject.lxc.stub(:attach) { "" }
-        subject.lxc.stub(:exec) { OpenStruct.new(:exit_code => 0) }
-
-        subject.lxc_clone.stub(:exists?) { false }
-
-        subject.node.stub(:arch) { "x86_64" }
-        subject.node.stub(:exec) { OpenStruct.new(:exit_code => 1) }
-
-        subject.stub(:exec) { }
-        subject.stub(:provisioners) { Array.new }
-
-        ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
-
-        subject.up
       end
     end
 
