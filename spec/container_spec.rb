@@ -114,6 +114,14 @@ describe TestLab::Container do
       end
     end
 
+    describe "#console" do
+      it "should attempt to open an LXC console via a node SSH console" do
+        subject.node.ssh.stub(:console)
+
+        subject.console
+      end
+    end
+
     describe "#exists?" do
       it "should return false for a non-existant container" do
         subject.lxc.stub(:exists?) { false }
