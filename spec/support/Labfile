@@ -79,12 +79,7 @@ node 'vagrant' do
       TestLab::Provisioner::Apt
     ]
 
-    user do
-      username "deployer"
-      password "deployer"
-      uid      2600
-      gid      2600
-    end
+    # Use Default User Creation Here
 
     interface do
       name       :eth0

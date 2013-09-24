@@ -228,6 +228,44 @@ describe TestLab::Container do
       end
     end
 
+    describe "#build" do
+      it "should build the container" do
+        subject.stub(:create) { true }
+        subject.stub(:up) { true }
+        subject.stub(:provision) { true }
+
+        subject.build.should == true
+      end
+    end
+
+    describe "#demolish" do
+      it "should demolish the container" do
+        subject.stub(:destroy) { true }
+        subject.stub(:down) { true }
+        subject.stub(:deprovision) { true }
+
+        subject.demolish.should == true
+      end
+    end
+
+    describe "#recycle" do
+      it "should recycle the container" do
+        subject.stub(:demolish) { true }
+        subject.stub(:build) { true }
+
+        subject.recycle.should == true
+      end
+    end
+
+    describe "#bounce" do
+      it "should bounce the container" do
+        subject.stub(:down) { true }
+        subject.stub(:up) { true }
+
+        subject.bounce.should == true
+      end
+    end
+
     describe "#provision" do
       context "with no provisioner" do
         it "should provision the container" do
