@@ -48,10 +48,12 @@ node 'vagrant' do
     ]
 
     user do
-      username "deployer"
-      password "deployer"
-      uid      2600
-      gid      2600
+      username         "deployer"
+      password         "deployer"
+      uid              2600
+      gid              2600
+      public_identity  [File.join(Dir.pwd, 'test')]
+      identity         [File.join(Dir.pwd, 'test.pub')]
     end
 
     interface do
