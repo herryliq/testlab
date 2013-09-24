@@ -187,4 +187,32 @@ node 'vagrant' do
     end
   end
 
+  # ROUTE PROVISIONER
+  container "server-route" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::Route]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.80/24'
+    end
+  end
+
+  # NFSMOUNT PROVISIONER
+  container "server-nfsmount" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::NFSMount]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.80/24'
+    end
+  end
+
 end

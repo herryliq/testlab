@@ -24,11 +24,13 @@ include TestLab::Utility::Misc
 [
   TestLab::Provisioner::Apt,
   TestLab::Provisioner::AptCacherNG,
-  TestLab::Provisioner::Resolv,
   TestLab::Provisioner::Bind,
+  TestLab::Provisioner::HostsFile,
+  TestLab::Provisioner::NFSMount,
   TestLab::Provisioner::Raring,
-  TestLab::Provisioner::Shell,
-  TestLab::Provisioner::HostsFile
+  TestLab::Provisioner::Resolv,
+  TestLab::Provisioner::Route,
+  TestLab::Provisioner::Shell
 ].each do |klass|
 
   describe klass do
