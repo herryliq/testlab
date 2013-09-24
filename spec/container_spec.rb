@@ -122,6 +122,14 @@ describe TestLab::Container do
       end
     end
 
+    describe "#ssh_config" do
+      it "should return a text blob with our SSH configuration" do
+        subject.ssh_config.should_not be_nil
+        subject.ssh_config.should_not be_empty
+        subject.ssh_config.should be_kind_of(String)
+      end
+    end
+
     describe "#exists?" do
       it "should return false for a non-existant container" do
         subject.lxc.stub(:exists?) { false }
