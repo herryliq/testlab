@@ -35,17 +35,45 @@ describe TestLab::Interface do
       subject.should be_an_instance_of TestLab::Interface
     end
 
-    describe "methods" do
-
-    end
-
   end
 
   describe "methods" do
 
+    describe "#ip" do
+      it "should return the IP address of the interface" do
+        subject.ip.should_not be_nil
+        subject.ip.should_not be_empty
+        subject.ip.should be_kind_of(String)
+      end
+    end
+
+    describe "#netmask" do
+      it "should return the netmask address of the interface" do
+        subject.netmask.should_not be_nil
+        subject.netmask.should_not be_empty
+        subject.netmask.should be_kind_of(String)
+      end
+    end
+
+    describe "#ptr" do
+      it "should return the PTR address of the interface" do
+        subject.ptr.should_not be_nil
+        subject.ptr.should_not be_empty
+        subject.ptr.should be_kind_of(String)
+      end
+    end
+
+    describe "#cidr" do
+      it "should return the CIDR mask of the interface" do
+        subject.cidr.should_not be_nil
+        subject.cidr.should be_kind_of(Integer)
+      end
+    end
+
     describe "#generate_ip" do
       it "should generate a random RFC compliant private IP address" do
         subject.generate_ip.should_not be_nil
+        subject.generate_ip.should_not be_empty
         subject.generate_ip.should be_kind_of(String)
       end
     end
@@ -53,6 +81,7 @@ describe TestLab::Interface do
     describe "#generate_mac" do
       it "should generate a random RFC compliant private MAC address" do
         subject.generate_mac.should_not be_nil
+        subject.generate_mac.should_not be_empty
         subject.generate_mac.should be_kind_of(String)
       end
     end
