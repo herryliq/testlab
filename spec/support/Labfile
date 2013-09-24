@@ -93,24 +93,8 @@ node 'vagrant' do
     distro        "ubuntu"
     release       "precise"
 
-    provisioners  [
-      TestLab::Provisioner::Resolv,
-      TestLab::Provisioner::AptCacherNG,
-      TestLab::Provisioner::Apt,
-      TestLab::Provisioner::Shell
-    ]
-
-    config        ({
-      :shell => "/bin/bash",
-      :script => shell_provision_script
-    })
-
-    user do
-      username "deployer"
-      password "deployer"
-      uid      2600
-      gid      2600
-    end
+    provisioners  [TestLab::Provisioner::Shell]
+    config ({:script => "echo 'hello world!'"})
 
     interface do
       name       :eth0
@@ -133,5 +117,74 @@ node 'vagrant' do
     end
   end
 
+  # RESOLV PROVISIONER
+  container "server-resolv" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::Resolv]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.60/24'
+    end
+  end
+
+  # RARING PROVISIONER
+  container "server-raring" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::Raring]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.70/24'
+    end
+  end
+
+  # HOSTSFILE PROVISIONER
+  container "server-hostsfile" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::HostsFile]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.80/24'
+    end
+  end
+
+  # APT PROVISIONER
+  container "server-apt" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::Apt]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.80/24'
+    end
+  end
+
+  # APTCACHERNG PROVISIONER
+  container "server-aptcacherng" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners  [TestLab::Provisioner::AptCacherNG]
+
+    interface do
+      name       :eth0
+      network_id 'testnet'
+      address    '100.64.0.80/24'
+    end
+  end
 
 end
