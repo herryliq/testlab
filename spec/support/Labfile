@@ -208,6 +208,8 @@ node 'vagrant' do
 
     provisioners  [TestLab::Provisioner::NFSMount]
 
+    config ({:nfs_mounts => %w( 127.0.0.1 /share /local)})
+
     interface do
       name       :eth0
       network_id 'testnet'
