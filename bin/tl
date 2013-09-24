@@ -22,7 +22,6 @@ require 'gli'
 require 'testlab'
 
 include GLI::App
-include TestLab::Utility::GLI
 include TestLab::Utility::Misc
 
 version TestLab::VERSION
@@ -67,7 +66,13 @@ default_command :help
 
 preserve_argv true
 
-commands_from 'commands'
+require 'commands/support'
+require 'commands/testlab'
+require 'commands/node'
+require 'commands/network'
+require 'commands/container'
+
+# commands_from 'commands'
 
 desc 'Show verbose output'
 default_value false
