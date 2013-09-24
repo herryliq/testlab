@@ -46,9 +46,9 @@ RSpec.configure do |config|
 end
 
 def ui_helper(options={})
-  ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
+  ZTK::UI.new({:stdout => StringIO.new, :stderr => StringIO.new}.merge(options))
 end
 
 def testlab_helper(options={})
-  TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => options[:ui])
+  TestLab.new({:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH}.merge(options))
 end

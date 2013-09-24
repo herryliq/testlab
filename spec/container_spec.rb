@@ -23,8 +23,8 @@ describe TestLab::Container do
 
   subject {
     @logger = ZTK::Logger.new('/tmp/test.log')
-    @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :logger => @logger)
-    @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
+    @ui = ui_helper(:logger => @logger)
+    @testlab = testlab_helper(:ui => @ui)
     @testlab.boot
 
     TestLab::Container.first('master')
@@ -85,6 +85,7 @@ describe TestLab::Container do
         describe "#up" do
           it "should up the container" do
             subject.node.stub(:dead?) { false }
+            subject.node.stub(:alive?) { true }
             subject.node.stub(:state) { :running }
 
             subject.lxc.config.stub(:save) { true }
