@@ -11,5 +11,9 @@ before_install: sudo ./spec/support/install-lxc.sh
 
 notifications:
   email:
-    - testlab-ci@lookout.com
-  irc: "irc.freenode.net#jovelabs"
+    recipients:
+      - testlab-ci@lookout.com
+    on_success: always
+    on_failure: always
+  irc:
+    - "irc.freenode.net#jovelabs"
