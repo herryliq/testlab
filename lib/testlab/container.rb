@@ -82,7 +82,6 @@ class TestLab
     autoload :Interface,     'testlab/container/interface'
     autoload :IO,            'testlab/container/io'
     autoload :LXC,           'testlab/container/lxc'
-    autoload :MethodMissing, 'testlab/container/method_missing'
     autoload :Provision,     'testlab/container/provision'
     autoload :SSH,           'testlab/container/ssh'
     autoload :Status,        'testlab/container/status'
@@ -95,7 +94,6 @@ class TestLab
     include TestLab::Container::Interface
     include TestLab::Container::IO
     include TestLab::Container::LXC
-    include TestLab::Container::MethodMissing
     include TestLab::Container::Provision
     include TestLab::Container::SSH
     include TestLab::Container::Status
