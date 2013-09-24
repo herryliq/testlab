@@ -12,8 +12,10 @@ EOF
 REPO = File.dirname(__FILE__)
 
 TestLab::Container.new "simple-template" do
-  distro   "ubuntu"
-  release  "precise"
+  distro    "ubuntu"
+  release   "precise"
+
+  template  true
 end
 
 node 'vagrant' do
@@ -41,8 +43,7 @@ node 'vagrant' do
     bridge        :br0
   end
 
-  # DUAL NICs
-  container "server-dual-nic" do
+  container "master" do
     distro        "ubuntu"
     release       "precise"
 

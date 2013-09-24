@@ -26,7 +26,8 @@ describe TestLab::Container do
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :logger => @logger)
     @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
     @testlab.boot
-    @testlab.containers.first
+
+    TestLab::Container.first('master')
   }
 
   describe "class" do
@@ -76,7 +77,7 @@ describe TestLab::Container do
 
     describe "#fqdn" do
       it "should return the FQDN for the container" do
-        subject.fqdn.should == "server-dual-nic.default.zone"
+        subject.fqdn.should == "master.default.zone"
       end
     end
 

@@ -26,7 +26,8 @@ describe TestLab::Interface do
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :logger => @logger)
     @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
     @testlab.boot
-    @testlab.containers.first.interfaces.first
+
+    TestLab::Container.first('master').primary_interface
   }
 
   describe "class" do
