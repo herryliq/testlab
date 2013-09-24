@@ -11,6 +11,11 @@ EOF
 
 REPO = File.dirname(__FILE__)
 
+TestLab::Container.new "simple-template" do
+  distro   "ubuntu"
+  release  "precise"
+end
+
 node 'vagrant' do
 
   provider      TestLab::Provider::Vagrant
@@ -41,6 +46,9 @@ node 'vagrant' do
     distro        "ubuntu"
     release       "precise"
 
+    aa_profile  "unconfined"
+    cap_drop    "thing"
+
     provisioners  [
       TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
@@ -70,33 +78,9 @@ node 'vagrant' do
     end
   end
 
-  # SINGLE NIC
-  container "server-single-nic" do
-    distro      "ubuntu"
-    release     "precise"
-
-    aa_profile  "unconfined"
-    cap_drop    "thing"
-
-    provisioners  [
-      TestLab::Provisioner::Resolv,
-      TestLab::Provisioner::AptCacherNG,
-      TestLab::Provisioner::Apt
-    ]
-
-    # Use Default User Creation Here
-
-    interface do
-      name       :eth0
-      network_id 'testnet'
-      address    '100.64.0.30/24'
-    end
-  end
-
   # SHELL PROVISIONER
   container "server-shell" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Shell]
     config ({:script => "echo 'hello world!'"})
@@ -110,8 +94,7 @@ node 'vagrant' do
 
   # BIND PROVISIONER
   container "server-bind" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Bind]
 
@@ -124,8 +107,7 @@ node 'vagrant' do
 
   # RESOLV PROVISIONER
   container "server-resolv" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Resolv]
 
@@ -138,8 +120,7 @@ node 'vagrant' do
 
   # RARING PROVISIONER
   container "server-raring" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Raring]
 
@@ -152,8 +133,7 @@ node 'vagrant' do
 
   # HOSTSFILE PROVISIONER
   container "server-hostsfile" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::HostsFile]
 
@@ -166,8 +146,7 @@ node 'vagrant' do
 
   # APT PROVISIONER
   container "server-apt" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Apt]
 
@@ -180,8 +159,7 @@ node 'vagrant' do
 
   # APTCACHERNG PROVISIONER
   container "server-aptcacherng" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::AptCacherNG]
 
@@ -194,8 +172,7 @@ node 'vagrant' do
 
   # ROUTE PROVISIONER
   container "server-route" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::Route]
 
@@ -208,8 +185,7 @@ node 'vagrant' do
 
   # NFSMOUNT PROVISIONER
   container "server-nfsmount" do
-    distro        "ubuntu"
-    release       "precise"
+    inherit "simple-template"
 
     provisioners  [TestLab::Provisioner::NFSMount]
 

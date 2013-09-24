@@ -37,8 +37,8 @@ describe TestLab::Utility::Logger do
   describe "methods" do
 
     subject {
-      @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
-      @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
+      @ui = ui_helper
+      @testlab = testlab_helper(:ui => @ui)
       @testlab.boot
 
       class A

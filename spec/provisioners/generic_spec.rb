@@ -56,6 +56,8 @@ include TestLab::Utility::Misc
         ZTK::SSH.any_instance.stub(:file).and_yield(StringIO.new)
         ZTK::SSH.any_instance.stub(:exec) { OpenStruct.new(:output => "", :exit_code => 0) }
         ZTK::SSH.any_instance.stub(:bootstrap) { "" }
+        ZTK::SSH.any_instance.stub(:upload) { true }
+        ZTK::SSH.any_instance.stub(:download) { true }
 
         ZTK::Command.any_instance.stub(:exec) { OpenStruct.new(:output => "", :exit_code => 0) }
       end
