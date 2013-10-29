@@ -52,18 +52,19 @@ describe TestLab::Container do
 
   describe "methods" do
 
-    { 'ephemeral' => true, 'persistent' => false }.each do |tag, mode|
+    { :ephemeral => true, :persistent => false }.each do |tag, mode|
       context tag do
 
         before(:each) do
+          subject.node.stub(:dead?) { false }
+          subject.node.stub(:alive?) { true }
+          subject.node.stub(:state) { :running }
+
           subject.lxc_clone.stub(:exists?) { mode }
         end
 
         describe "#status" do
           it "should return a hash of status information about the container" do
-            subject.node.stub(:dead?) { false }
-            subject.node.stub(:state) { :running }
-
             subject.lxc.stub(:state) { :not_created }
             subject.lxc.stub(:memory_usage) { 0 }
             subject.lxc.stub(:cpu_usage) { 0 }
@@ -76,6 +77,7 @@ describe TestLab::Container do
         describe "#state" do
           it "should return the state of the container" do
             subject.node.stub(:dead?) { false }
+            subject.node.stub(:alive?) { true }
             subject.node.stub(:state) { :running }
 
             subject.state.should == :not_created
@@ -83,23 +85,57 @@ describe TestLab::Container do
         end
 
         describe "#ephemeral" do
-          it "should attempt to convert to an ephemeral container" do
+          it "should attempt to convert to a ephemeral container" do
             subject.ephemeral
           end
         end
 
         describe "#persistent" do
-          it "should attempt to convert to an persistent container" do
+          it "should attempt to convert to a persistent container" do
             subject.persistent
+          end
+        end
+
+        # describe "#export" do
+        #   it "should attempt to export the container" do
+        #     case tag
+        #     when :ephemeral
+        #       lambda { subject.export }.should raise_error TestLab::ContainerError
+        #     when :persistent
+        #       subject.stub(:down) { true }
+        #       # subject.stub(:destroy) { true }
+        #       # subject.stub(:create) { true }
+        #       # subject.stub(:up) { true }
+
+        #       subject.lxc.config.stub(:save) { true }
+        #       subject.lxc.stub(:state) { :running }
+
+        #       subject.lxc.stub(:start) { true }
+        #       subject.lxc.stub(:stop) { true }
+        #       subject.lxc.stub(:create) { true }
+        #       subject.lxc.stub(:destroy) { true }
+
+        #       subject.lxc.stub(:attach) { "" }
+        #       subject.lxc.stub(:exec) { OpenStruct.new(:exit_code => 0) }
+
+        #       subject.export
+        #     end
+        #   end
+        # end
+
+        describe "#copy" do
+          it "should attempt to copy the container" do
+            case tag
+            when :ephemeral
+              lambda { subject.copy("master") }.should raise_error TestLab::ContainerError
+            when :persistent
+              subject.copy("master")
+            end
           end
         end
 
         describe "#up" do
           it "should up the container" do
-            subject.node.stub(:dead?) { false }
-            subject.node.stub(:alive?) { true }
-            subject.node.stub(:state) { :running }
-
             subject.lxc.config.stub(:save) { true }
             subject.lxc.stub(:state) { :running }
             subject.lxc.stub(:start) { true }
