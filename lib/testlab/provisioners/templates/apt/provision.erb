@@ -3,7 +3,20 @@ set -e
 
 export DEBIAN_FRONTEND="noninteractive"
 
+<% if !@apt[:multiarch].nil? && (@apt[:multiarch] == false) -%>
+rm -fv /etc/dpkg/dpkg.cfg.d/multiarch || true
+<% end -%>
+
 apt-get -y update
+apt-get -y install apt-transport-https
+
+<% if !@apt[:sources].nil? && @apt[:sources].count > 0 -%>
+rm -fv /etc/apt/sources.list || true
+<% @apt[:sources].flatten.compact.each do |source| -%>
+echo '<%= source %>' | tee -a /etc/apt/sources.list
+<% end -%>
+apt-get -y update
+<% end -%>
 
 <% if !@apt[:install].nil? -%>
 <% @apt[:install].flatten.compact.each do |package| -%>

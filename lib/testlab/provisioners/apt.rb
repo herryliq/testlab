@@ -15,9 +15,11 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:apt] ||= Hash.new
-        @config[:apt][:install] ||= Array.new
-        @config[:apt][:remove]  ||= Array.new
-        @config[:apt][:purge]   ||= Array.new
+        @config[:apt][:install]   ||= Array.new
+        @config[:apt][:remove]    ||= Array.new
+        @config[:apt][:purge]     ||= Array.new
+        @config[:apt][:sources]   ||= Array.new
+        @config[:apt][:multiarch] ||= true
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
