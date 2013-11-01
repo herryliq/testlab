@@ -2,22 +2,20 @@ class TestLab
 
   class Provider
 
-    # Local Provider Error Class
-    class LocalError < ProviderError; end
+    # BareMetal Provider Error Class
+    class BareMetalError < ProviderError; end
 
-    # Local Provider Class
+    # BareMetal Provider Class
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
-    class Local
+    class BareMetal
 
       def initialize(config={}, ui=nil)
         @config = (config || Hash.new)
         @ui     = (ui     || TestLab.ui)
 
-        # ensure our local key is there
-        @config[:local] ||= Hash.new
-
-        @ui.stderr.puts("TestLab::Provider::Local is depreciated.  Please use TestLab::Provider::BareMetal instead.")
+        # ensure our bare_metal key exists
+        @config[:bare_metal] ||= Hash.new
       end
 
       # This is a NO-OP
@@ -73,19 +71,19 @@ class TestLab
       end
 
       def user
-        (@config[:local][:user] || ENV['USER'])
+        (@config[:bare_metal][:user] || ENV['USER'])
       end
 
       def identity
-        (@config[:local][:identity] || File.join(ENV['HOME'], ".ssh", "id_rsa"))
+        (@config[:bare_metal][:identity] || File.join(ENV['HOME'], ".ssh", "id_rsa"))
       end
 
       def ip
-        (@config[:local][:ip] || "127.0.0.1")
+        (@config[:bare_metal][:ip] || "127.0.0.1")
       end
 
       def port
-        (@config[:local][:port] || 22)
+        (@config[:bare_metal][:port] || 22)
       end
 
     end
