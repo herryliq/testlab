@@ -9,6 +9,7 @@ class TestLab
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class HostsFile
+      include TestLab::Utility::Misc
 
       def initialize(config={}, ui=nil)
         @config  = (config || Hash.new)
