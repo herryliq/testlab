@@ -42,12 +42,13 @@ class TestLab
 
         if unknown_container_names.count > 0
           if unknown_running_container_names.count > 0
-            @ui.stderr.puts(format_message("WARNING: You have *running* containers on your TestLab node which are not defined in your Labfile!".red.bold))
-            @ui.stderr.puts(format_message("WARNING: You may need to manually stop the following containers: #{unknown_running_container_names.join(', ')}".red))
+            @ui.stderr.puts(format_message("WARNING: You have *running* containers on your TestLab node #{self.id.inspect} which are not defined in your Labfile!".red.bold))
+            @ui.stderr.puts(format_message(">>> You may need to manually stop the following containers: #{unknown_running_container_names.join(', ')}".red.bold))
+            result = false
           end
 
-          @ui.stderr.puts(format_message("WARNING: You have containers on your TestLab node which are not defined in your Labfile!".yellow.bold))
-          @ui.stderr.puts(format_message("WARNING: You may need to manually remove the following containers: #{unknown_container_names.join(', ')}".yellow))
+          @ui.stderr.puts(format_message("WARNING: You have containers on your TestLab node #{self.id.inspect} which are not defined in your Labfile!".red.bold))
+          @ui.stderr.puts(format_message(">>> You may need to manually remove the following containers: #{unknown_container_names.join(', ')}".red.bold))
         end
 
         result
