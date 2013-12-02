@@ -8,9 +8,9 @@ class TestLab
 
       PBZIP2_MEMORY    = 1024
       READ_SIZE        = ((64 * 1024) - 1)
-      TRANSFER_MESSAGE = "transferring '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%% (%01d:%02dT-%01d:%02d)   \r"
+      TRANSFER_MESSAGE = "%s '%s' at %0.2fMB/s -- %0.2fMB of %0.2fMB -- %d%% (%01d:%02dT-%01d:%02d)   \r"
 
-      def transfer_message(filename, current_size, total_size, elapsed)
+      def transfer_message(what, filename, current_size, total_size, elapsed)
         total_size_mb   = (total_size.to_f / (1024 * 1024).to_f)
         current_size_mb = (current_size.to_f / (1024 * 1024).to_f)
 
@@ -27,7 +27,7 @@ class TestLab
 
         percentage_done = ((current_size * 100) / total_size)
 
-        @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [File.basename(filename), speed_mb, current_size_mb, total_size_mb, percentage_done, minutes, seconds, est_minutes, est_seconds]))
+        @ui.stdout.print(format_message(TRANSFER_MESSAGE.yellow % [what, File.basename(filename), speed_mb, current_size_mb, total_size_mb, percentage_done, minutes, seconds, est_minutes, est_seconds]))
       end
 
       def progress_callback(action, args)
@@ -44,7 +44,7 @@ class TestLab
           elapsed      = (Time.now - @start_time)
           current_size = (args[1] + args[2].length)
 
-          transfer_message(args[0].local, current_size, @total_size, elapsed)
+          transfer_message(%(uploading to node:), args[0].local, current_size, @total_size, elapsed)
 
         when :finish
           @ui.stdout.puts
@@ -260,7 +260,7 @@ EOF
               elapsed  = (Time.now - start_time)
               current_size += chunk.size
 
-              transfer_message(local_file, current_size, total_size, elapsed)
+              transfer_message(%(downloading locally:), local_file, current_size, total_size, elapsed)
             end
             @ui.stdout.puts
 
