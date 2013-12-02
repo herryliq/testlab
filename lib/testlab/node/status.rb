@@ -33,6 +33,22 @@ class TestLab
           result = false
         end
 
+        my_container_names = self.containers.map(&:id)
+        node_container_names = self.lxc.containers.map(&:name)
+
+        unknown_container_names = (node_container_names - my_container_names)
+        unknown_running_container_names = self.lxc.containers.select{ |c| (unknown_container_names.include?(c.name) && (c.state == :running)) }.map(&:name)
+
+        if unknown_container_names.count > 0
+          if unknown_running_container_names.count > 0
+            @ui.stderr.puts(format_message("WARNING: You have *running* containers on your TestLab node which are not defined in your Labfile!".red.bold))
+            @ui.stderr.puts(format_message("WARNING: You may need to manually stop the following containers: #{unknown_running_container_names.join(', ')}".red))
+          end
+
+          @ui.stderr.puts(format_message("WARNING: You have containers on your TestLab node which are not defined in your Labfile!".yellow.bold))
+          @ui.stderr.puts(format_message("WARNING: You may need to manually remove the following containers: #{unknown_container_names.join(', ')}".yellow))
+        end
+
         result
       end
 
