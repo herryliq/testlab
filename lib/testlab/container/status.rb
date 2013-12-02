@@ -58,6 +58,7 @@ class TestLab
           :state => self.state,
           :memory_usage => "#{self.memory_usage}M",
           :cpu_time => "#{self.cpu_usage}s",
+          :disk_usage => "#{self.disk_usage}MB",
           :distro => self.distro,
           :release => self.release,
           :interfaces => interfaces,
@@ -82,6 +83,15 @@ class TestLab
           0
         else
           self.lxc.cpu_usage
+        end
+      end
+
+      # Container Disk Usage
+      def disk_usage
+        if self.node.dead?
+          0
+        else
+          self.lxc.disk_usage / (1024 * 1024)
         end
       end
 
