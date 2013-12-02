@@ -59,6 +59,9 @@ class TestLab
       def export(compression=9, local_file=nil)
         @ui.logger.debug { "Container Export: #{self.id} " }
 
+        self.node.alive? or return false
+        self.node.ok?
+
         (self.state == :not_created) and raise ContainerError, 'You must create a container before you can export it!'
 
         # Throw an exception if we are attempting to export a container in a
@@ -118,6 +121,9 @@ EOF
       # @return [Boolean] True if successful.
       def import(local_file)
         @ui.logger.debug { "Container Import: #{self.id}" }
+
+        self.node.alive? or return false
+        self.node.ok?
 
         import_tempfile = Tempfile.new('import')
         remote_filename = File.basename(import_tempfile.path.dup)

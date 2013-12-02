@@ -13,6 +13,7 @@ class TestLab
         @ui.logger.debug { "Container Create: #{self.id}" }
 
         self.node.alive? or return false
+        self.node.ok?
 
         persistent_operation_check(:create)
 
@@ -36,6 +37,7 @@ class TestLab
         @ui.logger.debug { "Container Destroy: #{self.id}" }
 
         self.node.alive? or return false
+        self.node.ok?
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.lxc.destroy(%(-f))
@@ -56,6 +58,7 @@ class TestLab
         @ui.logger.debug { "Container Up: #{self.id}" }
 
         self.node.alive? or return false
+        self.node.ok?
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           configure
@@ -101,6 +104,7 @@ class TestLab
         @ui.logger.debug { "Container Down: #{self.id}" }
 
         self.node.alive? or return false
+        self.node.ok?
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
 
