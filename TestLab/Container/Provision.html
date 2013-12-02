@@ -207,7 +207,6 @@ provisioners deprovision methods.</p>
       <pre class="lines">
 
 
-30
 31
 32
 33
@@ -219,15 +218,18 @@ provisioners deprovision methods.</p>
 39
 40
 41
-42</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprovision'>deprovision</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Deprovision: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_ok?'>ok?</span>
 
   <span class='id identifier rubyid_persistent_operation_check'>persistent_operation_check</span><span class='lparen'>(</span><span class='symbol'>:deprovision</span><span class='rparen'>)</span>
 
@@ -299,7 +301,8 @@ provisioners provision methods.</p>
 19
 20
 21
-22</pre>
+22
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 12</span>
@@ -308,6 +311,7 @@ provisioners provision methods.</p>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Provision: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_ok?'>ok?</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:provision</span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:provision</span><span class='comma'>,</span> <span class='ivar'>@ui</span><span class='rparen'>)</span>
@@ -325,7 +329,7 @@ provisioners provision methods.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Nov  4 15:04:41 2013 by
+  Generated on Mon Dec  2 13:10:59 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.2 (ruby-1.9.3).
 </div>
