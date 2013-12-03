@@ -22,6 +22,8 @@ class TestLab
       end
 
       def ok?
+        self.node.alive? or return false
+
         result = true
 
         # make sure the node has some free space
