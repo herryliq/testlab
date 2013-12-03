@@ -22,7 +22,7 @@ class TestLab
       end
 
       def ok?
-        self.node.alive? or return false
+        self.alive? or return false
 
         result = true
 
