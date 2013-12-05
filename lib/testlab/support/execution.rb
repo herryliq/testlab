@@ -11,7 +11,7 @@ class TestLab
       # Renders the supplied content into a file over the SSH connection and
       # executes it as the 'root' user.
       def bootstrap(content, options={})
-        ssh.bootstrap(content, options)
+        ssh.bootstrap(content, {:set_x => true, :set_e => true}.merge(options))
       end
 
       # Execute
