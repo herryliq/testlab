@@ -1,6 +1,6 @@
 class TestLab
   unless const_defined?(:VERSION)
     # TestLab Gem Version
-    VERSION = "1.11.7"
+    VERSION = "1.12.0"
   end
 end
