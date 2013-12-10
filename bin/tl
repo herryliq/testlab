@@ -128,8 +128,8 @@ pre do |global,command,options,args|
 
   if !@ui.quiet?
     message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
-    @testlab.ui.stdout.puts(message)
-    @testlab.ui.logger.info { message }
+    @ui.stdout.puts(message)
+    @ui.logger.info { message }
   end
 
   true
@@ -140,8 +140,8 @@ post do |global,command,options,args|
 
   if !@ui.quiet?
     message = format_message("TestLab v#{TestLab::VERSION} Finished (%0.4f seconds)".black.bold % testlab_run_time)
-    @testlab.ui.stdout.puts(message)
-    @testlab.ui.logger.info { message }
+    @ui.stdout.puts(message)
+    @ui.logger.info { message }
   end
 
   true
@@ -168,8 +168,8 @@ on_error do |exception|
     end
 
     message = format_message("TestLab v#{TestLab::VERSION} Aborted (%0.4f seconds)".black.bold % testlab_run_time)
-    @testlab.ui.stderr.puts(message)
-    @testlab.ui.logger.info { message }
+    @ui.stderr.puts(message)
+    @ui.logger.info { message }
 
     false
   end
