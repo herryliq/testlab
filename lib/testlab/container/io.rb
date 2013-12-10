@@ -85,15 +85,10 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
           self.node.bootstrap(<<-EOF)
-set -x
-set -e
-
 du -sh #{self.lxc.container_root}
-
 cd #{self.lxc.container_root}
 find #{root_fs_path} -depth -print0 | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
 chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
-
 ls -lah #{remote_file}
 EOF
         end
@@ -105,9 +100,6 @@ EOF
         self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
 
         self.node.bootstrap(<<-EOF)
-set -x
-set -e
-
 rm -fv #{remote_file}
 EOF
 
@@ -157,17 +149,11 @@ EOF
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
           self.node.bootstrap(<<-EOF)
-set -x
-set -e
-
 ls -lah #{remote_file}
-
 rm -rf #{self.lxc.fs_root}
 cd #{self.lxc.container_root}
 pbzip2 -vdcm#{PBZIP2_MEMORY} #{remote_file} | cpio -uid && rm -fv #{remote_file}
-
 du -sh #{self.lxc.container_root}
-
 rm -fv #{remote_file}
 EOF
         end
