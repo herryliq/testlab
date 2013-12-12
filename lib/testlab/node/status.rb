@@ -22,7 +22,7 @@ class TestLab
       end
 
       def ok?
-        self.alive? or return false
+        self.dead? and return false
 
         result = true
 
