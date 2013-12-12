@@ -36,8 +36,13 @@ class TestLab
           result = false
         end
 
+        # get the names of all of the defined containers
         my_container_names = self.containers.map(&:id)
-        node_container_names = self.lxc.containers.map(&:name)
+
+        # ephemeral containers parent containers have a "-master" suffix; we need to remove these from the results or we will complain about them
+        node_container_names = self.lxc.containers.map(&:name).delete_if do |node_container_name|
+          my_container_names.any?{ |my_container_name| "#{my_container_name}-master" == node_container_name }
+        end
 
         unknown_container_names = (node_container_names - my_container_names)
         unknown_running_container_names = self.lxc.containers.select{ |c| (unknown_container_names.include?(c.name) && (c.state == :running)) }.map(&:name)
