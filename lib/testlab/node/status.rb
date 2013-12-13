@@ -26,6 +26,12 @@ class TestLab
 
         result = true
 
+        if !self.lxc.installed?
+          # @ui.stderr.puts(format_message("ERROR: "))
+          raise NodeError, "LXC does not appear to be installed on your TestLab node!  (Did you forget to provision or build the node?)"
+          # result = false
+        end
+
         # make sure the node has some free space
         free_space_percent = (self.exec(%(df -P /), :ignore_exit_status => true).output.split("\n")[1].split[-2].to_i rescue nil)
         if free_space_percent.nil?
