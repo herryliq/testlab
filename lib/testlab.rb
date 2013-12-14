@@ -363,7 +363,7 @@ class TestLab
       node.doctor
     end
 
-    return results.all?
+    results.flatten.compact.all?
   end
 
   # Node Method Proxy
