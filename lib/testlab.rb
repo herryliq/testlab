@@ -367,6 +367,11 @@ class TestLab
   def doctor
     results = Array.new
 
+    if ((rlimit_nofile = Process.getrlimit(Process::RLIMIT_NOFILE)[0]) < 1024)
+      @ui.stderr.puts(format_message("The maximum number of file handles is set to #{rlimit_nofile}!  Please raise it to 1024 or higher!".red.bold))
+      results << false
+    end
+
     results << nodes.all? do |node|
       node.doctor
     end
