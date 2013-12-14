@@ -351,6 +351,21 @@ class TestLab
     true
   end
 
+  # Test Lab Doctor
+  #
+  # Attempts to analyze the lab for issues.
+  #
+  # @return [Boolean] True if everything is OK; false otherwise.
+  def doctor
+    results = Array.new
+
+    results << nodes.all? do |node|
+      node.doctor
+    end
+
+    return results.all?
+  end
+
   # Node Method Proxy
   #
   # Iterates all of the lab nodes, sending the supplied method name and arguments

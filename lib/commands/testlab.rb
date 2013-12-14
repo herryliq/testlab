@@ -209,3 +209,20 @@ command :status do |status|
     commands[:container].commands[:status].execute({}, {}, [])
   end
 end
+
+
+# LAB DOCTOR
+#############
+desc 'Check the health of the lab'
+long_desc <<-EOF
+Attempts to analyze the health of the lab and report any issues.
+EOF
+command :doctor do |doctor|
+  doctor.action do |global_options, options, args|
+    if @testlab.doctor == true
+      @testlab.ui.stdout.puts("Everything is OK".green.bold)
+    else
+      @testlab.ui.stdout.puts(format_message("OH NOES!  SOMETHING IS SCREWED UP!".red.bold))
+    end
+  end
+end

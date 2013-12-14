@@ -60,7 +60,6 @@ class TestLab
         @ui.logger.debug { "Container Export: #{self.id} " }
 
         self.node.alive? or return false
-        self.node.ok?
 
         (self.state == :not_created) and raise ContainerError, 'You must create a container before you can export it!'
 
@@ -115,7 +114,6 @@ EOF
         @ui.logger.debug { "Container Import: #{self.id}" }
 
         self.node.alive? or return false
-        self.node.ok?
 
         import_tempfile = Tempfile.new('import')
         remote_filename = File.basename(import_tempfile.path.dup)

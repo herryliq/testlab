@@ -13,7 +13,6 @@ class TestLab
         @ui.logger.debug { "Container Provision: #{self.id} " }
 
         self.node.alive? or return false
-        self.node.ok?
 
         please_wait(:ui => @ui, :message => format_object_action(self, :provision, :green)) do
           do_provisioner_callbacks(self, :provision, @ui)
@@ -32,7 +31,6 @@ class TestLab
         @ui.logger.debug { "Container Deprovision: #{self.id} " }
 
         self.node.alive? or return false
-        self.node.ok?
 
         persistent_operation_check(:deprovision)
 

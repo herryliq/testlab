@@ -12,6 +12,7 @@ class TestLab
     # Sub-Modules
     autoload :Actions,       'testlab/node/actions'
     autoload :ClassMethods,  'testlab/node/class_methods'
+    autoload :Doctor,        'testlab/node/doctor'
     autoload :LXC,           'testlab/node/lxc'
     autoload :MethodMissing, 'testlab/node/method_missing'
     autoload :Provision,     'testlab/node/provision'
@@ -19,6 +20,7 @@ class TestLab
     autoload :Status,        'testlab/node/status'
 
     include TestLab::Node::Actions
+    include TestLab::Node::Doctor
     include TestLab::Node::LXC
     include TestLab::Node::MethodMissing
     include TestLab::Node::Provision
