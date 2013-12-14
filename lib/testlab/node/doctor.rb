@@ -7,7 +7,7 @@ class TestLab
       #
       # Attempts to analyze the current node and report any issues.
       #
-      # @result [Boolean] True if everything is OK; false otherwise.
+      # @return [Boolean] True if everything is OK; false otherwise.
       def doctor
         if self.dead?
           @ui.stderr.puts(format_message("The node #{self.id.inspect} is dead! (Did you forget to up or build the node?)".red.bold))
