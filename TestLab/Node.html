@@ -97,7 +97,7 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><span class='object_link'><a href="Node/Actions.html" title="TestLab::Node::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Node/LXC.html" title="TestLab::Node::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Node/MethodMissing.html" title="TestLab::Node::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Node/Provision.html" title="TestLab::Node::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Node/SSH.html" title="TestLab::Node::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Node/Status.html" title="TestLab::Node::Status (module)">Status</a></span>, <span class='object_link'><a href="Support/Execution.html" title="TestLab::Support::Execution (module)">Support::Execution</a></span>, <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span>, <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></dd>
+      <dd class="r1"><span class='object_link'><a href="Node/Actions.html" title="TestLab::Node::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Node/Doctor.html" title="TestLab::Node::Doctor (module)">Doctor</a></span>, <span class='object_link'><a href="Node/LXC.html" title="TestLab::Node::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Node/MethodMissing.html" title="TestLab::Node::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Node/Provision.html" title="TestLab::Node::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Node/SSH.html" title="TestLab::Node::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Node/Status.html" title="TestLab::Node::Status (module)">Status</a></span>, <span class='object_link'><a href="Support/Execution.html" title="TestLab::Support::Execution (module)">Support::Execution</a></span>, <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span>, <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></dd>
       
     
   
@@ -105,7 +105,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/testlab/node.rb<span class="defines">,<br />
-  lib/testlab/node/lxc.rb,<br /> lib/testlab/node/ssh.rb,<br /> lib/testlab/node/status.rb,<br /> lib/testlab/node/actions.rb,<br /> lib/testlab/node/provision.rb,<br /> lib/testlab/node/class_methods.rb,<br /> lib/testlab/node/method_missing.rb</span>
+  lib/testlab/node/ssh.rb,<br /> lib/testlab/node/lxc.rb,<br /> lib/testlab/node/doctor.rb,<br /> lib/testlab/node/status.rb,<br /> lib/testlab/node/actions.rb,<br /> lib/testlab/node/provision.rb,<br /> lib/testlab/node/class_methods.rb,<br /> lib/testlab/node/method_missing.rb</span>
 </dd>
   
 </dl>
@@ -142,7 +142,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Node/Actions.html" title="TestLab::Node::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Node/ClassMethods.html" title="TestLab::Node::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Node/LXC.html" title="TestLab::Node::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Node/MethodMissing.html" title="TestLab::Node::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Node/Provision.html" title="TestLab::Node::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Node/SSH.html" title="TestLab::Node::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Node/Status.html" title="TestLab::Node::Status (module)">Status</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Node/Actions.html" title="TestLab::Node::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Node/ClassMethods.html" title="TestLab::Node::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Node/Doctor.html" title="TestLab::Node::Doctor (module)">Doctor</a></span>, <span class='object_link'><a href="Node/LXC.html" title="TestLab::Node::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Node/MethodMissing.html" title="TestLab::Node::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Node/Provision.html" title="TestLab::Node::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Node/SSH.html" title="TestLab::Node::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Node/Status.html" title="TestLab::Node::Status (module)">Status</a></span>
     
   
     
@@ -324,7 +324,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Node/Status.html" title="TestLab::Node::Status (module)">Status</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Node/Status.html#ok%3F-instance_method" title="TestLab::Node::Status#ok? (method)">#ok?</a></span>, <span class='object_link'><a href="Node/Status.html#status-instance_method" title="TestLab::Node::Status#status (method)">#status</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Node/Status.html#status-instance_method" title="TestLab::Node::Status#status (method)">#status</a></span></p>
 
   
   
@@ -369,6 +369,17 @@
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Node/LXC.html" title="TestLab::Node::LXC (module)">LXC</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Node/LXC.html#arch-instance_method" title="TestLab::Node::LXC#arch (method)">#arch</a></span>, <span class='object_link'><a href="Node/LXC.html#lxc-instance_method" title="TestLab::Node::LXC#lxc (method)">#lxc</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Node/Doctor.html" title="TestLab::Node::Doctor (module)">Doctor</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Node/Doctor.html#doctor-instance_method" title="TestLab::Node::Doctor#doctor (method)">#doctor</a></span></p>
 
   
   
@@ -423,8 +434,6 @@
       <pre class="lines">
 
 
-46
-47
 48
 49
 50
@@ -435,10 +444,12 @@
 55
 56
 57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
@@ -490,12 +501,12 @@
       <pre class="lines">
 
 
-60
-61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_labfile'>labfile</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -520,13 +531,13 @@
       <pre class="lines">
 
 
-68
-69
 70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_domain'>domain</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -552,12 +563,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_labfile'>labfile</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -572,7 +583,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Dec 12 22:12:53 2013 by
+  Generated on Fri Dec 13 19:45:29 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
