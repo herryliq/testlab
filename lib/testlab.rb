@@ -159,6 +159,14 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def boot
+
+    # Raise how many files we can have open to the hard limit.
+    rlimit_nofile = Process.getrlimit(Process::RLIMIT_NOFILE)
+    if rlimit_nofile[0] != rlimit_nofile[1]
+      self.ui.logger.info { "Changing maximum open file descriptors from #{rlimit_nofile[0].inspect} to #{rlimit_nofile[1].inspect}" }
+      Process.setrlimit(Process::RLIMIT_NOFILE, rlimit_nofile[1])
+    end
+
     @labfile         = TestLab::Labfile.load(labfile_path)
     @labfile.testlab = self
 
