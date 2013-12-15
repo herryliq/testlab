@@ -96,7 +96,7 @@ EOF
 
         @total_size = self.node.ssh.sftp.stat!(remote_file).size
 
-        self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
+        self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE, :use_scp => true)
 
         self.node.bootstrap(<<-EOF)
 rm -fv #{remote_file}
@@ -143,7 +143,7 @@ EOF
         self.create
 
         self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
-        self.node.upload(local_file, remote_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE)
+        self.node.upload(local_file, remote_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE, :use_scp => true)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
           self.node.bootstrap(<<-EOF)
