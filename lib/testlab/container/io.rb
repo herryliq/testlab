@@ -35,7 +35,7 @@ class TestLab
 
         case action
         when :open then
-          @start_time = Time.now
+          @start_time ||= Time.now
           if (@total_size == 0)
             @total_size = args[0].size
           end
