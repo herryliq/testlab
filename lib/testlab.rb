@@ -141,16 +141,19 @@ class TestLab
   attr_accessor :labfile_path
 
   def initialize(options={})
-    self.ui          = (options[:ui] || ZTK::UI.new)
-    self.class.ui    = self.ui
+    self.ui        = (options[:ui] || ZTK::UI.new)
+    self.class.ui  = self.ui
 
-    @repo_dir        = File.expand_path(options[:repo_dir]   || Dir.pwd)
+    _labfile_path  = (options[:labfile_path] || ENV['LABFILE'] || 'Labfile')
+    @labfile_path  = ZTK::Locator.find(_labfile_path)
 
-    @config_dir      = File.expand_path(options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
+    @repo_dir      = (options[:repo_dir] || File.dirname(@labfile_path))
+
+    @config_dir    = (options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
     File.exists?(@config_dir) or FileUtils.mkdir_p(@config_dir)
 
-    labfile_path     = (options[:labfile_path] || File.join(@repo_dir, 'Labfile'))
-    @labfile_path    = File.expand_path(ZTK::Locator.find(labfile_path))
+    log_file       = File.join(@repo_dir, "testlab-#{TestLab.hostname}.log")
+    self.ui.logger = ZTK::Logger.new(log_file)
   end
 
   # Boot TestLab
@@ -159,6 +162,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def boot
+    TestLab::Utility.log_header(self).each { |line| self.ui.logger.info { line } }
 
     # Raise how many files we can have open to the hard limit.
     nofile_cur, nofile_max = Process.getrlimit(Process::RLIMIT_NOFILE)
