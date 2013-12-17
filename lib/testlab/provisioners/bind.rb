@@ -138,7 +138,7 @@ class TestLab
       end
 
       def bind_install(node)
-        node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install bind9))
+        node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" (dpkg --status bind9 &> /dev/null || apt-get -qy install bind9)))
         node.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
