@@ -161,10 +161,19 @@ class TestLab
   def boot
 
     # Raise how many files we can have open to the hard limit.
-    rlimit_nofile = Process.getrlimit(Process::RLIMIT_NOFILE)
-    if rlimit_nofile[0] != rlimit_nofile[1]
-      self.ui.logger.info { "Changing maximum open file descriptors from #{rlimit_nofile[0].inspect} to #{rlimit_nofile[1].inspect}" }
-      Process.setrlimit(Process::RLIMIT_NOFILE, rlimit_nofile[1])
+    nofile_cur, nofile_max = Process.getrlimit(Process::RLIMIT_NOFILE)
+    if nofile_cur != nofile_max
+
+      # OSX likes to indicate we can set the infinity value here; do so causes
+      # an the following exception to throw:
+      # Errno::EINVAL: Invalid argument - setrlimit
+      # In the event this happens, use 4096 as the max value.
+      if (nofile_max == Process::RLIM_INFINITY)
+        nofile_max = 4096
+      end
+
+      self.ui.logger.info { "Changing maximum open file descriptors from #{nofile_cur.inspect} to #{nofile_max.inspect}" }
+      Process.setrlimit(Process::RLIMIT_NOFILE, nofile_max)
     end
 
     @labfile         = TestLab::Labfile.load(labfile_path)
