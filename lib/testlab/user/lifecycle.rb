@@ -82,7 +82,7 @@ class TestLab
 
         # ensure the container user home directory is owned by them
         home_dir = self.container.lxc.attach(%(-- /bin/bash -c 'grep #{self.username} /etc/passwd | cut -d ":" -f6')).strip
-        self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -Rv $(id -u #{self.username}):$(id -g #{self.username}) #{home_dir}'))
+        self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -R $(id -u #{self.username}):$(id -g #{self.username}) #{home_dir}'))
 
         # ensure the sudo user group can do passwordless sudo
         self.container.lxc.attach(%(-- /bin/bash -c 'grep "sudo\tALL=\(ALL:ALL\) ALL" /etc/sudoers && sed -i "s/sudo\tALL=\(ALL:ALL\) ALL/sudo\tALL=\(ALL:ALL\) NOPASSWD: ALL/" /etc/sudoers'))
