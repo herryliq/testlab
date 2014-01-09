@@ -54,12 +54,15 @@ class TestLab
       end
 
       def log_gem_dependencies(testlab)
-        {
-          "gli_version" => ::GLI::VERSION.inspect,
+        dependencies = {
           "lxc_version" => ::LXC::VERSION.inspect,
           "ztk_version" => ::ZTK::VERSION.inspect,
           "activesupport_version" => ::ActiveSupport::VERSION::STRING.inspect
         }
+
+        defined?(::GLI) and dependencies.merge!("gli_version" => ::GLI::VERSION.inspect)
+
+        dependencies
       end
 
       def log_external_dependencies(testlab)

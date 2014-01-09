@@ -94,15 +94,18 @@ desc 'Path to Configuration directory'
 arg_name 'path/to/directory'
 flag [:c, :config]
 
+desc 'Path to Log file'
+default_value STDOUT
+arg_name 'path/to/log_file'
+flag [:L, :log_file]
+
 pre do |global,command,options,args|
   @testlab_start_time = Time.now.utc
 
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
-  @logger = ZTK::Logger.new(STDOUT)
-
   @ui = ZTK::UI.new(
-    :logger  => @logger,
+    :logger  => ZTK::Logger.new(global[:log_file]),
     :verbose => global[:verbose],
     :quiet   => global[:quiet]
   )
@@ -156,9 +159,9 @@ on_error do |exception|
   else
     testlab_run_time = (Time.now.utc - @testlab_start_time)
 
-    @logger.fatal { exception.inspect }
+    @ui.logger.fatal { exception.inspect }
     exception.backtrace.each do |line|
-      @logger.logdev.write("#{line}\n")
+      @ui.logger.logdev.write("#{line}\n")
     end
 
     message = format_message("TestLab v#{TestLab::VERSION} Aborted (%0.4f seconds)".black.bold % testlab_run_time)

@@ -28,18 +28,25 @@ class TestLab
       def please_wait(options={}, &block)
         ui      = options[:ui]
         message = options[:message]
-        mark    = (options[:mark] || "# Completed in %0.4f seconds!".black.bold)
+        mark    = (options[:mark] || "Completed in %0.4f seconds!")
 
         !block_given? and raise MiscError, "You must supply a block!"
         ui.nil? and raise MiscError, "You must supply a ZTK::UI object!"
         message.nil? and raise MiscError, "You must supply a message!"
 
-        message = format_message(message)
-        length = message.uncolor.length
-        max = (length >= 60 ? (length+1) : (60 - length))
-        mark = ((' ' * max) + mark)
+        if (ui.logger.logdev == STDOUT)
+          mark = format_message("#{message} / #{mark.black.bold}")
+          message = format_message(message)
+        else
+          message = format_message(message)
+          length = message.uncolor.length
+          max = (length >= 60 ? (length+1) : (60 - length))
+          mark = ((' ' * max) + "# #{mark}".black.bold)
+        end
+        use_spinner = ((ui.logger.logdev == STDOUT) ? false : true)
 
-        ZTK::Benchmark.bench(:ui => ui, :message => message, :mark => mark) do
+        ZTK::Benchmark.bench(:ui => ui, :message => message, :mark => mark, :use_spinner => use_spinner) do
+          (ui.logger.logdev == STDOUT) and STDOUT.puts
           yield
         end
       end

@@ -152,8 +152,8 @@ class TestLab
     @config_dir    = (options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
     File.exists?(@config_dir) or FileUtils.mkdir_p(@config_dir)
 
-    log_file       = File.join(@repo_dir, "testlab-#{TestLab.hostname}.log")
-    self.ui.logger = ZTK::Logger.new(log_file)
+    # @log_file      = (options[:log_file] || File.join(@repo_dir, "testlab-#{TestLab.hostname}.log") || STDOUT)
+    # self.ui.logger = ZTK::Logger.new(@log_file)
   end
 
   # Boot TestLab
@@ -168,10 +168,13 @@ class TestLab
     nofile_cur, nofile_max = Process.getrlimit(Process::RLIMIT_NOFILE)
     if nofile_cur != nofile_max
 
-      # OSX likes to indicate we can set the infinity value here; do so causes
-      # an the following exception to throw:
-      # Errno::EINVAL: Invalid argument - setrlimit
-      # In the event this happens, use 4096 as the max value.
+      # OSX likes to indicate we can set the infinity value here.
+      #
+      # Doing so causes the following exception to throw:
+      #   Errno::EINVAL: Invalid argument - setrlimit
+      #
+      # In the event infinity is returned as the max value, use 4096 as the max
+      # value.
       if (nofile_max == Process::RLIM_INFINITY)
         nofile_max = 4096
       end
