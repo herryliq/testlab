@@ -138,13 +138,19 @@ class TestLab
       end
 
       def bind_install(node)
-        node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" (dpkg --status bind9 &> /dev/null || apt-get -qy install bind9)))
-        node.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
+        node.bootstrap(<<-EOSHELL)
+          export DEBIAN_FRONTEND="noninteractive"
+
+          (dpkg --status bind9 &> /dev/null || apt-get -qy install bind9)
+          rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}
+        EOSHELL
       end
 
       def bind_reload(node)
-        node.exec(%(sudo chown -Rv bind:bind /etc/bind))
-        node.exec(%(sudo rndc reload))
+        node.bootstrap(<<-EOSHELL)
+          chown -Rv bind:bind /etc/bind
+          rndc reload
+        EOSHELL
       end
 
       def bind_provision(node)
