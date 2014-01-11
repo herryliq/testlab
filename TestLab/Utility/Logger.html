@@ -412,18 +412,18 @@
       <pre class="lines">
 
 
-65
-66
-67
 68
 69
 70
 71
 72
-73</pre>
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/utility/logger.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/utility/logger.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_external_dependencies'>log_external_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_testlab'>testlab</span><span class='rparen'>)</span>
   <span class='ivar'>@command</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -461,18 +461,24 @@
 60
 61
 62
-63</pre>
+63
+64
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/utility/logger.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_gem_dependencies'>log_gem_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_testlab'>testlab</span><span class='rparen'>)</span>
-  <span class='lbrace'>{</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gli_version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='op'>::</span><span class='const'>GLI</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_dependencies'>dependencies</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lxc_version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='op'>::</span><span class='const'>LXC</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ztk_version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='op'>::</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>activesupport_version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='op'>::</span><span class='const'>ActiveSupport</span><span class='op'>::</span><span class='const'>VERSION</span><span class='op'>::</span><span class='const'>STRING</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
   <span class='rbrace'>}</span>
+
+  <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>GLI</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gli_version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='op'>::</span><span class='const'>GLI</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_dependencies'>dependencies</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -494,9 +500,6 @@
       <pre class="lines">
 
 
-75
-76
-77
 78
 79
 80
@@ -514,10 +517,13 @@
 92
 93
 94
-95</pre>
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/utility/logger.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/utility/logger.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_header'>log_header</span><span class='lparen'>(</span><span class='id identifier rubyid_testlab'>testlab</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log_lines'>log_lines</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -662,7 +668,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Dec 15 14:18:54 2013 by
+  Generated on Fri Jan 10 20:53:14 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

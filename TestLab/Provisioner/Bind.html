@@ -513,15 +513,23 @@
 140
 141
 142
-143</pre>
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo DEBIAN_FRONTEND=&quot;noninteractive&quot; apt-get -y install bind9</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSHELL</span><span class='rparen'>)</span>
+<span class='tstring_content'>    export DEBIAN_FRONTEND=&quot;noninteractive&quot;
+
+    (dpkg --status bind9 &amp;&gt; /dev/null || apt-get -qy install bind9)
+    rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}
+</span><span class='heredoc_end'>  EOSHELL
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -542,14 +550,14 @@
       <pre class="lines">
 
 
-150
-151
-152
-153
-154</pre>
+156
+157
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
@@ -576,18 +584,22 @@
       <pre class="lines">
 
 
-145
-146
-147
-148</pre>
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_reload'>bind_reload</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo chown -Rv bind:bind /etc/bind</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rndc reload</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSHELL</span><span class='rparen'>)</span>
+<span class='tstring_content'>    chown -Rv bind:bind /etc/bind
+    rndc reload
+</span><span class='heredoc_end'>  EOSHELL
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1162,7 +1174,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Dec 15 14:18:57 2013 by
+  Generated on Fri Jan 10 20:53:18 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
