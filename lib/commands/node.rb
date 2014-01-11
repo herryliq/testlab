@@ -51,4 +51,30 @@ build_lab_commands(:node, TestLab::Node) do |c|
     end
   end
 
+  # NODE IMPORT
+  ##############
+  c.desc 'Node Import (only if provider supported)'
+  c.command :import do |import|
+    import.desc 'Specify the node image file to import.'
+    import.arg_name 'filename'
+    import.flag [:input]
+
+    import.action do |global_options,options,args|
+      node = iterate_objects_by_name(options[:name], TestLab::Node).first
+
+      node.import(options[:input])
+    end
+  end
+
+  # NODE EXPORT
+  ##############
+  c.desc 'Node Export (only if provider supported)'
+  c.command :export do |export|
+    export.action do |global_options,options,args|
+      node = iterate_objects_by_name(options[:name], TestLab::Node).first
+
+      node.export
+    end
+  end
+
 end

@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Provider
-    PROXY_METHODS = %w(instance_id state user identity ip port create destroy up down reload status alive? dead? exists?).map(&:to_sym)
+    PROXY_METHODS = %w(instance_id state user identity ip port create destroy up down export import reload status alive? dead? exists?).map(&:to_sym)
 
     autoload :AWS,       'testlab/providers/aws'
     autoload :BareMetal, 'testlab/providers/bare_metal'
