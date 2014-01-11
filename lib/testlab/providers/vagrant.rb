@@ -49,7 +49,10 @@ class TestLab
 
       # Destroy Vagrant-controlled VM
       def destroy
+        @state = nil
         self.alive? and self.down
+
+        @state = nil
         self.exists? and self.vagrant_cli("destroy", "--force", self.instance_id)
 
         true
@@ -59,6 +62,7 @@ class TestLab
 
       # Online Vagrant-controlled VM
       def up
+        @state = nil
         self.vagrant_cli("up", self.instance_id)
 
         ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120, :ui => @ui).wait
@@ -68,8 +72,8 @@ class TestLab
 
       # Halt Vagrant-controlled VM
       def down(*args)
+        @state = nil
         arguments = (%W(halt #{self.instance_id}) + args).flatten.compact
-
         self.vagrant_cli(*arguments)
 
         true
@@ -151,15 +155,18 @@ class TestLab
 
       # Inquire the state of the Vagrant-controlled VM
       def state
-        output = self.vagrant_cli("status").output.split("\n").select{ |line| (line =~ /#{self.instance_id}/) }.first
-        result = UNKNOWN_STATE
-        ALL_STATES.map{ |s| s.to_s.gsub('_', ' ') }.each do |state|
-          if output =~ /#{state}/
-            result = state.to_s.gsub(' ', '_')
-            break
+        if @state.nil?
+          output = self.vagrant_cli("status").output.split("\n").select{ |line| (line =~ /#{self.instance_id}/) }.first
+          result = UNKNOWN_STATE
+          ALL_STATES.map{ |s| s.to_s.gsub('_', ' ') }.each do |state|
+            if output =~ /#{state}/
+              result = state.to_s.gsub(' ', '_')
+              break
+            end
           end
+          @state = result.to_sym
         end
-        result.to_sym
+        @state
       end
 
 ################################################################################
