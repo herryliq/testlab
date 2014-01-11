@@ -1,6 +1,3 @@
-set -x
-set -e
-
 export DEBIAN_FRONTEND="noninteractive"
 
 <% if !@apt[:multiarch].nil? && (@apt[:multiarch] == false) -%>
