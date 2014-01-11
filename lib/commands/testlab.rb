@@ -199,6 +199,7 @@ end
 desc 'Display the lab status'
 command :status do |status|
   status.action do |global_options,options,args|
+    @testlab.ui.logger.level = ZTK::Logger::WARN
     @testlab.ui.stdout.puts("\nNODES:".green.bold)
     commands[:node].commands[:status].execute({}, {}, [])
 
