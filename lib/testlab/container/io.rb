@@ -87,13 +87,13 @@ class TestLab
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
-          self.node.bootstrap(<<-EOF)
-du -sh #{self.lxc.container_root}
-cd #{self.lxc.container_root}
-find #{root_fs_path} -depth -print0 | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
-chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
-ls -lah #{remote_file}
-EOF
+          self.node.bootstrap(<<-EOSCRIPT)
+            du -sh #{self.lxc.container_root}
+            cd #{self.lxc.container_root}
+            find #{root_fs_path} -depth -print0 | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
+            chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
+            ls -lah #{remote_file}
+          EOSCRIPT
         end
 
         File.exists?(local_file) and FileUtils.rm_f(local_file)
@@ -102,9 +102,9 @@ EOF
 
         self.node.download(remote_file, local_file, :on_progress => method(:progress_callback), :read_size => READ_SIZE, :use_scp => true)
 
-        self.node.bootstrap(<<-EOF)
-rm -fv #{remote_file}
-EOF
+        self.node.bootstrap(<<-EOSCRIPT)
+          rm -fv #{remote_file}
+        EOSCRIPT
 
         @ui.stdout.puts(format_message("Your shipping container is now exported and available at '#{local_file}'!".green.bold))
 
