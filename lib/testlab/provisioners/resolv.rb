@@ -41,7 +41,6 @@ class TestLab
 
         true
       end
-      alias :on_node_up :on_node_provision
 
       # Resolv: Container Provision
       #
