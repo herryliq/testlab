@@ -97,7 +97,7 @@ flag [:c, :config]
 desc 'Path to Log file'
 default_value STDOUT
 arg_name 'path/to/log_file'
-flag [:L, :log_file]
+flag [:log]
 
 pre do |global,command,options,args|
   @testlab_start_time = Time.now.utc
@@ -105,7 +105,7 @@ pre do |global,command,options,args|
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
   @ui = ZTK::UI.new(
-    :logger  => ZTK::Logger.new(global[:log_file]),
+    :logger  => ZTK::Logger.new(global[:log]),
     :verbose => global[:verbose],
     :quiet   => global[:quiet]
   )
