@@ -320,8 +320,6 @@
       <pre class="lines">
 
 
-178
-179
 180
 181
 182
@@ -348,10 +346,12 @@
 203
 204
 205
-206</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy'>copy</span><span class='lparen'>(</span><span class='id identifier rubyid_target_name'>target_name</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Copy: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -431,7 +431,6 @@
       <pre class="lines">
 
 
-59
 60
 61
 62
@@ -482,10 +481,12 @@
 107
 108
 109
-110</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_export'>export</span><span class='lparen'>(</span><span class='id identifier rubyid_compression'>compression</span><span class='op'>=</span><span class='int'>9</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Export: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -504,7 +505,8 @@
   <span class='comment'># Ensure the container is stopped before we attempt to export it.
 </span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
 
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c 'apt-get clean'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/bin/bash -c 'apt-get -y autoremove'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/bin/bash -c 'apt-get -y clean'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_export_tempfile'>export_tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>export</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_remote_filename'>remote_filename</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_export_tempfile'>export_tempfile</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
@@ -516,13 +518,13 @@
   <span class='id identifier rubyid_root_fs_path'>root_fs_path</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_fs_root'>fs_root</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>SEPARATOR</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Compress</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:cyan</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='rparen'>)</span>
-<span class='tstring_content'>du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_container_root'>container_root</span><span class='rbrace'>}</span><span class='tstring_content'>
-cd </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_container_root'>container_root</span><span class='rbrace'>}</span><span class='tstring_content'>
-find </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_root_fs_path'>root_fs_path</span><span class='rbrace'>}</span><span class='tstring_content'> -depth -print0 | cpio -o0 | pbzip2 -</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_compression'>compression</span><span class='rbrace'>}</span><span class='tstring_content'> -vfczm</span><span class='embexpr_beg'>#{</span><span class='const'>PBZIP2_MEMORY</span><span class='rbrace'>}</span><span class='tstring_content'> &gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
-chown ${SUDO_USER}:${SUDO_USER} </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
-ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>EOF
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSCRIPT</span><span class='rparen'>)</span>
+<span class='tstring_content'>      du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_container_root'>container_root</span><span class='rbrace'>}</span><span class='tstring_content'>
+      cd </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_container_root'>container_root</span><span class='rbrace'>}</span><span class='tstring_content'>
+      find </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_root_fs_path'>root_fs_path</span><span class='rbrace'>}</span><span class='tstring_content'> -depth -print0 | cpio -o0 | pbzip2 -</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_compression'>compression</span><span class='rbrace'>}</span><span class='tstring_content'> -vfczm</span><span class='embexpr_beg'>#{</span><span class='const'>PBZIP2_MEMORY</span><span class='rbrace'>}</span><span class='tstring_content'> &gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
+      chown ${SUDO_USER}:${SUDO_USER} </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
+      ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>    EOSCRIPT
 </span>  <span class='kw'>end</span>
 
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
@@ -531,9 +533,9 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='symbol'>:on_progress</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:progress_callback</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:read_size</span> <span class='op'>=&gt;</span> <span class='const'>READ_SIZE</span><span class='comma'>,</span> <span class='symbol'>:use_scp</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
 
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='rparen'>)</span>
-<span class='tstring_content'>rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>EOF
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSCRIPT</span><span class='rparen'>)</span>
+<span class='tstring_content'>    rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='rbrace'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>  EOSCRIPT
 </span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now exported and available at '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rbrace'>}</span><span class='tstring_content'>'!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
@@ -588,8 +590,6 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
       <pre class="lines">
 
 
-115
-116
 117
 118
 119
@@ -644,10 +644,12 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
 168
 169
 170
-171</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Import: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -747,7 +749,8 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 33</span>
@@ -765,8 +768,9 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
   <span class='kw'>when</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='symbol'>:put</span> <span class='kw'>then</span>
     <span class='id identifier rubyid_elapsed'>elapsed</span>      <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='ivar'>@start_time</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_current_size'>current_size</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_message'>message</span>      <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span> <span class='op'>==</span> <span class='symbol'>:get</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>downloading from</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>uploading to</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_transfer_message'>transfer_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>uploading to node:</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_local'>local</span><span class='comma'>,</span> <span class='id identifier rubyid_current_size'>current_size</span><span class='comma'>,</span> <span class='ivar'>@total_size</span><span class='comma'>,</span> <span class='id identifier rubyid_elapsed'>elapsed</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_transfer_message'>transfer_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'> node:</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_local'>local</span><span class='comma'>,</span> <span class='id identifier rubyid_current_size'>current_size</span><span class='comma'>,</span> <span class='ivar'>@total_size</span><span class='comma'>,</span> <span class='id identifier rubyid_elapsed'>elapsed</span><span class='rparen'>)</span>
 
   <span class='kw'>when</span> <span class='symbol'>:finish</span>
     <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
@@ -823,8 +827,6 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
       <pre class="lines">
 
 
-211
-212
 213
 214
 215
@@ -877,10 +879,12 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
 262
 263
 264
-265</pre>
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sc_download'>sc_download</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&lt;=</span> <span class='int'>0</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Too many redirects, aborting!</span><span class='tstring_end'>&quot;</span></span>
@@ -1009,7 +1013,7 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 10 20:56:24 2014 by
+  Generated on Tue Jan 14 18:42:23 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

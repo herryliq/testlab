@@ -408,8 +408,6 @@
     
 
     
-      (also: #on_node_up)
-    
   </span>
   
   
@@ -510,17 +508,17 @@
       <pre class="lines">
 
 
+139
 140
 141
 142
 143
 144
 145
-146
-147</pre>
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSHELL</span><span class='rparen'>)</span>
@@ -550,14 +548,14 @@
       <pre class="lines">
 
 
+155
 156
 157
 158
-159
-160</pre>
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
@@ -584,15 +582,15 @@
       <pre class="lines">
 
 
+148
 149
 150
 151
 152
-153
-154</pre>
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind_reload'>bind_reload</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOSHELL</span><span class='rparen'>)</span>
@@ -631,15 +629,15 @@
       <pre class="lines">
 
 
+132
 133
 134
 135
 136
-137
-138</pre>
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bind_conf'>build_bind_conf</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_file'>file</span><span class='lparen'>(</span><span class='symbol'>:target</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/etc/bind/named.conf</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:chown</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind:bind</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -667,17 +665,17 @@
       <pre class="lines">
 
 
+122
 123
 124
 125
 126
 127
 128
-129
-130</pre>
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bind_db'>build_bind_db</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_zone'>zone</span><span class='comma'>,</span> <span class='id identifier rubyid_records'>records</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind_db_template'>bind_db_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>bind-db.erb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
@@ -718,15 +716,15 @@
       <pre class="lines">
 
 
+65
 66
 67
 68
 69
-70
-71</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bind_main_partial'>build_bind_main_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind_conf_template'>bind_conf_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind.erb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -754,6 +752,7 @@
       <pre class="lines">
 
 
+72
 73
 74
 75
@@ -770,11 +769,10 @@
 86
 87
 88
-89
-90</pre>
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bind_records'>build_bind_records</span>
   <span class='id identifier rubyid_forward_records'>forward_records</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -825,6 +823,7 @@
       <pre class="lines">
 
 
+92
 93
 94
 95
@@ -852,11 +851,10 @@
 117
 118
 119
-120
-121</pre>
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bind_zone_partial'>build_bind_zone_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind_zone_template'>bind_zone_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>bind-zone.erb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
@@ -960,6 +958,7 @@
       <pre class="lines">
 
 
+40
 41
 42
 43
@@ -967,11 +966,10 @@
 45
 46
 47
-48
-49</pre>
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_container_provision'>on_container_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BIND Provisioner: Container </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1055,16 +1053,16 @@
       <pre class="lines">
 
 
+55
 56
 57
 58
 59
 60
-61
-62</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_network_provision'>on_network_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_network'>network</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BIND Provisioner: Network </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1084,10 +1082,6 @@
     - (<tt>Boolean</tt>) <strong>on_node_provision</strong>(node) 
   
 
-  
-    <span class="aliases">Also known as:
-    <span class="names"><span id='on_node_up-instance_method'>on_node_up</span></span>
-    </span>
   
 
   
@@ -1174,7 +1168,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 10 20:56:28 2014 by
+  Generated on Tue Jan 14 18:42:28 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

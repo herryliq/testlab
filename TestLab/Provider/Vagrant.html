@@ -995,12 +995,12 @@
       <pre class="lines">
 
 
-173
-174
-175</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='const'>RUNNING_STATES</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1025,12 +1025,12 @@
       <pre class="lines">
 
 
-217
-218
-219</pre>
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_box'>box</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:box</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>raring64</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1055,12 +1055,12 @@
       <pre class="lines">
 
 
-221
-222
-223</pre>
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_box_url'>box_url</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:box_url</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://files.vagrantup.com/raring64.box</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1085,12 +1085,12 @@
       <pre class="lines">
 
 
-225
-226
-227</pre>
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cpus'>cpus</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:cpus</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>2</span><span class='rparen'>)</span>
@@ -1180,12 +1180,12 @@
       <pre class="lines">
 
 
-178
-179
-180</pre>
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dead?'>dead?</span>
   <span class='op'>!</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span>
@@ -1226,13 +1226,19 @@
 53
 54
 55
-56</pre>
+56
+57
+58
+59</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
+  <span class='ivar'>@state</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
+
+  <span class='ivar'>@state</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>destroy</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
@@ -1268,20 +1274,20 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
 74
 75
-76</pre>
+76
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@state</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='words_beg'>%W(</span><span class='tstring_content'>halt</span><span class='words_sep'> </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rbrace'>}</span><span class='words_sep'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
-
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
@@ -1330,12 +1336,12 @@
       <pre class="lines">
 
 
-168
-169
-170</pre>
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_exists?'>exists?</span>
   <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span>
@@ -1371,10 +1377,6 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
 85
 86
 87
@@ -1394,10 +1396,14 @@
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_export'>export</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tempfile'>tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>export</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
@@ -1454,12 +1460,12 @@
       <pre class="lines">
 
 
-213
-214
-215</pre>
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hostname'>hostname</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:hostname</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rparen'>)</span>
@@ -1484,12 +1490,12 @@
       <pre class="lines">
 
 
-193
-194
-195</pre>
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_identity'>identity</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:identity</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.vagrant.d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>insecure_private_key</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1525,10 +1531,6 @@
       <pre class="lines">
 
 
-107
-108
-109
-110
 111
 112
 113
@@ -1556,10 +1558,14 @@
 135
 136
 137
-138</pre>
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rbrace'>}</span><span class='tstring_content'>.lab</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1624,12 +1630,12 @@
       <pre class="lines">
 
 
-185
-186
-187</pre>
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instance_id'>instance_id</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_hostname'>hostname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span>
@@ -1654,12 +1660,12 @@
       <pre class="lines">
 
 
-197
-198
-199</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ip'>ip</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:ip</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>192.168.33.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_last_octet'>last_octet</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1684,13 +1690,13 @@
       <pre class="lines">
 
 
-201
-202
-203
-204</pre>
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_last_octet'>last_octet</span>
   <span class='id identifier rubyid_crc32'>crc32</span> <span class='op'>=</span> <span class='const'>Zlib</span><span class='period'>.</span><span class='id identifier rubyid_crc32'>crc32</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rparen'>)</span>
@@ -1716,12 +1722,12 @@
       <pre class="lines">
 
 
-229
-230
-231</pre>
+236
+237
+238</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_memory'>memory</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:memory</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>2</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1746,12 +1752,12 @@
       <pre class="lines">
 
 
-206
-207
-208</pre>
+213
+214
+215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_port'>port</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>22</span><span class='rparen'>)</span>
@@ -1787,15 +1793,15 @@
       <pre class="lines">
 
 
-143
-144
-145
-146
 147
-148</pre>
+148
+149
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reload'>reload</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
@@ -1823,13 +1829,6 @@
       <pre class="lines">
 
 
-283
-284
-285
-286
-287
-288
-289
 290
 291
 292
@@ -1844,10 +1843,17 @@
 301
 302
 303
-304</pre>
+304
+305
+306
+307
+308
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_vagrantfile'>render_vagrantfile</span>
   <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -1891,12 +1897,12 @@
       <pre class="lines">
 
 
-233
-234
-235</pre>
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resize'>resize</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:resize</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>16</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1932,31 +1938,37 @@
       <pre class="lines">
 
 
-153
-154
-155
-156
 157
 158
 159
 160
 161
 162
-163</pre>
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
-  <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rbrace'>}</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
-  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>UNKNOWN_STATE</span>
-  <span class='const'>ALL_STATES</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_state'>state</span><span class='op'>|</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_state'>state</span><span class='rbrace'>}</span><span class='regexp_end'>/</span></span>
-      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-      <span class='kw'>break</span>
+  <span class='kw'>if</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rbrace'>}</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>UNKNOWN_STATE</span>
+    <span class='const'>ALL_STATES</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_state'>state</span><span class='op'>|</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_state'>state</span><span class='rbrace'>}</span><span class='regexp_end'>/</span></span>
+        <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+        <span class='kw'>break</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
+    <span class='ivar'>@state</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='ivar'>@state</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1978,12 +1990,12 @@
       <pre class="lines">
 
 
-237
-238
-239</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_synced_folders'>synced_folders</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:synced_folders</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -2019,18 +2031,20 @@
       <pre class="lines">
 
 
-61
-62
-63
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
+  <span class='ivar'>@state</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>up</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_id'>instance_id</span><span class='rparen'>)</span>
 
   <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='symbol'>:wait</span> <span class='op'>=&gt;</span> <span class='int'>120</span><span class='comma'>,</span> <span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
@@ -2057,12 +2071,12 @@
       <pre class="lines">
 
 
-189
-190
-191</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user'>user</span>
   <span class='lparen'>(</span><span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:vagrant</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:user</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vagrant</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2087,13 +2101,6 @@
       <pre class="lines">
 
 
-243
-244
-245
-246
-247
-248
-249
 250
 251
 252
@@ -2105,10 +2112,17 @@
 258
 259
 260
-261</pre>
+261
+262
+263
+264
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vagrant_cli'>vagrant_cli</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>args == </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2149,13 +2163,6 @@
       <pre class="lines">
 
 
-263
-264
-265
-266
-267
-268
-269
 270
 271
 272
@@ -2167,10 +2174,17 @@
 278
 279
 280
-281</pre>
+281
+282
+283
+284
+285
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/providers/vagrant.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vboxmanage_cli'>vboxmanage_cli</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>args == </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -2201,7 +2215,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 10 20:56:28 2014 by
+  Generated on Tue Jan 14 18:42:28 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
