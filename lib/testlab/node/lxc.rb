@@ -2,7 +2,6 @@ class TestLab
   class Node
 
     module LXC
-      require 'lxc'
 
       # Returns the LXC object for this Node
       #

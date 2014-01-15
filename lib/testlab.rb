@@ -2,6 +2,8 @@ require 'zlib'
 require 'socket'
 
 require 'ztk'
+require 'lxc'
+
 require 'active_support/inflector'
 
 require 'testlab/version'
