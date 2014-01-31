@@ -16,7 +16,7 @@ branches:
   - master
 before_install:
 - "sudo ./scripts/before_install.sh"
-after_install:
+before_script:
 - "bundle exec gem pristine nokogiri"
 after_script:
 - "travis-artifacts upload --path testlab.log"
