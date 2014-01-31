@@ -30,6 +30,8 @@ mkdir -p /lib/modules/$(uname -r)
 depmod -a
 
 apt-get -qq update
+add-apt-repository ppa:serge-hallyn/lxc-backport
+apt-get -qq update
 
 # apt-get install linux-headers-$(uname -r)
 
