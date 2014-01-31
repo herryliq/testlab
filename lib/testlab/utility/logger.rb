@@ -35,7 +35,8 @@ class TestLab
           "hostname" => "%s (%s)" % [Socket.gethostname.inspect, TestLab.hostname.inspect],
           "program" => $0.to_s.inspect,
           "argv" => ARGV.join(' ').inspect,
-          "timezone" => Time.now.zone.inspect
+          "timezone" => Time.now.zone.inspect,
+          "user" => ENV['USER'].inspect
         }
       end
 
