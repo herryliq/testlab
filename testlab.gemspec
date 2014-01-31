@@ -51,6 +51,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("coveralls")
 
   spec.add_development_dependency("travis")
+  spec.add_development_dependency("travis-artifacts")
   spec.add_development_dependency("typhoeus", "~> 0.6.7")
   spec.add_development_dependency("websocket-native")
 end
