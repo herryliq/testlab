@@ -38,6 +38,10 @@ apt-get -qq update
 apt-get -qq install lxc
 lxc-version
 
+(iptables -L -t nat) || true
+(grep -i iptables /etc/vz/vz.conf) || true
+(lsmod | grep nat) || true
+
 mkdir -p $HOME/.ssh
 ssh-keygen -N '' -f $HOME/.ssh/id_rsa
 
