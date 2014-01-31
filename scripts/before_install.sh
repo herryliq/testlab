@@ -36,6 +36,8 @@ ssh-keygen -N '' -f $HOME/.ssh/id_rsa
 cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys
 cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys2
 
+chown -R $SUDO_USER:$SUDO_USER $HOME/.ssh
+
 ls -la $HOME/.ssh
 
 eval `ssh-agent -s`
