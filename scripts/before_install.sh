@@ -22,8 +22,10 @@ set -x
 
 apt-get -qq update
 
-mkdir -p /lib/modules/`uname -r`
+mkdir -p /lib/modules/$(uname -r)
 depmod -a
+
+apt-get install linux-headers-$(uname -r)
 
 cat <<EOF | tee /usr/sbin/policy-rc.d
 #!/bin/sh
