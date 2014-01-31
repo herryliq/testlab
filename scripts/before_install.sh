@@ -31,6 +31,7 @@ exit 101
 EOF
 chmod 755 /usr/sbin/policy-rc.d
 apt-get -qq install lxc
+rm /usr/sbin/policy-rc.d
 lxc-version
 
 mkdir -p $HOME/.ssh
