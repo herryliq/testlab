@@ -17,9 +17,11 @@
 #   limitations under the License.
 #
 ################################################################################
-#!/bin/bash -x
+#!/bin/bash
+set -x
 
 rake spec
 
 export LABFILE=./features/support/Labfile.bare-metal
 bundle exec tl status
+bundle exec tl build

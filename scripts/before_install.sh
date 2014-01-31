@@ -17,9 +17,11 @@
 #   limitations under the License.
 #
 ################################################################################
-#!/bin/bash -x
+#!/bin/bash
+set -x
 
 apt-get -qq update
+
 cat <<EOF | tee /usr/sbin/policy-rc.d
 #!/bin/sh
 exit 101
@@ -27,3 +29,15 @@ EOF
 chmod 755 /usr/sbin/policy-rc.d
 apt-get -qq install lxc
 lxc-version
+
+mkdir -p $HOME/.ssh
+ssh-keygen -N '' -f $HOME/.ssh/id_rsa
+
+cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys
+cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys2
+
+ls -la $HOME/.ssh
+
+eval `ssh-agent -s`
+# ssh-add $HOME/.ssh/id_rsa
+ssh-add -L
