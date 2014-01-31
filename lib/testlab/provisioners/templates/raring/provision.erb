@@ -7,7 +7,7 @@ dpkg --status <%= package %> &> /dev/null || apt-get -y install <%= package %>
 <% end -%>
 
 # Ensure the default lxc networking services are off
-service lxc-net stop || (service lxc-net start ; service lxc-net stop)
+service lxc-net stop || true
 echo "manual" | tee /etc/init/lxc-net.override
 
 # Ensure NTP services are enabled and running
