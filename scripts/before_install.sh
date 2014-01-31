@@ -39,5 +39,5 @@ cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys2
 ls -la $HOME/.ssh
 
 eval `ssh-agent -s`
-# ssh-add $HOME/.ssh/id_rsa
+ssh-add $HOME/.ssh/id_rsa
 ssh-add -L
