@@ -5,7 +5,7 @@ LIB_DIR = File.join(File.expand_path(File.dirname(__FILE__)),'..','..','lib')
 
 TEST_REPO = File.dirname(__FILE__)
 
-if ENV['USER'] == 'vagrant'
+if %w( vagrant travis ).include?(ENV['USER'])
   TEST_LABFILE = File.join(TEST_REPO, 'Labfile.bare-metal')
 else
   TEST_LABFILE = File.join(TEST_REPO, 'Labfile.vagrant')
