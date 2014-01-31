@@ -20,16 +20,25 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # Route: Network Provision
+      # Route: Network Up
       def on_network_up(network)
         manage_route(:add, network)
 
         true
       end
 
-      # Route: Network Deprovision
+      # Route: Network Down
       def on_network_down(network)
         manage_route(:del, network)
+
+        true
+      end
+
+      # Route: Node Down
+      def on_node_down(node)
+        node.networks.each do |network|
+          manage_route(:del, network)
+        end
 
         true
       end
