@@ -18,10 +18,6 @@
 #
 ################################################################################
 #!/bin/bash
-set -x
+set -e
 
-rake spec
-
-export LABFILE=./features/support/Labfile.bare-metal
-bundle exec tl status
-bundle exec tl build
+bundle exec rake
