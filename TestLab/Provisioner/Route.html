@@ -189,7 +189,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Route: Network Deprovision.</p>
+<p>Route: Network Down.</p>
 </div></span>
   
 </li>
@@ -213,7 +213,31 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Route: Network Provision.</p>
+<p>Route: Network Up.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_node_down-instance_method" title="#on_node_down (instance method)">- (Object) <strong>on_node_down</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Route: Node Down.</p>
 </div></span>
   
 </li>
@@ -306,7 +330,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Route: Network Deprovision</p>
+<p>Route: Network Down</p>
 
 
   </div>
@@ -351,7 +375,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Route: Network Provision</p>
+<p>Route: Network Up</p>
 
 
   </div>
@@ -384,12 +408,61 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="on_node_down-instance_method">
+  
+    - (<tt>Object</tt>) <strong>on_node_down</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Route: Node Down</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/route.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_node_down'>on_node_down</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_networks'>networks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='op'>|</span>
+    <span class='id identifier rubyid_manage_route'>manage_route</span><span class='lparen'>(</span><span class='symbol'>:del</span><span class='comma'>,</span> <span class='id identifier rubyid_network'>network</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Wed Jan 15 13:26:58 2014 by
+  Generated on Thu Jan 30 18:29:34 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
