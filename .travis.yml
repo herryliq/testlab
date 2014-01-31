@@ -1,13 +1,14 @@
 language: ruby
-
 rvm:
   - ree
   - 1.9.2
   - 1.9.3
   - 2.0.0
-
-before_install: sudo ./spec/support/install-lxc.sh
-
+  - 2.1.0
+branches:
+  only:
+    - master
+before_install: ./spec/support/before_install.sh
 notifications:
   email:
     recipients:
@@ -15,4 +16,7 @@ notifications:
     on_success: always
     on_failure: always
   irc:
-    - "irc.freenode.net#jovelabs"
+    channels:
+      - "irc.freenode.net#jovelabs"
+    use_notice: true
+    skip_join: true
