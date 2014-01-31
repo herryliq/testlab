@@ -23,11 +23,11 @@ after_test:
 notifications:
   email:
     recipients:
-    - testlab-ci@lookout.com
+    - "testlab-ci@lookout.com"
     on_success: always
     on_failure: always
   irc:
     channels:
-    - irc.freenode.net#jovelabs
+    - "irc.freenode.net#jovelabs"
     use_notice: true
     skip_join: true

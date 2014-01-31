@@ -20,20 +20,20 @@
 #!/bin/bash
 set -x
 
-apt-get -qq update
-
-mkdir -p /lib/modules/$(uname -r)
-depmod -a
-
-apt-get install linux-headers-$(uname -r)
-
 cat <<EOF | tee /usr/sbin/policy-rc.d
 #!/bin/sh
 exit 101
 EOF
 chmod 755 /usr/sbin/policy-rc.d
+
+mkdir -p /lib/modules/$(uname -r)
+depmod -a
+
+apt-get -qq update
+
+# apt-get install linux-headers-$(uname -r)
+
 apt-get -qq install lxc
-rm /usr/sbin/policy-rc.d
 lxc-version
 
 mkdir -p $HOME/.ssh
