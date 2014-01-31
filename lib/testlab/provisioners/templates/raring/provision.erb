@@ -2,7 +2,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # Update APT and ensure our required packages are installed
 apt-get -y update
-<% %w(lxc apparmor bridge-utils debootstrap yum iptables iptables-persistent ntpdate ntp pbzip2).each do |package| -%>
+<% %w(lxc apparmor bridge-utils debootstrap yum iptables ntpdate ntp pbzip2).each do |package| -%>
 dpkg --status <%= package %> &> /dev/null || apt-get -y install <%= package %>
 <% end -%>
 
