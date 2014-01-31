@@ -1,22 +1,35 @@
 language: ruby
+env:
+  global:
+  - secure: YbxuFSMIVppYT99C+klcWpzLr0w/sLqjfxbBVorzTLgHhFpUVIdK4tIu5dQDohrVEuMskPzqilFjnW+bqKQ6rfG9pgkN9Gkp5LbxzTRdWPT5u9111fQSjW/hdqN+z0Beqdi1k2ZoPQRTgVPaPq9UHlX8/4LK021gTTbe2EGMcSg=
+  - secure: KMwqbWoqcYmmyNoGHxBUnmWmQ1zzoxpcNggrcU7VeWB1NrUIeeAsvX1zAmb1xiuFZDaIrnto9mmiWVuphGpK5FDOGzFGWCO4vISBUzRkcJQE8rU1K4G3O/meXJ9W1pADHE4b/50uEGQjPMry4lwOiugKMc5x7+364de2YoALx6E=
+  - secure: H4MqaotOXE5aboHmv+udPK8sPKpzpgBaKBj3ZOqfqgmkea4sbyIMptAXvMrdWlaJGhfjxhmjwN7UfpYYxv4zN2a+16uQR1waRSt5ugxGY05riRp1vF8silogj8iSaM6TiDmytdyAbPOg+gFsDJNT50Sa29tDkiOA5L2VFAgkwjU=
+  - secure: QR7/0AU/pC64kfH9tsd5nANsX/S2QMKT2LVGcFfZhdRyisT597s4LzVj6snBrfh+Qd0mqkZZmkVHRNmi5BdO3qVeA/0R8LOm3WD5gFaBNEbCV7B3j2iX6a386nKYd+9LbLO57cfnVePFRsWmPF3pefhNDnQbWLKjUxT2rj3j/RQ=
 rvm:
-  - ree
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+- ree
+- 1.9.2
+- 1.9.3
+- 2.0.0
+- 2.1.0
 branches:
   only:
-    - master
-before_install: sudo ./scripts/before_install.sh
+  - master
+before_install:
+- sudo ./scripts/before_install.sh
+before_script:
+- gem install travis-artifacts
+after_script:
+- "travis-artifacts upload --path testlab.log"
+after_test:
+- "travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID"
 notifications:
   email:
     recipients:
-      - testlab-ci@lookout.com
+    - testlab-ci@lookout.com
     on_success: always
     on_failure: always
   irc:
     channels:
-      - "irc.freenode.net#jovelabs"
+    - irc.freenode.net#jovelabs
     use_notice: true
     skip_join: true

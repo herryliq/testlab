@@ -32,5 +32,5 @@ end
 
 def testlab_cmd(app_name, *args)
   args = args.join(' ')
-  step %(I run `#{app_name} --repo=#{TEST_REPO} --labfile=#{TEST_LABFILE} #{args}`)
+  step %(I run `#{app_name} --repo=#{TEST_REPO} --labfile=#{TEST_LABFILE} --log=testlab.log #{args}`)
 end
