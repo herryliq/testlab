@@ -38,6 +38,7 @@ apt-get -qq update
 apt-get -qq install lxc
 lxc-version
 
+apt-get -qq install slirp
 git clone git://github.com/jpetazzo/sekexe
 
 (iptables -L -t nat) || true
