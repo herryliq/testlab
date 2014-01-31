@@ -17,7 +17,8 @@
 #   limitations under the License.
 #
 ################################################################################
-#!/bin/bash
+#!/bin/bash -x
+
 apt-get -qq update
 cat <<EOF | tee /usr/sbin/policy-rc.d
 #!/bin/sh
