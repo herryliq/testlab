@@ -22,6 +22,9 @@ set -x
 
 apt-get -qq update
 
+mkdir -p /lib/modules/`uname -r`
+depmod -a
+
 cat <<EOF | tee /usr/sbin/policy-rc.d
 #!/bin/sh
 exit 101
