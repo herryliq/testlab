@@ -124,6 +124,17 @@ class TestLab
         end
       end
 
+      # Container Importable
+      #
+      # If the container has a non-nil sc_url value, we assume since we can
+      # supposedly download a shipping container image for the container
+      # that it is therefore importable.
+      # @return [Boolean] True if the container has a non-nil sc_url attribute,
+      #   False otherwise.
+      def importable?
+        !self.sc_url.nil?
+      end
+
     end
 
   end
