@@ -43,9 +43,9 @@ class TestLab
         when :get, :put then
           elapsed      = (Time.now - @start_time)
           current_size = (args[1] + args[2].length)
-          message      = ((action == :get) ? 'downloading from' : 'uploading to')
+          message      = ((action == :get) ? 'downloading to local host from' : 'uploading from local host to')
 
-          transfer_message(%(#{message} node:), args[0].local, current_size, @total_size, elapsed)
+          transfer_message(%(#{message} TestLab node #{self.node.id.inspect}:), args[0].local, current_size, @total_size, elapsed)
 
         when :finish
           @ui.stdout.puts
