@@ -84,7 +84,10 @@ class TestLab
           end
 
           # Ensure the hostname is set
-          self.exec(%(sudo hostname #{self.fqdn}))
+          self.lxc.attach(%(-- /bin/bash -c 'hostname #{self.id}'))
+          self.lxc.attach(%(-- /bin/bash -c 'echo "#{self.id}" | tee /etc/hostname'))
+          self.lxc.attach(%(-- /bin/bash -c 'sed -i "s/\\(127\\.0\\.1\\.1\\).*/\\1\t#{self.id} #{self.fqdn}/g" /etc/hosts'))
+          self.lxc.attach(%(-- /bin/bash -c '(grep "#{self.id}" /etc/hosts) || (echo "127.0.1.1\t#{self.id} #{self.fqdn}" | tee -a /etc/hosts)'))
 
           do_provisioner_callbacks(self, :up, @ui)
         end
