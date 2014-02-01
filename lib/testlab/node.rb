@@ -52,6 +52,8 @@ class TestLab
 
       super(*args)
 
+      self.config.merge!(:node => { :id => self.id.dup })
+
       @provider = self.provider.new(self.config, @ui)
 
       raise NodeError, "You must specify a provider class!" if self.provider.nil?
