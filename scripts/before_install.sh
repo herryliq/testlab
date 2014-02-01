@@ -33,8 +33,6 @@ apt-get -qq update
 add-apt-repository -y ppa:serge-hallyn/lxc-backport
 apt-get -qq update
 
-# apt-get install linux-headers-$(uname -r)
-
 apt-get -qq install lxc
 lxc-version
 
