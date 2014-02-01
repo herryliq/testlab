@@ -95,7 +95,7 @@ arg_name 'path/to/directory'
 flag [:c, :config]
 
 desc 'Path to Log file'
-default_value STDOUT
+default_value 'testlab.log'
 arg_name 'path/to/log_file'
 flag [:log]
 
@@ -104,8 +104,12 @@ pre do |global,command,options,args|
 
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
+  File.exists?(global[:log]) and File.truncate(global[:log], 0)
+  logger = ZTK::Logger.new(global[:log])
+  logger.stdout_echo = ((global[:verbose] == true) || (global[:quiet] == false))
+
   @ui = ZTK::UI.new(
-    :logger  => ZTK::Logger.new(global[:log]),
+    :logger  => logger,
     :verbose => global[:verbose],
     :quiet   => global[:quiet]
   )
