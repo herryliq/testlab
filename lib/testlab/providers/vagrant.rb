@@ -190,7 +190,7 @@ class TestLab
       ####################
 
       def instance_id
-        default_id = "#{File.basename(@config[:vagrant][:file])}-#{TestLab.hostname}-#{@config[:node][:id]}"
+        default_id = "#{TestLab.hostname}-#{@config[:node][:id]}-#{File.basename(@config[:vagrant][:file])}"
         (@config[:vagrant][:id] || default_id.downcase)
       end
 
