@@ -46,8 +46,8 @@ task :coveralls => [:spec, 'coveralls:push']
 
 ################################################################################
 
-task :default => [:spec, :features]
-task :test => [:spec, :features]
+task :default => [:spec]
+task :test => [:spec]
 
 ################################################################################
 
