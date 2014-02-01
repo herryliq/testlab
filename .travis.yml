@@ -16,8 +16,6 @@ branches:
   - master
 before_install:
 - "sudo ./scripts/before_install.sh"
-script:
-- sekexe/run sekexe/run "`pwd`/scripts/test.sh"
 after_script:
 - "travis-artifacts upload --path testlab.log"
 after_test:

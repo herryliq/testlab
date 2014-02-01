@@ -21,6 +21,10 @@
 set -e
 set -x
 
-trap 'kill $(jobs -p)' SIGINT SIGTERM EXIT
+# For Travis-CI sekexe:
+#
+# script:
+# - sekexe/run "export HOME=$HOME USER=$USER PWD=$(pwd) ; env ; cd $(pwd) ; $(pwd)/scripts/test.sh"
 
-/home/travis/.rvm/bin/rvm $(cat .ruby-version)@$(cat .ruby-gemset) do bundle exec rake
+
+/home/$USER/.rvm/bin/rvm $(cat $PWD/.ruby-version)@$(cat $PWD/.ruby-gemset) do bundle exec rake
