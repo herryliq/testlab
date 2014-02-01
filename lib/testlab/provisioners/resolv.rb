@@ -54,7 +54,8 @@ class TestLab
           :object => :container
         )
 
-        container.bootstrap(ZTK::Template.render(provision_template, @config))
+        script = ZTK::Template.render(provision_template, @config)
+        container.lxc.attach(%(-- /bin/bash -c '#{script}'))
 
         true
       end
