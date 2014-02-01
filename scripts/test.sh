@@ -19,5 +19,8 @@
 ################################################################################
 #!/bin/bash
 set -e
+set -x
 
-bundle exec rake
+trap 'kill $(jobs -p)' SIGINT SIGTERM EXIT
+
+/home/travis/.rvm/bin/rvm $(cat .ruby-version)@$(cat .ruby-gemset) do bundle exec rake
