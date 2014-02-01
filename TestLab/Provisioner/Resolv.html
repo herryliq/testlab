@@ -371,7 +371,8 @@
 57
 58
 59
-60</pre>
+60
+61</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/resolv.rb', line 50</span>
@@ -383,7 +384,8 @@
     <span class='symbol'>:object</span> <span class='op'>=&gt;</span> <span class='symbol'>:container</span>
   <span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_provision_template'>provision_template</span><span class='comma'>,</span> <span class='ivar'>@config</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_script'>script</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_provision_template'>provision_template</span><span class='comma'>,</span> <span class='ivar'>@config</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_script'>script</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -494,7 +496,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jan 30 18:29:34 2014 by
+  Generated on Sat Feb  1 00:52:22 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

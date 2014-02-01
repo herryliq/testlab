@@ -202,6 +202,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#importable%3F-instance_method" title="#importable? (instance method)">- (Boolean) <strong>importable?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Container Importable.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#ip-instance_method" title="#ip (instance method)">- (String) <strong>ip</strong> </a>
     
 
@@ -570,6 +594,69 @@
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span>
 
   <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="importable?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>importable?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Container Importable</p>
+
+<p>If the container has a non-nil sc_url value, we assume since we can
+supposedly download a shipping container image for the container that it is
+therefore importable.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if the container has a non-nil sc_url attribute, False otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_importable?'>importable?</span>
+  <span class='op'>!</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sc_url'>sc_url</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -995,7 +1082,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jan 30 18:29:31 2014 by
+  Generated on Sat Feb  1 00:52:18 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

@@ -427,9 +427,6 @@ sub-system to create the container.</p>
       <pre class="lines">
 
 
-100
-101
-102
 103
 104
 105
@@ -455,10 +452,13 @@ sub-system to create the container.</p>
 125
 126
 127
-128</pre>
+128
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Down: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -578,7 +578,10 @@ sub-system to create the container.</p>
 90
 91
 92
-93</pre>
+93
+94
+95
+96</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 55</span>
@@ -615,7 +618,10 @@ sub-system to create the container.</p>
     <span class='kw'>end</span>
 
     <span class='comment'># Ensure the hostname is set
-</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo hostname </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fqdn'>fqdn</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c 'hostname </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c 'echo &quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>&quot; | tee /etc/hostname'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c 'sed -i &quot;s/\\(127\\.0\\.1\\.1\\).*/\\1\t</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fqdn'>fqdn</span><span class='rbrace'>}</span><span class='tstring_content'>/g&quot; /etc/hosts'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_attach'>attach</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-- /bin/bash -c '(grep &quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>&quot; /etc/hosts) || (echo &quot;127.0.1.1\t</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fqdn'>fqdn</span><span class='rbrace'>}</span><span class='tstring_content'>&quot; | tee -a /etc/hosts)'</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:up</span><span class='comma'>,</span> <span class='ivar'>@ui</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -632,7 +638,7 @@ sub-system to create the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Jan 30 18:29:31 2014 by
+  Generated on Sat Feb  1 00:52:19 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
