@@ -9,16 +9,10 @@ class TestLab
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     module Misc
 
-      def format_object(object, color)
-        klass = object.class.to_s.split('::').last
-
-        ["#{klass}:".upcase.send(color).bold, "#{object.id}".white.bold].join(' ')
-      end
-
       def format_object_action(object, action, color)
         klass = object.class.to_s.split('::').last
 
-        ["#{klass}".downcase.send(color).bold, "#{object.id}".white.bold, "#{action}".downcase.send(color).bold, ].join(' ')
+        "#{klass} #{object.id} #{action}".downcase.send(color).bold
       end
 
       def format_message(message)
@@ -38,12 +32,12 @@ class TestLab
         msg         = format_message("#{message} ")
         length      = msg.uncolor.length
         max         = (length >= 60 ? (length+1) : (60 - length))
-        mrk         = ((' ' * max) + "# #{mark}\n".bold)
+        mrk         = ((' ' * max) + "# #{mark}\n")
 
         if (ui.logger.respond_to?(:loggers) && ui.logger.loggers.is_a?(Array))
           if ui.logger.loggers.count > 1
             use_spinner = false
-            mrk = format_message("#{message} / #{mark.bold}\n")
+            mrk = format_message("#{message} - #{mark}\n")
             msg = format_message("#{message}\n")
           end
         end
