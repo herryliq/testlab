@@ -290,7 +290,7 @@ Containers (LXC) to accomplish this.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.19.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.20.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -470,7 +470,7 @@ Containers (LXC) to accomplish this.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-instance_method" title="#build (instance method)">- (Boolean) <strong>build</strong> </a>
+      <a href="#build-instance_method" title="#build (instance method)">- (Boolean) <strong>build</strong>(force = false) </a>
     
 
     
@@ -904,7 +904,7 @@ Containers (LXC) to accomplish this.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#recycle-instance_method" title="#recycle (instance method)">- (Boolean) <strong>recycle</strong> </a>
+      <a href="#recycle-instance_method" title="#recycle (instance method)">- (Boolean) <strong>recycle</strong>(force = false) </a>
     
 
     
@@ -1512,7 +1512,7 @@ our nodes, networks and containers.</p>
       <div class="method_details ">
   <h3 class="signature " id="build-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>build</strong> 
+    - (<tt>Boolean</tt>) <strong>build</strong>(force = false) 
   
 
   
@@ -1565,8 +1565,8 @@ our nodes, networks and containers.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 334</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
-  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:build</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_force'>force</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:build</span><span class='comma'>,</span> <span class='id identifier rubyid_force'>force</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -2572,7 +2572,7 @@ all of our nodes.</p>
       <div class="method_details ">
   <h3 class="signature " id="recycle-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>recycle</strong> 
+    - (<tt>Boolean</tt>) <strong>recycle</strong>(force = false) 
   
 
   
@@ -2626,9 +2626,9 @@ our nodes, networks and containers.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 371</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_recycle'>recycle</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_recycle'>recycle</span><span class='lparen'>(</span><span class='id identifier rubyid_force'>force</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_demolish'>demolish</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_force'>force</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -2786,7 +2786,7 @@ nodes.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Feb  2 00:34:24 2014 by
+  Generated on Sun Feb  2 14:29:57 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
