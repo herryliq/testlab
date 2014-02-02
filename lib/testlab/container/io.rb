@@ -114,7 +114,7 @@ class TestLab
       # Import the container
       #
       # @return [Boolean] True if successful.
-      def import(local_file)
+      def import(local_file=nil)
         @ui.logger.debug { "Container Import: #{self.id}" }
 
         self.node.alive? or return false
