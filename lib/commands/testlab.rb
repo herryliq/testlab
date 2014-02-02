@@ -33,8 +33,11 @@ TestLab will then attempt to build the components, executing the following tasks
 Create -> Up -> Provision
 EOF
 command :build do |build|
+  build.desc %(Force the actions verbatium, do not attempt to infer shortcuts; this has no effect for most operations)
+  build.switch [:f, :force]
+
   build.action do |global_options, options, args|
-    @testlab.build
+    @testlab.build(options[:force])
   end
 end
 
@@ -93,8 +96,11 @@ Then components are built in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :recycle do |recycle|
+  recycle.desc %(Force the actions verbatium, do not attempt to infer shortcuts; this has no effect for most operations)
+  recycle.switch [:f, :force]
+
   recycle.action do |global_options, options, args|
-    @testlab.recycle
+    @testlab.recycle(options[:force])
   end
 end
 

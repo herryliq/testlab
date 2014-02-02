@@ -331,8 +331,8 @@ class TestLab
   # all of our nodes, networks and containers.
   #
   # @return [Boolean] True if successful.
-  def build
-    method_proxy(:build)
+  def build(force=false)
+    method_proxy(:build, force)
 
     true
   end
@@ -368,9 +368,9 @@ class TestLab
   # all of our nodes, networks and containers.
   #
   # @return [Boolean] True if successful.
-  def recycle
+  def recycle(force=false)
     self.demolish
-    self.build
+    self.build(force)
 
     true
   end
