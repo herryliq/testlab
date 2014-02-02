@@ -26,27 +26,29 @@ class TestLab
       end
 
       def please_wait(options={}, &block)
-        ui      = options[:ui]
-        message = options[:message]
-        mark    = (options[:mark] || "Completed in %0.4f seconds!")
+        ui       = options[:ui]
+        message  = options[:message]
+        mark     = (options[:mark] || "Completed in %0.4f seconds!")
 
         !block_given? and raise MiscError, "You must supply a block!"
         ui.nil? and raise MiscError, "You must supply a ZTK::UI object!"
         message.nil? and raise MiscError, "You must supply a message!"
 
-        if (ui.logger.logdev == STDOUT)
-          mark = format_message("#{message} / #{mark.black.bold}")
-          message = format_message(message)
-        else
-          message = format_message(message)
-          length = message.uncolor.length
-          max = (length >= 60 ? (length+1) : (60 - length))
-          mark = ((' ' * max) + "# #{mark}".black.bold)
-        end
-        use_spinner = ((ui.logger.logdev == STDOUT) ? false : true)
+        use_spinner = true
+        msg         = format_message("#{message} ")
+        length      = msg.uncolor.length
+        max         = (length >= 60 ? (length+1) : (60 - length))
+        mrk         = ((' ' * max) + "# #{mark}\n".bold)
 
-        ZTK::Benchmark.bench(:ui => ui, :message => message, :mark => mark, :use_spinner => use_spinner) do
-          (ui.logger.logdev == STDOUT) and STDOUT.puts
+        if (ui.logger.respond_to?(:loggers) && ui.logger.loggers.is_a?(Array))
+          if ui.logger.loggers.count > 1
+            use_spinner = false
+            mrk = format_message("#{message} / #{mark.bold}\n")
+            msg = format_message("#{message}\n")
+          end
+        end
+
+        ZTK::Benchmark.bench(:ui => ui, :message => msg, :mark => mrk, :use_spinner => use_spinner) do
           yield
         end
       end
