@@ -38,7 +38,7 @@ class TestLab
           if ui.logger.loggers.count > 1
             use_spinner = false
             mrk = format_message("#{message} - #{mark}\n")
-            msg = format_message("#{message}\n")
+            msg = format_message("#{message} - Starting...\n")
           end
         end
 
