@@ -4,10 +4,14 @@ class TestLab
     module Lifecycle
 
       # Build the object
-      def build
-        create
-        up
-        provision
+      def build(force=false)
+        if (force == false) and self.respond_to?(:importable?) and self.respond_to?(:import) and (self.importable? == true)
+          import
+        else
+          create
+          up
+          provision
+        end
 
         true
       end
@@ -22,9 +26,9 @@ class TestLab
       end
 
       # Recycle the object
-      def recycle
+      def recycle(force=false)
         demolish
-        build
+        build(force)
 
         true
       end
