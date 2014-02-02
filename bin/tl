@@ -74,11 +74,11 @@ require 'commands/container'
 
 # commands_from 'commands'
 
-desc 'Show verbose output'
+desc 'Verbose output'
 default_value false
 switch [:v, :verbose]
 
-desc 'Quiet mode'
+desc 'Quiet output'
 default_value false
 switch [:q, :quiet]
 
@@ -95,7 +95,7 @@ arg_name 'path/to/directory'
 flag [:c, :config]
 
 desc 'Path to Log file'
-default_value 'testlab.log'
+default_value DEFAULT_LOG_FILE
 arg_name 'path/to/log_file'
 flag [:log]
 
@@ -104,9 +104,11 @@ pre do |global,command,options,args|
 
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
-  File.exists?(global[:log]) and File.truncate(global[:log], 0)
+  File.exists?(global[:log]) and FileUtils.move(global[:log], DEFAULT_LOG_BACKUP)
   logger = ZTK::Logger.new(global[:log])
-  logger.stdout_echo = ((global[:verbose] == true) || (global[:quiet] == false))
+  if ((global[:verbose] == true) || (global[:quiet] == false))
+    logger.loggers << ::Logger.new(STDOUT)
+  end
 
   @ui = ZTK::UI.new(
     :logger  => logger,
@@ -145,6 +147,8 @@ post do |global,command,options,args|
     @ui.logger.info { message }
   end
 
+  File.exists?(DEFAULT_DUMP_FILE) and File.delete(DEFAULT_DUMP_FILE)
+
   true
 end
 
@@ -163,12 +167,22 @@ on_error do |exception|
   else
     testlab_run_time = (Time.now.utc - @testlab_start_time)
 
+    dump_file = File.open(DEFAULT_DUMP_FILE, 'w')
+
+    if !@testlab.nil?
+      TestLab::Utility.log_header(@testlab).each { |line| dump_file.puts(line) }
+    end
+
+    dump_file.puts(exception.inspect)
     @ui.logger.fatal { exception.inspect }
+
     exception.backtrace.each do |line|
-      @ui.logger.logdev.write("#{line}\n")
+      dump_file.puts(line)
+      @ui.logger << "#{line}\n"
     end
 
     message = format_message("TestLab v#{TestLab::VERSION} Aborted (%0.4f seconds)".black.bold % testlab_run_time)
+    dump_file.puts(ZTK::ANSI.uncolor(message))
     @ui.stderr.puts(message)
     @ui.logger.info { message }
 

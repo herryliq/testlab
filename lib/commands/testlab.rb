@@ -211,6 +211,25 @@ command :status do |status|
   end
 end
 
+# LAB BUG REPORT
+#################
+desc 'Generate a lab bug report'
+command :bugreport do |bugreport|
+  bugreport.action do |global_options, options, args|
+    @testlab.ui.logger.level = ZTK::Logger::FATAL
+
+    report_file = File.join("", "tmp", "testlab-bug-report.#{Time.now.utc.to_i}")
+
+    content = Array.new
+    content << (IO.read(DEFAULT_DUMP_FILE) rescue nil)
+    content << ("#{'=' * 30} TestLab Log #{'=' * 30}")
+    content << IO.read(DEFAULT_LOG_BACKUP)
+
+    IO.write(report_file, content.flatten.compact.join("\n"))
+
+    @testlab.ui.stdout.puts("The bug report for your most recent execution of TestLab is located at #{report_file.inspect}.")
+  end
+end
 
 # LAB DOCTOR
 #############
