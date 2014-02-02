@@ -141,8 +141,8 @@ class TestLab
         # Ensure we are not in ephemeral mode.
         self.persistent
 
-        self.down
-        self.destroy
+        (self.state == :running) and self.down
+        self.exists? and self.destroy
 
         self.create
 
