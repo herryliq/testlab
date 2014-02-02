@@ -33,7 +33,7 @@ TestLab will then attempt to build the components, executing the following tasks
 Create -> Up -> Provision
 EOF
 command :build do |build|
-  build.action do |global_options,options,args|
+  build.action do |global_options, options, args|
     @testlab.build
   end
 end
@@ -53,7 +53,7 @@ TestLab will then attempt to demolish the components, executing the following ta
 Deprovision -> Down -> Destroy
 EOF
 command :demolish do |demolish|
-  demolish.action do |global_options,options,args|
+  demolish.action do |global_options, options, args|
     @testlab.demolish
   end
 end
@@ -73,7 +73,7 @@ Then components are onlined in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :bounce do |bounce|
-  bounce.action do |global_options,options,args|
+  bounce.action do |global_options, options, args|
     @testlab.bounce
   end
 end
@@ -93,7 +93,7 @@ Then components are built in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :recycle do |recycle|
-  recycle.action do |global_options,options,args|
+  recycle.action do |global_options, options, args|
     @testlab.recycle
   end
 end
@@ -109,7 +109,7 @@ The components are created in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :create do |create|
-  create.action do |global_options,options,args|
+  create.action do |global_options, options, args|
     @testlab.create
   end
 end
@@ -125,7 +125,7 @@ The components are destroyed in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :destroy do |destroy|
-  destroy.action do |global_options,options,args|
+  destroy.action do |global_options, options, args|
     @testlab.destroy
   end
 end
@@ -141,7 +141,7 @@ The components are onlined in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :up do |up|
-  up.action do |global_options,options,args|
+  up.action do |global_options, options, rgs|
     @testlab.up
   end
 end
@@ -157,7 +157,7 @@ The components are offlined in the following order:
 Containers -> Networks -> Nodes
 EOF
 command :down do |down|
-  down.action do |global_options,options,args|
+  down.action do |global_options, options, args|
     @testlab.down
   end
 end
@@ -173,7 +173,7 @@ The components are provisioned in the following order:
 Nodes -> Networks -> Containers
 EOF
 command :provision do |provision|
-  provision.action do |global_options,options,args|
+  provision.action do |global_options, options, args|
     @testlab.provision
   end
 end
@@ -189,7 +189,7 @@ The components are torndown in the following order:
 Containers -> Networks -> Nodes
 EOF
 command :deprovision do |deprovision|
-  deprovision.action do |global_options,options,args|
+  deprovision.action do |global_options, options, args|
     @testlab.deprovision
   end
 end
@@ -198,7 +198,7 @@ end
 #############
 desc 'Display the lab status'
 command :status do |status|
-  status.action do |global_options,options,args|
+  status.action do |global_options, options, args|
     @testlab.ui.logger.level = ZTK::Logger::WARN
     @testlab.ui.stdout.puts("\nNODES:".green.bold)
     commands[:node].commands[:status].execute({}, {}, [])
