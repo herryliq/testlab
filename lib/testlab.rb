@@ -9,6 +9,18 @@ require 'active_support/inflector'
 require 'testlab/version'
 require 'testlab/monkeys'
 
+unless defined?(DEFAULT_DUMP_FILE)
+  DEFAULT_DUMP_FILE = File.join('', 'tmp', 'testlab.dump')
+end
+
+unless defined?(DEFAULT_LOG_FILE)
+  DEFAULT_LOG_FILE = File.join('', 'tmp', 'testlab.log')
+end
+
+unless defined?(DEFAULT_LOG_BACKUP)
+  DEFAULT_LOG_BACKUP = File.join('', 'tmp', 'testlab.log.bak')
+end
+
 # TestLab - A framework for building lightweight virtual infrastructure using LXC
 #
 # The core concept with the TestLab is the *Labfile*.  This file dictates the
@@ -153,9 +165,6 @@ class TestLab
 
     @config_dir    = (options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
     File.exists?(@config_dir) or FileUtils.mkdir_p(@config_dir)
-
-    # @log_file      = (options[:log_file] || File.join(@repo_dir, "testlab-#{TestLab.hostname}.log") || STDOUT)
-    # self.ui.logger = ZTK::Logger.new(@log_file)
   end
 
   # Boot TestLab
