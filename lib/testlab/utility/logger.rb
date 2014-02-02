@@ -25,7 +25,7 @@ class TestLab
           "config_dir" => testlab.config_dir.inspect,
           "repo_dir" => testlab.repo_dir.inspect,
           "labfile_path" => testlab.labfile_path.inspect,
-          "logdev" => testlab.ui.logger.logdev.inspect,
+          "logdev" => testlab.ui.logger.instance_variable_get(:@logdev).inspect,
           "version" => TestLab::VERSION.inspect,
         }
       end
