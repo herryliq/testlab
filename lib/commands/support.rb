@@ -46,17 +46,26 @@ def build_lab_commands(component, klass, &block)
     c.arg_name %(#{component}[,#{component},...])
     c.flag [:n, :name]
 
+    c.desc %(Force the actions verbatium, do not attempt to infer shortcuts; this has no effect for most operations)
+    c.switch [:f, :force]
+
     LAB_ACTION_ORDER.each do |lab_action|
       action_desc = LAB_ACTIONS[lab_action]
       c.desc(action_desc.first % "#{component}s")
       c.long_desc(ZTK::Template.string(action_desc.last, {:component => "#{component}s"}))
 
       c.command lab_action do |la|
+
         la.action do |global_options, options, args|
           iterate_objects_by_name(options[:name], klass) do |object|
-            object.send(lab_action)
+            if %w( build recycle ).map(&:to_sym).include?(lab_action)
+              object.send(lab_action, options[:force])
+            else
+              object.send(lab_action)
+            end
           end
         end
+
       end
     end
 
