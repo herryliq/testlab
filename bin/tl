@@ -74,11 +74,11 @@ require 'commands/container'
 
 # commands_from 'commands'
 
-desc 'Verbose output'
+desc 'Verbose output (or set VERBOSE=1 in your environment)'
 default_value false
 switch [:v, :verbose]
 
-desc 'Quiet output'
+desc 'Quiet output (or set QUIET=1 in your environment)'
 default_value false
 switch [:q, :quiet]
 
@@ -112,8 +112,8 @@ pre do |global,command,options,args|
 
   @ui = ZTK::UI.new(
     :logger  => logger,
-    :verbose => global[:verbose],
-    :quiet   => global[:quiet]
+    :verbose => (ENV['VERBOSE'] == '1') || global[:verbose],
+    :quiet   => (ENV['QUIET'] == '1') || global[:quiet]
   )
 
   @ui.logger.debug { "global(#{global.inspect})" }
