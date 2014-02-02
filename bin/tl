@@ -101,19 +101,21 @@ flag [:log]
 
 pre do |global,command,options,args|
   @testlab_start_time = Time.now.utc
+  @verbose = ((ENV['VERBOSE'] == '1') || (global[:verbose] == true))
+  @quiet   = ((ENV['QUIET'] == '1') || (global[:quiet] == true))
 
-  (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
+  (@verbose == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
   File.exists?(global[:log]) and FileUtils.move(global[:log], DEFAULT_LOG_BACKUP)
   logger = ZTK::Logger.new(global[:log])
-  if ((global[:verbose] == true) || (global[:quiet] == false))
+  if ((@verbose == true) || (@quiet == false))
     logger.loggers << ::Logger.new(STDOUT)
   end
 
   @ui = ZTK::UI.new(
     :logger  => logger,
-    :verbose => (ENV['VERBOSE'] == '1') || global[:verbose],
-    :quiet   => (ENV['QUIET'] == '1') || global[:quiet]
+    :verbose => @verbose,
+    :quiet   => @quiet
   )
 
   @ui.logger.debug { "global(#{global.inspect})" }
