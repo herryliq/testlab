@@ -132,7 +132,7 @@ pre do |global,command,options,args|
   @testlab.boot
 
   if !@ui.quiet?
-    message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
+    message = format_message("TestLab v#{TestLab::VERSION} Loaded".magenta.bold)
     @ui.stdout.puts(message)
     @ui.logger.info { message }
   end
@@ -144,7 +144,7 @@ post do |global,command,options,args|
   testlab_run_time = (Time.now.utc - @testlab_start_time)
 
   if !@ui.quiet?
-    message = format_message("TestLab v#{TestLab::VERSION} Finished (%0.4f seconds)".black.bold % testlab_run_time)
+    message = format_message("TestLab v#{TestLab::VERSION} Finished (%0.4f seconds)".magenta.bold % testlab_run_time)
     @ui.stdout.puts(message)
     @ui.logger.info { message }
   end
