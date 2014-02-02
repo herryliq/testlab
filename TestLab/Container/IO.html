@@ -176,7 +176,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#import-instance_method" title="#import (instance method)">- (Boolean) <strong>import</strong>(local_file) </a>
+      <a href="#import-instance_method" title="#import (instance method)">- (Boolean) <strong>import</strong>(local_file = nil) </a>
     
 
     
@@ -549,7 +549,7 @@
       <div class="method_details ">
   <h3 class="signature " id="import-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>import</strong>(local_file) 
+    - (<tt>Boolean</tt>) <strong>import</strong>(local_file = nil) 
   
 
   
@@ -651,7 +651,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 117</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Import: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
@@ -678,8 +678,8 @@
   <span class='comment'># Ensure we are not in ephemeral mode.
 </span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_persistent'>persistent</span>
 
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>
 
@@ -1013,7 +1013,7 @@ rm -fv </span><span class='embexpr_beg'>#{</span><span class='id identifier ruby
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  1 00:52:17 2014 by
+  Generated on Sun Feb  2 00:34:22 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

@@ -308,8 +308,6 @@
       <pre class="lines">
 
 
-54
-55
 56
 57
 58
@@ -317,10 +315,12 @@
 60
 61
 62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_action'>action</span><span class='comma'>,</span> <span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_klass'>klass</span>       <span class='op'>=</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>::</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -474,33 +474,37 @@
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_ui'>ui</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:ui</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_mark'>mark</span>    <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:mark</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Completed in %0.4f seconds!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ui'>ui</span>       <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:ui</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_message'>message</span>  <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_mark'>mark</span>     <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:mark</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Completed in %0.4f seconds!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>MiscError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block!</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>MiscError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a ZTK::UI object!</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>MiscError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a message!</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_logdev'>logdev</span> <span class='op'>==</span> <span class='const'>STDOUT</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_mark'>mark</span> <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'> / </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mark'>mark</span><span class='period'>.</span><span class='id identifier rubyid_black'>black</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_uncolor'>uncolor</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-    <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;=</span> <span class='int'>60</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_length'>length</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='int'>60</span> <span class='op'>-</span> <span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_mark'>mark</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='op'>*</span> <span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'># </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mark'>mark</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_black'>black</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_use_spinner'>use_spinner</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_logdev'>logdev</span> <span class='op'>==</span> <span class='const'>STDOUT</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='kw'>false</span> <span class='op'>:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_use_spinner'>use_spinner</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_msg'>msg</span>         <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_length'>length</span>      <span class='op'>=</span> <span class='id identifier rubyid_msg'>msg</span><span class='period'>.</span><span class='id identifier rubyid_uncolor'>uncolor</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='id identifier rubyid_max'>max</span>         <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;=</span> <span class='int'>60</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_length'>length</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='int'>60</span> <span class='op'>-</span> <span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_mrk'>mrk</span>         <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span> <span class='op'>*</span> <span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'># </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mark'>mark</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span>
 
-  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Benchmark</span><span class='period'>.</span><span class='id identifier rubyid_bench'>bench</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='symbol'>:mark</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_mark'>mark</span><span class='comma'>,</span> <span class='symbol'>:use_spinner</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_use_spinner'>use_spinner</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_logdev'>logdev</span> <span class='op'>==</span> <span class='const'>STDOUT</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>STDOUT</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:loggers</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>1</span>
+      <span class='id identifier rubyid_use_spinner'>use_spinner</span> <span class='op'>=</span> <span class='kw'>false</span>
+      <span class='id identifier rubyid_mrk'>mrk</span> <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'> / </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mark'>mark</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Benchmark</span><span class='period'>.</span><span class='id identifier rubyid_bench'>bench</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='symbol'>:mark</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_mrk'>mrk</span><span class='comma'>,</span> <span class='symbol'>:use_spinner</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_use_spinner'>use_spinner</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>yield</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -524,12 +528,12 @@
       <pre class="lines">
 
 
-65
-66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sudo'>sudo</span>
   <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo -p '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sudo_prompt'>sudo_prompt</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>)</span></span>
@@ -554,12 +558,12 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/utility/misc.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sudo_prompt'>sudo_prompt</span>
   <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo password for %u@%h: </span><span class='tstring_end'>)</span></span>
@@ -574,7 +578,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  1 00:52:16 2014 by
+  Generated on Sun Feb  2 00:34:23 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
