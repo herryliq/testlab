@@ -68,8 +68,6 @@ When supplying container names you actually have three options.  When you do not
 
 # Installation
 
-You must have access to Source and Gerrit.
-
 * Install the latest version of VirtualBox: https://www.virtualbox.org/wiki/Downloads
 * Install the latest version of Vagrant: http://www.vagrantup.com/downloads.html
 * Install the latest version of RVM: https://rvm.io/rvm/install
