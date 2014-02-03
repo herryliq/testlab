@@ -22,182 +22,186 @@ TestLab can also import and export containers, making it easy to share them.  Te
 
 TestLab can be run via the command-line or can be interfaced with directly via Ruby code.
 
-# What is a Labfile?
+# Troubleshooting
 
-A `Labfile` defines what your lab will look like using the TestLab DSL.
+To get debug level output run TestLab with a `-v` flag like this:
 
-# Using TestLab Interactively
+    tl -v container build -n chef-client
 
-    $ tl help
-    NAME
-        tl - TestLab - A toolkit for building virtual computer labs
+or you can control this by setting the environment variable `VERBOSE` to `1`:
 
-        TestLab is based around the abstraction of three main components: nodes, networks and containers. Nodes represent a system
-        (bare-metal or virtualized) that hosts containers. Networks represent a Linux bridge on a node. Containers simply represent a Linux
-        Container (LXC) running on its parent node which is typically connected to a network on the node.
+    VERBOSE=1 tl container build -n chef-client
 
-        In addition to the core component abstractions, TestLab shares a series of core tasks that are universal across all of the
-        components. These are create and destroy, up and down, provision and deprovision. Several other core tasks, such as build,
-        demolish, recycle and bounce encapsulate the previously mentioned tasks and simply act as convenience tasks.
+Alternately you can silence the output with the `-q` flag or by setting the environment variable `QUIET` to `1`.
 
-        You can execute almost all of the tasks against the entire lab, or individual lab components.
+# Reporting Issues and Bugs
 
-        When building a lab from scratch, you will typically run 'tl build'. To breakdown your lab, destroying all the components, you will
-        typically run 'tl demolish'. If you want to re-build the lab you can run 'tl recycle' which will run the demolish task followed by
-        the build task against all the lab components. If you want to power-cycle the entire lab you can run 'tl bounce' which will run the
-        down task followed by the up task against all the lab components. Again these tasks can be run against the lab as a whole or
-        individual components.
+If you are having issues, please generate a bug report and reference in an issue on GitHub.
 
-        You can view the status of the entire lab using 'tl status', or view the status of individual components using 'tl node status',
-        'tl network status' or 'tl container status'.
+To generate a bug report run the following command:
 
-        You can easily get help for any of the component tasks using the syntax 'tl help <component>'. This can be extended to the
-        following syntax 'tl help <task>' or 'tl help <component> <task>' for more in-depth help.
+    $ tl -q bugreport
+    Your bug report is located at "/tmp/testlab-bug-report.1391307431".
 
-    SYNOPSIS
-        tl [global options] command [command options] [arguments...]
+# Getting Help and General Usage
 
-    VERSION
-        1.9.2
+You can get help a few ways:
 
-    GLOBAL OPTIONS
-        -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
-        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/Dropbox/code/lookout/chef-repo)
-        -c, --config=path/to/directory - Path to Configuration directory: ${REPO}/.testlab-$(hostname -s) (default: none)
-        --version                      - Display the program version
-        -v, --[no-]verbose             - Show verbose output
-        -q, --[no-]quiet               - Quiet mode
-        --help                         - Show this message
+* Use the help command to get details on sets of commands or specific commands.
+* On Freenode IRC, in #jovelabs
 
-    COMMANDS
-        help        - Shows a list of commands or help for one command
-        container   - Manage lab containers
-        network     - Manage lab networks
-        node        - Manage lab nodes
-        build       - Build the lab (create->up->provision)
-        demolish    - Demolish the lab (deprovision->down->destroy)
-        bounce      - Bounce the lab (down->up)
-        recycle     - Recycle the lab (demolish->build)
-        create      - Create the lab components
-        destroy     - Destroy the lab components
-        up          - On-line the lab components
-        down        - Off-line the lab components
-        provision   - Provision the lab components
-        deprovision - De-provision the lab components
-        status      - Display the lab status
-
-## Getting Help
-
-TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:
+TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Help for commands is not far away, for example:
 
     tl help
-    tl help node
-    tl help container
-    tl help network
+    tl help node recycle
+    tl help network build
+    tl help container import
+    tl help container demolish
 
-## Container Help
+You can also shorten commands; for example `tl container recycle` can also be written as `tl con rec`.
 
-Here is a sample of the help output for the container tasks:
+When supplying container names you actually have three options.  When you do not supply a container name, it is inferred that you want to run the action against all containers.  Alternately you can supply a single container name or a comma delimited list of container names.  For example:
 
-    $ tl help container
-    NAME
-        container - Manage lab containers
+    tl container build                             # build all containers
+    tl container build -n chef-client              # only build the chef-client container
+    tl container build -n chef-server,chef-client  # build the chef-server and chef-client container (NOTE: list order dictates execution order)
 
-    SYNOPSIS
-        tl [global options] container [command options]  bounce
-        tl [global options] container [command options]  build
-        tl [global options] container [command options]  console
-        tl [global options] container [command options] [-t container|--to container] copy
-        tl [global options] container [command options]  create
-        tl [global options] container [command options]  demolish
-        tl [global options] container [command options]  deprovision
-        tl [global options] container [command options]  destroy
-        tl [global options] container [command options]  down
-        tl [global options] container [command options]  ephemeral
-        tl [global options] container [command options] [--output filename] [-c level|--compression level] export
-        tl [global options] container [command options] [--input filename] import
-        tl [global options] container [command options]  persistent
-        tl [global options] container [command options]  provision
-        tl [global options] container [command options]  recycle
-        tl [global options] container [command options] [-i filename|--identity filename] [-u username|--user username] ssh
-        tl [global options] container [command options]  ssh-config
-        tl [global options] container [command options]  status
-        tl [global options] container [command options]  up
+# Installation
 
-    COMMAND OPTIONS
-        -n, --name=container[,container,...] - Optional container ID or comma separated list of container IDs (default: none)
+You must have access to Source and Gerrit.
 
-    COMMANDS
-        build       - Build containers (create->up->provision)
-        demolish    - Demolish containers (deprovision->down->destroy)
-        recycle     - Recycle containers (demolish->build)
-        bounce      - Bounce containers (down->up)
-        create      - Initialize containers
-        destroy     - Terminate containers
-        up          - On-line containers
-        down        - Off-line containers
-        provision   - Provision containers
-        deprovision - De-provision containers
-        status      - Display containers status
-        ssh         - Container SSH console
-        ssh-config  - Container SSH configuration
-        console     - Container console
-        ephemeral   - Enable ephemeral mode for containers
-        persistent  - Enable persistent mode for containers
-        copy        - Copy containers
-        export      - Export containers
-        import      - Import containers
+* Install the latest version of VirtualBox: https://www.virtualbox.org/wiki/Downloads
+* Install the latest version of Vagrant: http://www.vagrantup.com/downloads.html
+* Install the latest version of RVM: https://rvm.io/rvm/install
 
-## Interacting with Containers
+# Updating
 
-Almost all commands dealing will containers will take this argument:
+* Install the latest version of VirtualBox: https://www.virtualbox.org/wiki/Downloads
+* Install the latest version of Vagrant: http://www.vagrantup.com/downloads.html
 
-    COMMAND OPTIONS
-        -n, --name=container[,container,...] - Optional container ID or comma separated list of container IDs (default: none)
+# Lab
 
-You can interact with containers via SSH:
+## Labfile
 
-    tl container ssh -n <name>
+The `Labfile` defines your virtual computer lab.  It defines where you want to run your computer lab (i.e. VirtualBox/OpenStack/Bare Metal), what the network topology of that computer lab is and what servers are connect to those networks.
 
-For example:
+You can override the default `Labfile` by setting the path to your alternate `Labfile` via the environment variable `LABFILE` or via a command line argument (see `tl help` for more details) directly to TestLab.
 
-    tl container ssh -n server-www-1
+## Building your Lab
 
-Would connect to the container defined as 'server-www-1' in our Labfile.
+You should build your TestLab node (i.e. VirtualBox VM) and TestLab networks first.  This is the foundation which the containers run on.  You should attempt to keep your TestLab node intact and only cycle your containers.
 
-You can pass an optional username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the `Labfile` for that container, otherwise the default user for the containers distro is used.
+**The follow commands assume you have functioning VirtualBox, Vagrant and RVM installations.**
 
-    $ tl help container ssh
-    NAME
-        ssh - Open an SSH console to a container
+    tl build
 
-    SYNOPSIS
-        tl [global options] container ssh [command options]
+## Demolishing your Lab
 
-    COMMAND OPTIONS
-        -u, --user=username - Specify an SSH Username to use (default: none)
-        -i, --identity=key  - Specify an SSH Identity Key to use (default: none)
+You should demolish your TestLab node gracefully if possible.  This can be easily accomplished.
 
-You can individually create or destroy, online or offline and provision or deprovision containers:
+**The follow commands assume you have functioning VirtualBox, Vagrant and RVM installations.**
 
-    tl container create -n server-www-1
-    tl container destroy -n server-www-1
+    tl demolish
 
-    tl container up -n server-www-1
-    tl container down -n server-www-1
+## Importing Labs
 
-    tl container provision -n server-www-1
-    tl container deprovision -n server-www-1
+Importing entire labs with an embedded `Labfile` is coming soon.
 
-You can recycle a container, destroying then creating it again, provisioning it back to a "pristine" condition based on the `Labfile`:
 
-    tl container recycle -n server-www-1
+## Containers
 
-You can bounce a container, offlining then onlining it again:
+### Building Containers
 
-    tl container bounce -n server-www-1
+You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.
 
-## Ephemeral Container Cloning
+**The follow commands assume you have a functioning TestLab node.**
+
+    tl container build --force                 # Force all defined containers to build even if some can be imported
+    tl container build                         # Attempts to import all defined containers, building those which can not be imported
+    tl container build -n chef-client --force  # Force the 'chef-client' container to build from scratch even if it can be imported
+
+### Importing Containers
+
+You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.
+
+**The follow commands assume you have a functioning TestLab node.**
+
+    tl container import                             # Attempts to import all defined containers
+    tl container import -n chef-client              # Attempts to only import the 'chef-client' container
+    tl container import -n chef-server,chef-client  # Attempts to only import the 'chef-server' and 'chef-client' container
+
+### Demolishing Containers
+
+You can easily remove all the containers your have defined in your `Labfile` as well as single containers.  You should generally demolish your containers instead of destroying them because the demolish action involves decommissioning.
+
+**The follow commands assume you have a functioning TestLab node with running containers.**
+
+    tl container demolish                             # Demolish all defined containers
+    tl container demolish -n chef-client              # Only demolish the 'chef-client' container
+    tl container demolish -n chef-client,chef-server  # Only demolish the 'chef-client' and 'chef-server' containers
+
+### Connecting to Containers
+
+**The follow commands assume you have a functioning TestLab node with running containers.**
+
+#### Console
+
+You can easily open an LXC console to a container.  This would be similar to what you get when using IPMI to get a console.
+
+    tl container console -n chef-client
+
+#### SSH
+
+You can easily open an SSH console to a container.  Simply use the SSH command and supply the name of the container you wish to connect to, in this example we are SSH'ing to the chef-client container.
+
+    tl container ssh -n chef-client
+
+#### TCP/UDP/ICMP
+
+You can easily use any type of IP based network communication to talk to your containers.  Your container names will resolve for all containers and for your local machine.  For example if you had a web server running on a container called www-app you could direct your web browser at 'http://www-app' to connect to it.
+
+If you have a container named chef-client and you want to ping it, simply run ping against the host; for example:
+
+    $ ping -c 5 chef-client
+    PING chef-client (100.64.13.253) 56(84) bytes of data.
+    64 bytes from chef-client (100.64.13.253): icmp_req=1 ttl=63 time=0.463 ms
+    64 bytes from chef-client (100.64.13.253): icmp_req=2 ttl=63 time=0.472 ms
+    64 bytes from chef-client (100.64.13.253): icmp_req=3 ttl=63 time=0.483 ms
+    64 bytes from chef-client (100.64.13.253): icmp_req=4 ttl=63 time=0.493 ms
+    64 bytes from chef-client (100.64.13.253): icmp_req=5 ttl=63 time=0.492 ms
+    --- chef-client ping statistics ---
+    5 packets transmitted, 5 received, 0% packet loss, time 3999ms
+    rtt min/avg/max/mdev = 0.463/0.480/0.493/0.026 ms
+
+If you have a container named chef-server and you want to NMAP scan it, simply run nmap against the host; for example:
+
+    $ nmap -sT -vv chef-server
+    Starting Nmap 5.21 ( http://nmap.org ) at 2014-01-30 17:18 PST
+    Initiating Ping Scan at 17:18
+    Scanning chef-server (100.64.13.1) [2 ports]
+    Completed Ping Scan at 17:18, 0.00s elapsed (1 total hosts)
+    Initiating Connect Scan at 17:18
+    Scanning chef-server (100.64.13.1) [1000 ports]
+    Discovered open port 80/tcp on 100.64.13.1
+    Discovered open port 22/tcp on 100.64.13.1
+    Discovered open port 443/tcp on 100.64.13.1
+    Discovered open port 444/tcp on 100.64.13.1
+    Discovered open port 4000/tcp on 100.64.13.1
+    Completed Connect Scan at 17:18, 0.06s elapsed (1000 total ports)
+    Nmap scan report for chef-server (100.64.13.1)
+    Host is up (0.0029s latency).
+    Scanned at 2014-01-30 17:18:14 PST for 0s
+    Not shown: 995 closed ports
+    PORT     STATE SERVICE
+    22/tcp   open  ssh
+    80/tcp   open  http
+    443/tcp  open  https
+    444/tcp  open  snpp
+    4000/tcp open  remoteanything
+    Read data files from: /usr/share/nmap
+    Nmap done: 1 IP address (1 host up) scanned in 0.10 seconds
+
+### Ephemeral Container Cloning
 
 As it stands attempting to iterate infrastructure with Vagrant is a slow and painful process.  Enter LXC and ephemeral cloning.  The idea here is that you have a container that is provisioned to a "pristine" state according to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook, for example, and re-run it against the container.  Running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
 
@@ -222,7 +226,6 @@ To put the container back into the default, persistent mode:
     [TL] TestLab v1.1.0 Loaded
     [TL] container chef-client persistent                        # Completed in 17.3692 seconds!
     [TL] TestLab v1.1.0 Finished (17.8692 seconds)
-
 
 ## Network Routes
 
@@ -249,6 +252,34 @@ These routes can be manually manipulated as well (regardless of if you have spec
         add  - Add routes to lab networks
         del  - Delete routes to lab networks
         show - Show routes to lab networks
+
+# Reference
+
+## APT-Cacher NG
+
+If you are prompted for login credentials while using the APT-Cacher NG web UI you should use username admin, password admin .
+
+If you start seeing APT errors in your containers, it is likely because you have some corruption or some other issue with APT-Cacher NG's cache.  Access the URL below if you need to have APT-Cacher NG repair itself.
+
+    http://100.64.13.254:3142/acng-report.html
+
+## Chef-Server Web UI
+
+You can access the Chef server's web UI using the following URL.
+
+    https://chef-server:444
+
+## Chef-Server API
+
+You can access the Chef server's API using the following URL.
+
+    https://chef-server
+
+## Linux Containers (LXC)
+
+### Service Startup Delay
+
+LXC takes around 1-2 minutes before it will switch the runlevel in your container and start executing daemons which are set to start on boot. Because of this if you import a container from an image or clone a container, upon starting that container you will experience this delay before services are automatically started up. There is one exception to this and that is the SSH daemon is started immediately by LXC. This means you can manually SSH in, or use some other method such as capistrano, to start your required services; but it is advisable that you wait and allow the system to start the services as this would indicate that it would properly startup in production.  With some containers such as the chef-server; we use it's provisioner to start the services we want when TestLab brings the container online.
 
 # Using TestLab Programmatically
 
