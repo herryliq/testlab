@@ -5,8 +5,8 @@ version ">= 1.5.1"
 
 shell_provision_script = <<-EOF
 set -x
-apt-get -y update
-apt-get -y install dnsutils
+apt-get -qy update
+apt-get -qy install dnsutils
 EOF
 
 REPO = File.dirname(__FILE__)

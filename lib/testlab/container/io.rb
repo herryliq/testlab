@@ -74,8 +74,8 @@ class TestLab
         # Ensure the container is stopped before we attempt to export it.
         self.down
 
-        self.lxc.execute(%(/bin/bash -c 'apt-get -y autoremove'))
-        self.lxc.execute(%(/bin/bash -c 'apt-get -y clean'))
+        self.lxc.execute(%(/bin/bash -c 'apt-get -qy autoremove'))
+        self.lxc.execute(%(/bin/bash -c 'apt-get -qy clean'))
 
         export_tempfile = Tempfile.new('export')
         remote_filename = File.basename(export_tempfile.path.dup)

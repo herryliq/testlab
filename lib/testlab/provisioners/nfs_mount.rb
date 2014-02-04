@@ -26,7 +26,7 @@ class TestLab
 
       # NFSMount: Container Provision
       def on_container_provision(container)
-        container.exec(%(sudo dpkg --status nfs-common || sudo apt-get -y install nfs-common))
+        container.exec(%(sudo dpkg --status nfs-common || sudo apt-get -qy install nfs-common))
 
         add_nfs_mounts(container)
         container_mount(container)
@@ -122,7 +122,7 @@ EOI
         when /darwin/ then
           %(#{sudo} nfsd enable)
         when /linux/ then
-          %((#{sudo} dpkg --status nfs-kernel-server || #{sudo} apt-get -y install nfs-kernel-server) && #{sudo} service nfs-kernel-server start)
+          %((#{sudo} dpkg --status nfs-kernel-server || #{sudo} apt-get -qy install nfs-kernel-server) && #{sudo} service nfs-kernel-server start)
         end
       end
 

@@ -15,8 +15,8 @@ export
 mkdir -p ${CHEF_SOLO_ROOT}
 cd ${CHEF_SOLO_ROOT}
 
-apt-get -y update
-apt-get -y install build-essential expect wget curl libgecode-dev ca-certificates
+apt-get -qy update
+apt-get -qy install build-essential expect wget curl libgecode-dev ca-certificates
 
 mkdir -pv /etc/chef /var/log/chef ${HOME}/.chef
 

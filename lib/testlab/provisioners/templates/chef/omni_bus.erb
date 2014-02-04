@@ -12,7 +12,7 @@ export HOME="<%= @home_dir %>"
 export
 
 cd /tmp
-apt-get -y install wget ca-certificates || yum -y install wget ca-certificates
+apt-get -qy install wget ca-certificates || yum -y install wget ca-certificates
 rm -fv /tmp/install.sh
 wget -v https://www.opscode.com/chef/install.sh -O /tmp/install.sh
 /bin/bash /tmp/install.sh -v <%= @chef[:client][:version] %>
