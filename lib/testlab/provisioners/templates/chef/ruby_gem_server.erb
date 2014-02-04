@@ -14,8 +14,8 @@ export
 mkdir -pv ${CHEF_SOLO_ROOT}
 cd ${CHEF_SOLO_ROOT}
 
-apt-get -y --force-yes update
-apt-get -y --force-yes install build-essential expect wget curl libgecode-dev ca-certificates ruby1.8 rubygems
+apt-get -y update
+apt-get -y install build-essential expect wget curl libgecode-dev ca-certificates ruby1.8 rubygems
 
 mkdir -pv /etc/chef /var/log/chef ${HOME}/.chef
 
