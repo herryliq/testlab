@@ -37,14 +37,21 @@ class TestLab
     private
 
       def add_hosts(container)
-        @command.exec(<<-EOF)
-set -x
+        script = <<-EOF
 cat <<EOI | #{sudo} tee -a /etc/hosts
 #{def_tag}
 #{hosts_blob(container)}
 #{end_tag}
 EOI
         EOF
+
+        tempfile = Tempfile.new('script')
+        tempfile.write(script)
+        tempfile.flush
+
+        command = %(/bin/bash -x #{tempfile.path})
+
+        @command.exec(command)
       end
 
       def remove_hosts
