@@ -55,8 +55,7 @@ class TestLab
     private
 
       def add_nfs_mounts(container)
-        @command.exec(<<-EOF)
-set -x
+        script = <<-EOF
 #{service_check}
 grep '#{def_tag(container)}' /etc/exports && exit 0
 cat <<EOI | #{sudo} tee -a /etc/exports
@@ -66,6 +65,14 @@ cat <<EOI | #{sudo} tee -a /etc/exports
 EOI
 #{restart_service_command}
         EOF
+
+        tempfile = Tempfile.new('script')
+        tempfile.write(script)
+        tempfile.flush
+
+        command = %(/bin/bash -x #{tempfile.path})
+
+        @command.exec(command)
       end
 
       def remove_nfs_mounts(container)
