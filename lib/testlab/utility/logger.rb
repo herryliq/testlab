@@ -31,12 +31,15 @@ class TestLab
       end
 
       def log_details(testlab)
+        @command ||= ZTK::Command.new(:silence => true, :ignore_exit_status => true)
+
         {
           "hostname" => "%s (%s)" % [Socket.gethostname.inspect, TestLab.hostname.inspect],
           "program" => $0.to_s.inspect,
           "argv" => ARGV.join(' ').inspect,
           "timezone" => Time.now.zone.inspect,
-          "user" => ENV['USER'].inspect
+          "user" => ENV['USER'].inspect,
+          "uname" => @command.exec(%(uname -a)).output.strip.inspect
         }
       end
 
@@ -67,7 +70,7 @@ class TestLab
       end
 
       def log_external_dependencies(testlab)
-        @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
+        @command ||= ZTK::Command.new(:silence => true, :ignore_exit_status => true)
 
         {
           "vagrant_version" => @command.exec(%(/usr/bin/env vagrant --version)).output.strip.inspect,
