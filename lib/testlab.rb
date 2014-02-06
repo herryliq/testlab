@@ -179,8 +179,16 @@ class TestLab
         nofile_max = 4096
       end
 
-      self.ui.logger.info { "Changing maximum open file descriptors from #{nofile_cur.inspect} to #{nofile_max.inspect}" }
-      Process.setrlimit(Process::RLIMIT_NOFILE, nofile_max)
+      # Attempt to increment the number of open files we can have.  Now we just
+      # rescue this, because OSX doesn't seem to like us doing this in general.
+      if (nofile_max > nofile_cur)
+        begin
+          self.ui.logger.info { "Attempting to change maximum open file descriptors from #{nofile_cur.inspect} to #{nofile_max.inspect}" }
+          Process.setrlimit(Process::RLIMIT_NOFILE, nofile_max)
+        rescue Exception => e
+          self.ui.logger.warn { "Failed to change maximum open file descriptors from #{nofile_cur.inspect} to #{nofile_max.inspect}!" }
+        end
+      end
     end
 
     @labfile         = TestLab::Labfile.load(labfile_path)
