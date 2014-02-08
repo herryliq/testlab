@@ -44,6 +44,12 @@ class TestLab
     attribute  :provisioners,  :default => Array.new
     attribute  :config,        :default => Hash.new
 
+    # Execution priority; set the order in which the object should execute when
+    # performing parallel operations; a higher value priority equates to more
+    # precedence.  Objects with identical priority values will execute in
+    # parallel.
+    attribute   :priority,       :default => 0
+
 
     def initialize(*args)
       @ui = TestLab.ui
