@@ -123,9 +123,12 @@ class TestLab
 
     attribute   :mounts,        :default => Array.new
 
+    # The URL to this container or container templates shipping container image.
     attribute   :sc_url
 
+    # The AppArmor profile LXC should use
     attribute   :aa_profile
+    # Additional capabilities LXC should drop
     attribute   :cap_drop
 
     attribute   :tags,          :default => Array.new
