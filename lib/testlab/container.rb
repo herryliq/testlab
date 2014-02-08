@@ -194,6 +194,18 @@ class TestLab
       self.node.repo_dir
     end
 
+    class << self
+
+      def priority_groups
+        self.all.delete_if{|c| (c.template == true) }.map(&:priority).sort.uniq.reverse
+      end
+
+      def by_priority(priority)
+        self.all.delete_if{|c| (c.template == true) }.select{ |c| c.priority == priority }
+      end
+
+    end
+
   end
 
 end
