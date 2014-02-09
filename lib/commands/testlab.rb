@@ -228,8 +228,14 @@ command :bugreport do |bugreport|
 
     content = Array.new
     content << (IO.read(DEFAULT_DUMP_FILE) rescue nil)
-    content << ("#{'=' * 30} TestLab Log #{'=' * 30}")
-    content << IO.read(DEFAULT_LOG_BACKUP)
+
+    content << build_header("TestLab Log")
+    content << IO.read(DEFAULT_LOG_FILE)
+
+    Dir[DEFAULT_LOG_GLOB].each do |log_filename|
+      content << build_header("TestLab Log: #{log_filename.inspect}")
+      content << IO.read(log_filename)
+    end
 
     IO.write(report_file, content.flatten.compact.join("\n"))
 

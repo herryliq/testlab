@@ -6,6 +6,6 @@ unless defined?(DEFAULT_LOG_FILE)
   DEFAULT_LOG_FILE = File.join('', 'tmp', 'testlab.log')
 end
 
-unless defined?(DEFAULT_LOG_BACKUP)
-  DEFAULT_LOG_BACKUP = File.join('', 'tmp', 'testlab.log.bak')
+unless defined?(DEFAULT_LOG_GLOB)
+  DEFAULT_LOG_GLOB = File.join('', 'tmp', 'testlab.log.*')
 end

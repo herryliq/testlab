@@ -106,7 +106,11 @@ pre do |global,command,options,args|
 
   (@verbose == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
-  File.exists?(global[:log]) and FileUtils.move(global[:log], DEFAULT_LOG_BACKUP)
+  File.exists?(global[:log]) and FileUtils.rm_f(global[:log])
+  Dir[DEFAULT_LOG_GLOB].each do |log_filename|
+    File.exists?(log_filename) and FileUtils.rm_f(log_filename)
+  end
+
   logger = ZTK::Logger.new(global[:log])
   if ((@verbose == true) || (@quiet == false))
     logger.loggers << ::Logger.new(STDOUT)
