@@ -219,9 +219,22 @@ end
 
 # LAB BUG REPORT
 #################
-desc 'Generate a lab bug report'
+desc 'Generate a bug report'
 command :bugreport do |bugreport|
   bugreport.action do |global_options, options, args|
+
+    def build_header(message)
+      char    = '#'
+      header  = "#{char * 30}   #{message}   #{char * 30}"
+      content = Array.new
+
+      content << (char * header.uncolor.length)
+      content << header
+      content << (char * header.uncolor.length)
+
+      content
+    end
+
     @testlab.ui.logger.level = ZTK::Logger::FATAL
 
     report_file = File.join("", "tmp", "testlab-bug-report.#{Time.now.utc.to_i}")
@@ -239,7 +252,7 @@ command :bugreport do |bugreport|
 
     IO.write(report_file, content.flatten.compact.join("\n"))
 
-    @testlab.ui.stdout.puts("The bug report for your most recent execution of TestLab is located at #{report_file.inspect}.")
+    @testlab.ui.stderr.puts("The bug report for your most recent execution of TestLab is located at #{report_file.inspect}.")
   end
 end
 
