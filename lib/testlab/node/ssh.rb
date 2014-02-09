@@ -3,7 +3,9 @@ class TestLab
 
     module SSH
 
-      # SSH to the Node
+      # Node SSH Connection
+      #
+      # @return [ZTK::SSH] Returns a new or cached ZTK::SSH object for the node.
       def ssh(options={})
         if (!defined?(@ssh) || @ssh.nil?)
           @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 3600, :silence => true}.merge(options))
@@ -17,7 +19,10 @@ class TestLab
         @ssh
       end
 
-      # SSH to a container running on the Node
+      # Container SSH Connection
+      #
+      # @return [ZTK::SSH] Returns a new or cached ZTK::SSH object for the
+      #   container.
       def container_ssh(container, options={})
         name = container.id
         @container_ssh ||= Hash.new
