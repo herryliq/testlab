@@ -137,6 +137,7 @@ class TestLab
   autoload :User,        'testlab/user'
   autoload :Utility,     'testlab/utility'
 
+  include TestLab::Support::Parallel
   include TestLab::Utility::Misc
 
   attr_accessor :config_dir

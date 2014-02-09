@@ -13,6 +13,7 @@ class TestLab
   module Support
     autoload :Execution, 'testlab/support/execution'
     autoload :Lifecycle, 'testlab/support/lifecycle'
+    autoload :Parallel,  'testlab/support/parallel'
   end
 
 end
