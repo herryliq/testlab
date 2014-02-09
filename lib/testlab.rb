@@ -427,11 +427,13 @@ class TestLab
   def method_proxy(method_name, *method_args)
     nodes.each do |node|
       node.send(method_name, *method_args)
+
       node.networks.each do |network|
         network.send(method_name, *method_args)
       end
-      node.containers.each do |container|
-        container.send(method_name, *method_args)
+
+      do_parallel_actions(TestLab::Container, node.containers, method_name) do |object, action, klass|
+        object.send(method_name, *method_args)
       end
     end
   end
@@ -444,12 +446,14 @@ class TestLab
   # @return [Boolean] True if successful.
   def reverse_method_proxy(method_name, *method_args)
     nodes.reverse.each do |node|
-      node.containers.reverse.each do |container|
-        container.send(method_name, *method_args)
+      do_parallel_actions(TestLab::Container, node.containers.reverse, method_name, true) do |object, action, klass|
+        object.send(method_name, *method_args)
       end
+
       node.networks.reverse.each do |network|
         network.send(method_name, *method_args)
       end
+
       node.send(method_name, *method_args)
     end
   end

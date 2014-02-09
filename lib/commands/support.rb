@@ -57,12 +57,10 @@ def build_lab_commands(component, klass, &block)
       c.command lab_action do |la|
 
         la.action do |global_options, options, args|
-          iterate_objects_by_name(options[:name], klass) do |object|
-            if %w( build recycle ).map(&:to_sym).include?(lab_action)
-              object.send(lab_action, options[:force])
-            else
-              object.send(lab_action)
-            end
+          objects  = iterate_objects_by_name(options[:name], klass)
+
+          @testlab.do_parallel_actions(klass, objects, lab_action) do |object, action, klass|
+            send_lab_action(object, options, action)
           end
         end
 
@@ -70,6 +68,14 @@ def build_lab_commands(component, klass, &block)
     end
 
     !block.nil? and block.call(c)
+  end
+end
+
+def send_lab_action(object, options, lab_action)
+  if %w( build recycle ).map(&:to_sym).include?(lab_action)
+    object.send(lab_action, options[:force])
+  else
+    object.send(lab_action)
   end
 end
 
