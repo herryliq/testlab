@@ -335,7 +335,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Node/SSH.html" title="TestLab::Node::SSH (module)">SSH</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Node/SSH.html#container_ssh-instance_method" title="TestLab::Node::SSH#container_ssh (method)">#container_ssh</a></span>, <span class='object_link'><a href="Node/SSH.html#ssh-instance_method" title="TestLab::Node::SSH#ssh (method)">#ssh</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Node/SSH.html#container_ssh-instance_method" title="TestLab::Node::SSH#container_ssh (method)">#container_ssh</a></span>, <span class='object_link'><a href="Node/SSH.html#ssh-instance_method" title="TestLab::Node::SSH#ssh (method)">#ssh</a></span>, <span class='object_link'><a href="Node/SSH.html#ssh_shutdown%21-instance_method" title="TestLab::Node::SSH#ssh_shutdown! (method)">#ssh_shutdown!</a></span></p>
 
   
   
@@ -434,12 +434,6 @@
       <pre class="lines">
 
 
-48
-49
-50
-51
-52
-53
 54
 55
 56
@@ -448,10 +442,16 @@
 59
 60
 61
-62</pre>
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
@@ -505,12 +505,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_labfile'>labfile</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -535,13 +535,13 @@
       <pre class="lines">
 
 
-72
-73
-74
-75</pre>
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_domain'>domain</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -567,12 +567,12 @@
       <pre class="lines">
 
 
-68
-69
-70</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/node.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_labfile'>labfile</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -587,7 +587,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Feb  6 16:02:48 2014 by
+  Generated on Sat Feb  8 21:44:40 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

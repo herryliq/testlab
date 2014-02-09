@@ -105,7 +105,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/testlab/container.rb<span class="defines">,<br />
-  lib/testlab/container/io.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/class_methods.rb</span>
+  lib/testlab/container/io.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/configuration.rb</span>
 </dd>
   
 </dl>
@@ -271,6 +271,59 @@ the container.</p>
 
 
 
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#by_priority-class_method" title="by_priority (class method)">+ (Object) <strong>by_priority</strong>(priority) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#priority_groups-class_method" title="priority_groups (class method)">+ (Object) <strong>priority_groups</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -547,15 +600,6 @@ the container.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151
-152
-153
 154
 155
 156
@@ -580,10 +624,19 @@ the container.</p>
 175
 176
 177
-178</pre>
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
@@ -627,6 +680,72 @@ the container.</p>
 </div>
 
 
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="by_priority-class_method">
+  
+    + (<tt>Object</tt>) <strong>by_priority</strong>(priority) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+203
+204
+205</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 203</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_by_priority'>by_priority</span><span class='lparen'>(</span><span class='id identifier rubyid_priority'>priority</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_priority'>priority</span> <span class='op'>==</span> <span class='id identifier rubyid_priority'>priority</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="priority_groups-class_method">
+  
+    + (<tt>Object</tt>) <strong>priority_groups</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+199
+200
+201</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 199</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_priority_groups'>priority_groups</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:priority</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
@@ -646,12 +765,12 @@ the container.</p>
       <pre class="lines">
 
 
-180
-181
-182</pre>
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -676,12 +795,12 @@ the container.</p>
       <pre class="lines">
 
 
-184
-185
-186</pre>
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -696,7 +815,7 @@ the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Feb  6 16:02:49 2014 by
+  Generated on Sat Feb  8 21:44:41 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
