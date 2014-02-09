@@ -83,11 +83,17 @@ def iterate_objects_by_name(name, klass, &block)
   objects = Array.new
   klass_name = klass.to_s.split('::').last.downcase
 
-  if name.nil?
-    objects = klass.all.select{ |object| (!object.template rescue true) }
-  else
+  objects = klass.all.select{ |o| (!o.template rescue true) }
+  if !name.nil?
     names = name.split(',')
-    objects = klass.find(names).select{ |object| (!object.template rescue true) }
+
+    not_names = names.collect { |n| ((n[0] == '!') and n[1..-1]) }.delete_if {|n| n == false }.compact
+    names.delete_if { |n| n[0] == '!' }
+
+    if names.size > 0
+      objects = klass.find(names).select{ |o| (!o.template rescue true) }
+    end
+    objects.delete_if{ |o| not_names.include?(o.id.to_s.downcase) }
   end
 
   (objects.nil? || (objects.count == 0)) and raise TestLab::TestLabError, "We could not find any of the #{klass_name}s you supplied!"
