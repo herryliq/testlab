@@ -28,6 +28,7 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
 
+        bind_install(node)
         bind_provision(node)
 
         true
@@ -153,7 +154,6 @@ class TestLab
       end
 
       def bind_provision(node)
-        bind_install(node)
         build_bind_conf(node)
         bind_reload(node)
       end
