@@ -39,6 +39,21 @@ class TestLab
         @container_ssh[name]
       end
 
+      # Shutdown all SSH connections
+      #
+      # @return [Boolean] True if successful.
+      def ssh_shutdown!
+        @ssh.nil? or @ssh.close
+        @ssh = nil
+
+        @container_ssh.nil? or @container_ssh.each do |name, ssh|
+          ssh.nil? or ssh.close
+        end
+        @container_ssh = nil
+
+        true
+      end
+
     end
 
   end
