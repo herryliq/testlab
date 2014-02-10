@@ -62,18 +62,10 @@
     <iframe id="search_frame"></iframe>
 
     <div id="content"><div id='filecontents'><p><a href="http://badge.fury.io/rb/testlab"><img src="https://badge.fury.io/rb/testlab.png" alt="Gem Version"></a>
-<a href="https://gemnasium.com/zpatten/testlab"><img src="https://gemnasium.com/zpatten/testlab.png" alt="Dependency Status"></a>
+<a href="https://gemnasium.com/lookout/testlab"><img src="https://gemnasium.com/lookout/testlab.png" alt="Dependency Status"></a>
 <a href="http://travis-ci.org/lookout/testlab"><img src="https://secure.travis-ci.org/lookout/testlab.png" alt="Build Status"></a>
 <a href="https://coveralls.io/r/lookout/testlab"><img src="https://coveralls.io/repos/lookout/testlab/badge.png?branch=master" alt="Coverage Status"></a>
-<a href="https://codeclimate.com/github/zpatten/testlab"><img src="https://codeclimate.com/github/zpatten/testlab.png" alt="Code Climate"></a></p>
-
-<h1>A Quick Note on Versioning</h1>
-
-<p>I attempt to keep TestLab in line with Semantic Versioning when incrementing version numbers.  I am human so I may screw this up on, hopefully rare, occasion.  Semantic Versioning is delicious and everyone should be following this schema, especially when it comes to Ruby Gems which have a habit of pushing your projects into &quot;dependency hell&quot;.</p>
-
-<ul>
-<li><a href="http://semver.org/">http://semver.org/</a></li>
-</ul>
+<a href="https://codeclimate.com/github/lookout/testlab"><img src="https://codeclimate.com/github/lookout/testlab.png" alt="Code Climate"></a></p>
 
 <h1>What is TestLab?</h1>
 
@@ -136,6 +128,7 @@ Your bug report is located at &quot;/tmp/testlab-bug-report.1391307431&quot;.
 <pre class="code ruby"><code class="ruby">tl container build                             # build all containers
 tl container build -n chef-client              # only build the chef-client container
 tl container build -n chef-server,chef-client  # build the chef-server and chef-client container (NOTE: list order dictates execution order)
+tl container build -n \!chef-server            # build all containers, except the chef-server container
 </code></pre>
 
 <h1>Installation</h1>
@@ -189,33 +182,81 @@ tl container build -n chef-server,chef-client  # build the chef-server and chef-
 
 <p>You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.</p>
 
-<p><strong>The follow commands assume you have a functioning TestLab node.</strong></p>
-
 <pre class="code ruby"><code class="ruby">tl container build --force                 # Force all defined containers to build even if some can be imported
 tl container build                         # Attempts to import all defined containers, building those which can not be imported
 tl container build -n chef-client --force  # Force the 'chef-client' container to build from scratch even if it can be imported
+tl container build -n \!chef-server        # Build all containers, except the 'chef-server' container
 </code></pre>
 
 <h3>Importing Containers</h3>
 
 <p>You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.</p>
 
-<p><strong>The follow commands assume you have a functioning TestLab node.</strong></p>
-
-<pre class="code ruby"><code class="ruby">tl container import                             # Attempts to import all defined containers
-tl container import -n chef-client              # Attempts to only import the 'chef-client' container
-tl container import -n chef-server,chef-client  # Attempts to only import the 'chef-server' and 'chef-client' container
+<pre class="code ruby"><code class="ruby">tl container import                             # Import all defined containers
+tl container import -n chef-client              # Import the 'chef-client' container
+tl container import -n chef-server,chef-client  # Import the 'chef-server' and 'chef-client' container
+tl container import -n \!chef-server            # Import all containers, except the 'chef-server' container
 </code></pre>
 
 <h3>Demolishing Containers</h3>
 
 <p>You can easily remove all the containers your have defined in your <code>Labfile</code> as well as single containers.  You should generally demolish your containers instead of destroying them because the demolish action involves decommissioning.</p>
 
-<p><strong>The follow commands assume you have a functioning TestLab node with running containers.</strong></p>
-
 <pre class="code ruby"><code class="ruby">tl container demolish                             # Demolish all defined containers
 tl container demolish -n chef-client              # Only demolish the 'chef-client' container
 tl container demolish -n chef-client,chef-server  # Only demolish the 'chef-client' and 'chef-server' containers
+tl container demolish -n \!chef-server            # Demolish all containers, except the 'chef-server' container
+</code></pre>
+
+<h3>Recycle Containers</h3>
+
+<p>You can demolish and build containers all in one motion by recycling them. If a container can be imported, recycle will attempt to do so during the build phase unless the force options is specified.</p>
+
+<pre class="code ruby"><code class="ruby">tl container recycle                             # Recycle all defined containers
+tl container recycle -n chef-client              # Only recycle the 'chef-client' container
+tl container recycle -n chef-client --force      # Only recycle the 'chef-client' container and force building; do not import
+tl container recycle -n chef-client,chef-server  # Only recycle the 'chef-client' and 'chef-server' containers
+tl container recycle -n \!chef-server            # Recycle all containers, except the 'chef-server' container
+</code></pre>
+
+<h3>Bounce Containers</h3>
+
+<p>You can easily restart (i.e. bounce) your containers, for example:</p>
+
+<pre class="code ruby"><code class="ruby">tl container bounce                             # Bounce all defined containers
+tl container bounce -n chef-client              # Only bounce the 'chef-client' container
+tl container bounce -n chef-client,chef-server  # Only bounce the 'chef-client' and 'chef-server' containers
+tl container bounce -n \!chef-server            # Bounce all containers, except the 'chef-server' container
+</code></pre>
+
+<h3>Start Containers</h3>
+
+<p>You can easily start your containers, for example:</p>
+
+<pre class="code ruby"><code class="ruby">tl container up                             # Start all defined containers
+tl container up -n chef-client              # Only start the 'chef-client' container
+tl container up -n chef-client,chef-server  # Only start the 'chef-client' and 'chef-server' containers
+tl container up -n \!chef-server            # Start all containers, except the 'chef-server' container
+</code></pre>
+
+<h3>Stop Containers</h3>
+
+<p>You can easily stop your containers, for example:</p>
+
+<pre class="code ruby"><code class="ruby">tl container down                             # Stop all defined containers
+tl container down -n chef-client              # Only stop the 'chef-client' container
+tl container down -n chef-client,chef-server  # Only stop the 'chef-client' and 'chef-server' containers
+tl container down -n \!chef-server            # Stop all containers, except the 'chef-server' container
+</code></pre>
+
+<h3>Container Status</h3>
+
+<p>You can get the status of all, some or a single container, for example (-q silences all of the STDOUT log output):</p>
+
+<pre class="code ruby"><code class="ruby">tl -q container status                             # Get status for all defined containers
+tl -q container status -n chef-client              # Get status only for the 'chef-client' container
+tl -q container status -n chef-client,chef-server  # Get status only for the 'chef-client' and 'chef-server' containers
+tl -q container status -n \!chef-server            # Get the status of all containers, except the 'chef-server' container
 </code></pre>
 
 <h3>Connecting to Containers</h3>
@@ -482,7 +523,7 @@ limitations under the License.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sat Feb  8 21:49:21 2014 by
+  Generated on Sun Feb  9 21:54:31 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
