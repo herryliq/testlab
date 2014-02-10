@@ -107,8 +107,6 @@ Importing entire labs with an embedded `Labfile` is coming soon.
 
 You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.
 
-**The follow commands assume you have a functioning TestLab node.**
-
     tl container build --force                 # Force all defined containers to build even if some can be imported
     tl container build                         # Attempts to import all defined containers, building those which can not be imported
     tl container build -n chef-client --force  # Force the 'chef-client' container to build from scratch even if it can be imported
@@ -117,8 +115,6 @@ You should import containers because it saves a lot of time.  Building container
 ### Importing Containers
 
 You should import containers because it saves a lot of time.  Building containers from scratch is a time consuming process.  Using shipping container images and ultimately lab images greatly accelerates the speed at which you can move.
-
-**The follow commands assume you have a functioning TestLab node.**
 
     tl container import                             # Import all defined containers
     tl container import -n chef-client              # Import the 'chef-client' container
@@ -129,12 +125,56 @@ You should import containers because it saves a lot of time.  Building container
 
 You can easily remove all the containers your have defined in your `Labfile` as well as single containers.  You should generally demolish your containers instead of destroying them because the demolish action involves decommissioning.
 
-**The follow commands assume you have a functioning TestLab node with running containers.**
-
     tl container demolish                             # Demolish all defined containers
     tl container demolish -n chef-client              # Only demolish the 'chef-client' container
     tl container demolish -n chef-client,chef-server  # Only demolish the 'chef-client' and 'chef-server' containers
     tl container demolish -n \!chef-server            # Demolish all containers, except the 'chef-server' container
+
+### Recycle Containers
+
+You can demolish and build containers all in one motion by recycling them. If a container can be imported, recycle will attempt to do so during the build phase unless the force options is specified.
+
+    tl container recycle                             # Recycle all defined containers
+    tl container recycle -n chef-client              # Only recycle the 'chef-client' container
+    tl container recycle -n chef-client --force      # Only recycle the 'chef-client' container and force building; do not import
+    tl container recycle -n chef-client,chef-server  # Only recycle the 'chef-client' and 'chef-server' containers
+    tl container recycle -n \!chef-server            # Recycle all containers, except the 'chef-server' container
+
+### Bounce Containers
+
+You can easily restart (i.e. bounce) your containers, for example:
+
+    tl container bounce                             # Bounce all defined containers
+    tl container bounce -n chef-client              # Only bounce the 'chef-client' container
+    tl container bounce -n chef-client,chef-server  # Only bounce the 'chef-client' and 'chef-server' containers
+    tl container bounce -n \!chef-server            # Bounce all containers, except the 'chef-server' container
+
+### Start Containers
+
+You can easily start your containers, for example:
+
+    tl container up                             # Start all defined containers
+    tl container up -n chef-client              # Only start the 'chef-client' container
+    tl container up -n chef-client,chef-server  # Only start the 'chef-client' and 'chef-server' containers
+    tl container up -n \!chef-server            # Start all containers, except the 'chef-server' container
+
+### Stop Containers
+
+You can easily stop your containers, for example:
+
+    tl container down                             # Stop all defined containers
+    tl container down -n chef-client              # Only stop the 'chef-client' container
+    tl container down -n chef-client,chef-server  # Only stop the 'chef-client' and 'chef-server' containers
+    tl container down -n \!chef-server            # Stop all containers, except the 'chef-server' container
+
+### Container Status
+
+You can get the status of all, some or a single container, for example (-q silences all of the STDOUT log output):
+
+    tl -q container status                             # Get status for all defined containers
+    tl -q container status -n chef-client              # Get status only for the 'chef-client' container
+    tl -q container status -n chef-client,chef-server  # Get status only for the 'chef-client' and 'chef-server' containers
+    tl -q container status -n \!chef-server            # Get the status of all containers, except the 'chef-server' container
 
 ### Connecting to Containers
 
