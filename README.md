@@ -80,6 +80,10 @@ The `Labfile` defines your virtual computer lab.  It defines where you want to r
 
 You can override the default `Labfile` by setting the path to your alternate `Labfile` via the environment variable `LABFILE` or via a command line argument (see `tl help` for more details) directly to TestLab.
 
+For some examples of Labfiles check out:
+
+* https://github.com/zpatten/testlab-repo
+
 ## Building your Lab
 
 You should build your TestLab node (i.e. VirtualBox VM) and TestLab networks first.  This is the foundation which the containers run on.  You should attempt to keep your TestLab node intact and only cycle your containers.
