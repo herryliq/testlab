@@ -59,6 +59,7 @@ When supplying container names you actually have three options.  When you do not
     tl container build                             # build all containers
     tl container build -n chef-client              # only build the chef-client container
     tl container build -n chef-server,chef-client  # build the chef-server and chef-client container (NOTE: list order dictates execution order)
+    tl container build -n \!chef-server            # build all containers, except the chef-server container
 
 # Installation
 
@@ -111,6 +112,7 @@ You should import containers because it saves a lot of time.  Building container
     tl container build --force                 # Force all defined containers to build even if some can be imported
     tl container build                         # Attempts to import all defined containers, building those which can not be imported
     tl container build -n chef-client --force  # Force the 'chef-client' container to build from scratch even if it can be imported
+    tl container build -n \!chef-server        # Build all containers, except the 'chef-server' container
 
 ### Importing Containers
 
@@ -118,9 +120,10 @@ You should import containers because it saves a lot of time.  Building container
 
 **The follow commands assume you have a functioning TestLab node.**
 
-    tl container import                             # Attempts to import all defined containers
-    tl container import -n chef-client              # Attempts to only import the 'chef-client' container
-    tl container import -n chef-server,chef-client  # Attempts to only import the 'chef-server' and 'chef-client' container
+    tl container import                             # Import all defined containers
+    tl container import -n chef-client              # Import the 'chef-client' container
+    tl container import -n chef-server,chef-client  # Import the 'chef-server' and 'chef-client' container
+    tl container import -n \!chef-server            # Import all containers, except the 'chef-server' container
 
 ### Demolishing Containers
 
@@ -131,6 +134,7 @@ You can easily remove all the containers your have defined in your `Labfile` as 
     tl container demolish                             # Demolish all defined containers
     tl container demolish -n chef-client              # Only demolish the 'chef-client' container
     tl container demolish -n chef-client,chef-server  # Only demolish the 'chef-client' and 'chef-server' containers
+    tl container demolish -n \!chef-server            # Demolish all containers, except the 'chef-server' container
 
 ### Connecting to Containers
 
