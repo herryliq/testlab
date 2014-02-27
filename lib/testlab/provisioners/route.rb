@@ -33,6 +33,7 @@ class TestLab
 
         true
       end
+      alias :on_network_destroy :on_network_down
 
       # Route: Node Down
       def on_node_down(node)
@@ -42,6 +43,7 @@ class TestLab
 
         true
       end
+      alias :on_node_destroy :on_node_down
 
     private
 
