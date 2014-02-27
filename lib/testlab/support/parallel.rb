@@ -47,7 +47,7 @@ class TestLab
           else
             selected_objects.each do |object|
               parallel.process do
-                $0 = "TestLab #{klass_name.capitalize} #{action.capitalize}: #{object.id.inspect}"
+                $0 = "TestLab #{klass_name.capitalize} #{action.to_s.capitalize}: #{object.id.inspect}"
 
                 # Redirect all standard I/O to /dev/null
                 self.ui.stdout.reopen("/dev/null", "a")
@@ -64,7 +64,7 @@ class TestLab
             end
 
             while (parallel.count > 0) do
-              message = format_message("Parallel #{action.capitalize} Running:".yellow)
+              message = format_message("Parallel #{action.to_s.capitalize} Running:".yellow)
 
               reset_screen
               self.ui.stdout.puts(message)
