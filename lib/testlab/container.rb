@@ -131,7 +131,7 @@ class TestLab
     # Additional capabilities LXC should drop
     attribute   :cap_drop
 
-    attribute   :tags,          :default => Array.new
+    attribute   :tags
 
     # Instructs ephemeral containers to persist; otherwise tmpfs will be used
     # as the backend store for ephemeral containers.
