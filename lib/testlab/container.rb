@@ -148,7 +148,7 @@ class TestLab
     # performing parallel operations; a higher value priority equates to more
     # precedence.  Objects with identical priority values will execute in
     # parallel.
-    attribute   :priority,       :default => 0
+    attribute   :priority
 
 
     def initialize(*args)
@@ -157,6 +157,12 @@ class TestLab
       @ui.logger.debug { "Loading Container" }
       super(*args)
       @ui.logger.debug { "Container '#{self.id}' Loaded" }
+
+      if self.priority.nil? && (self.template == false)
+        $priority_counter ||= 0
+        self.priority     ||= (1000 - $priority_counter)
+        $priority_counter += 1
+      end
 
       self.tags ||= [ self.id ]
 
@@ -169,7 +175,7 @@ class TestLab
         end
 
         # Inherit the containers attributes
-        parent.attributes.reject{ |k,v| [:id, :node_id, :inherit, :template].include?(k) }.each do |key, value|
+        parent.attributes.reject{ |k,v| [:id, :node_id, :inherit, :template, :priority].include?(k) }.each do |key, value|
           self.send("#{key}=", (value.dup rescue value))
         end
 
