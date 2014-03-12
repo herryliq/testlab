@@ -178,6 +178,8 @@
     
 
     
+      (also: #on_network_destroy)
+    
   </span>
   
   
@@ -225,6 +227,8 @@
       <a href="#on_node_down-instance_method" title="#on_node_down (instance method)">- (Object) <strong>on_node_down</strong>(node) </a>
     
 
+    
+      (also: #on_node_destroy)
     
   </span>
   
@@ -325,6 +329,10 @@
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_network_destroy-instance_method'>on_network_destroy</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -415,6 +423,10 @@
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_node_destroy-instance_method'>on_node_destroy</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -434,16 +446,16 @@
       <pre class="lines">
 
 
-38
 39
 40
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/route.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/route.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_node_down'>on_node_down</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_networks'>networks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='op'>|</span>
@@ -462,7 +474,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Feb  9 21:54:36 2014 by
+  Generated on Wed Mar 12 16:54:45 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

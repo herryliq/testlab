@@ -633,7 +633,13 @@ the container.</p>
 184
 185
 186
-187</pre>
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 154</span>
@@ -644,6 +650,12 @@ the container.</p>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Loading Container</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>' Loaded</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_priority'>priority</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span> <span class='op'>==</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='gvar'>$priority_counter</span> <span class='op'>||=</span> <span class='int'>0</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_priority'>priority</span>     <span class='op'>||=</span> <span class='lparen'>(</span><span class='int'>1000</span> <span class='op'>-</span> <span class='gvar'>$priority_counter</span><span class='rparen'>)</span>
+    <span class='gvar'>$priority_counter</span> <span class='op'>+=</span> <span class='int'>1</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tags'>tags</span> <span class='op'>||=</span> <span class='lbracket'>[</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='rbracket'>]</span>
 
@@ -656,7 +668,7 @@ the container.</p>
     <span class='kw'>end</span>
 
     <span class='comment'># Inherit the containers attributes
-</span>    <span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='symbol'>:id</span><span class='comma'>,</span> <span class='symbol'>:node_id</span><span class='comma'>,</span> <span class='symbol'>:inherit</span><span class='comma'>,</span> <span class='symbol'>:template</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>    <span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='symbol'>:id</span><span class='comma'>,</span> <span class='symbol'>:node_id</span><span class='comma'>,</span> <span class='symbol'>:inherit</span><span class='comma'>,</span> <span class='symbol'>:template</span><span class='comma'>,</span> <span class='symbol'>:priority</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='kw'>rescue</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
@@ -699,12 +711,12 @@ the container.</p>
       <pre class="lines">
 
 
-203
-204
-205</pre>
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_by_priority'>by_priority</span><span class='lparen'>(</span><span class='id identifier rubyid_priority'>priority</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_priority'>priority</span> <span class='op'>==</span> <span class='id identifier rubyid_priority'>priority</span> <span class='rbrace'>}</span>
@@ -729,12 +741,12 @@ the container.</p>
       <pre class="lines">
 
 
-199
-200
-201</pre>
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_priority_groups'>priority_groups</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_template'>template</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:priority</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
@@ -765,12 +777,12 @@ the container.</p>
       <pre class="lines">
 
 
-189
-190
-191</pre>
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 195</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -795,12 +807,12 @@ the container.</p>
       <pre class="lines">
 
 
-193
-194
-195</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -815,7 +827,7 @@ the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Feb  9 21:54:35 2014 by
+  Generated on Wed Mar 12 16:54:44 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
