@@ -171,7 +171,7 @@ class TestLab
 
         parent = TestLab::Container.first(self.inherit)
         if parent.nil?
-          raise ContainerError, "Could not find the container you specified to inherit attributes from!"
+          raise ContainerError, "Could not find the container you specified to inherit attributes from! (#{self.inherit.inspect})"
         end
 
         # Inherit the containers attributes
