@@ -80,6 +80,18 @@ class TestLab
       self.config[:bind][:domain] ||= 'tld.invalid'
     end
 
+    class << self
+
+      def priority_groups
+        self.all.map(&:priority).sort.uniq.reverse
+      end
+
+      def by_priority(priority)
+        self.all.select{ |n| n.priority == priority }
+      end
+
+    end
+
   end
 
 end
