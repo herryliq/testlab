@@ -160,7 +160,7 @@ class TestLab
 
       if self.priority.nil? && (self.template == false)
         $priority_counter ||= 0
-        self.priority     ||= (1000 - $priority_counter)
+        self.priority     = (1000 - $priority_counter)
         $priority_counter += 1
       end
 
