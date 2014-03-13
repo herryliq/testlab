@@ -52,6 +52,18 @@ class TestLab
       @ui.logger.debug { "Network '#{self.id}' Loaded" }
     end
 
+    class << self
+
+      def priority_groups
+        self.all.map(&:priority).sort.uniq.reverse
+      end
+
+      def by_priority(priority)
+        self.all.select{ |n| n.priority == priority }
+      end
+
+    end
+
   end
 
 end
