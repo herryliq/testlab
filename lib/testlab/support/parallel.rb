@@ -29,7 +29,7 @@ class TestLab
 
         klass_name = klass.to_s.split('::').last
         command    = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
-        parallel   = ZTK::Parallel.new(:ui => self.ui)
+        parallel   = ZTK::Parallel.new(:ui => self.ui, :raise_exceptions => false)
         parallel.config do |config|
           config.before_fork = method(:before_fork)
         end
@@ -82,6 +82,13 @@ class TestLab
 
             reset_screen
           end
+        end
+
+        exception_count = parallel.results.count{ |result| (Exception === result) }
+        if (exception_count > 0)
+          message = "Encountered #{exception_count} exceptions during parallel operations! (See logs for details)"
+          self.ui.logger.fatal { message }
+          raise TestLabError, message
         end
 
         true
