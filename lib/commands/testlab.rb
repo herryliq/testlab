@@ -252,6 +252,11 @@ command :bugreport do |bugreport|
 
     IO.write(report_file, content.flatten.compact.join("\n"))
 
+    File.exists?(DEFAULT_LOG_FILE) and FileUtils.rm_f(DEFAULT_LOG_FILE)
+    Dir[DEFAULT_LOG_GLOB].each do |log_filename|
+      File.exists?(log_filename) and FileUtils.rm_f(log_filename)
+    end
+
     @testlab.ui.stderr.puts("The bug report for your most recent execution of TestLab is located at #{report_file.inspect}.")
   end
 end
