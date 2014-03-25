@@ -50,12 +50,12 @@ EOI
         command = %(/bin/bash -x #{tempfile.path})
 
         @command.exec(command)
-        container.bootstrap(script)
+        container.alive? and container.bootstrap(script)
       end
 
       def remove_hosts(container)
         @command.exec(sed_hostsfile)
-        container.exec(sed_hostsfile('linux'))
+        container.alive? and container.exec(sed_hostsfile('linux'))
       end
 
       def hosts_blob(container)
