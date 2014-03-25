@@ -6,7 +6,6 @@ env:
   - secure: H4MqaotOXE5aboHmv+udPK8sPKpzpgBaKBj3ZOqfqgmkea4sbyIMptAXvMrdWlaJGhfjxhmjwN7UfpYYxv4zN2a+16uQR1waRSt5ugxGY05riRp1vF8silogj8iSaM6TiDmytdyAbPOg+gFsDJNT50Sa29tDkiOA5L2VFAgkwjU=
   - secure: QR7/0AU/pC64kfH9tsd5nANsX/S2QMKT2LVGcFfZhdRyisT597s4LzVj6snBrfh+Qd0mqkZZmkVHRNmi5BdO3qVeA/0R8LOm3WD5gFaBNEbCV7B3j2iX6a386nKYd+9LbLO57cfnVePFRsWmPF3pefhNDnQbWLKjUxT2rj3j/RQ=
 rvm:
-- ree
 - 1.9.2
 - 1.9.3
 - 2.0.0
