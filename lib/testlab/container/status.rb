@@ -41,6 +41,15 @@ class TestLab
         [self.id, self.domain].join('.')
       end
 
+      # Container Alive?
+      #
+      # Is the container alive and running?
+      #
+      # @return [Boolean] True if the container is running; False otherwise.
+      def alive?
+        (self.state == :running)
+      end
+
       # Container Status
       #
       # Returns a hash of status information for the container.
