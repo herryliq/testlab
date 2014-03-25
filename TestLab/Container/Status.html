@@ -106,6 +106,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#alive%3F-instance_method" title="#alive? (instance method)">- (Boolean) <strong>alive?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Container Alive?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#cidr-instance_method" title="#cidr (instance method)">- (Integer) <strong>cidr</strong> </a>
     
 
@@ -377,7 +401,68 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="cidr-instance_method">
+  <h3 class="signature first" id="alive?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>alive?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Container Alive?</p>
+
+<p>Is the container alive and running?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if the container is running; False otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cidr-instance_method">
   
     - (<tt>Integer</tt>) <strong>cidr</strong> 
   
@@ -463,16 +548,16 @@
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
-88</pre>
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cpu_usage'>cpu_usage</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -512,16 +597,16 @@
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97</pre>
+100
+101
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_disk_usage'>disk_usage</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -648,12 +733,12 @@ therefore importable.</p>
       <pre class="lines">
 
 
-135
-136
-137</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_importable?'>importable?</span>
   <span class='op'>!</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sc_url'>sc_url</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -750,16 +835,16 @@ therefore importable.</p>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79</pre>
+82
+83
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_memory_usage'>memory_usage</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -819,20 +904,20 @@ therefore importable.</p>
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122
-123
-124
 125
-126</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -957,16 +1042,16 @@ therefore importable.</p>
       <pre class="lines">
 
 
-104
-105
-106
-107
-108
-109
-110</pre>
+113
+114
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -1026,15 +1111,6 @@ therefore importable.</p>
       <pre class="lines">
 
 
-49
-50
-51
-52
-53
-54
-55
-56
-57
 58
 59
 60
@@ -1047,10 +1123,19 @@ therefore importable.</p>
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span>
   <span class='id identifier rubyid_interfaces'>interfaces</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_interfaces'>interfaces</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_interface'>interface</span><span class='op'>|</span>
@@ -1084,7 +1169,7 @@ therefore importable.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Mar 25 13:23:23 2014 by
+  Generated on Tue Mar 25 15:12:17 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
