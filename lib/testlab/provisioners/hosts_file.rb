@@ -21,7 +21,7 @@ class TestLab
 
       # HostsFile: Container Provision
       def on_container_callback(container)
-        remove_hosts
+        remove_hosts(container)
         add_hosts(container)
 
         true
@@ -39,9 +39,7 @@ class TestLab
       def add_hosts(container)
         script = <<-EOF
 cat <<EOI | #{sudo} tee -a /etc/hosts
-#{def_tag}
 #{hosts_blob(container)}
-#{end_tag}
 EOI
         EOF
 
@@ -52,23 +50,27 @@ EOI
         command = %(/bin/bash -x #{tempfile.path})
 
         @command.exec(command)
+        container.bootstrap(script)
       end
 
-      def remove_hosts
+      def remove_hosts(container)
         @command.exec(sed_hostsfile)
+        container.exec(sed_hostsfile('linux'))
       end
 
       def hosts_blob(container)
         blob = Array.new
+        blob << def_tag
         container.node.containers.each do |con|
           blob << "#{con.primary_interface.ip}\t#{con.id} #{con.fqdn}"
         end
+        blob << end_tag
 
         blob.join("\n")
       end
 
-      def sed_hostsfile
-        case RUBY_PLATFORM
+      def sed_hostsfile(platform=RUBY_PLATFORM)
+        case platform
         when /darwin/ then
           %(#{sudo} sed -i '' '/#{def_tag}/,/#{end_tag}/d' /etc/hosts)
         when /linux/ then
